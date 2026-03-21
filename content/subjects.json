@@ -1,0 +1,104 @@
+{
+  "title": "高中學測心智圖",
+  "subtitle": "互動式學習 · 多科整合",
+  "subjects": [
+    {
+      "id": "chinese",
+      "title": "國文",
+      "titleEn": "Chinese",
+      "icon": "📜",
+      "color": "#ef4444",
+      "description": "即將推出",
+      "hasSubjects": false
+    },
+    {
+      "id": "english",
+      "title": "英文",
+      "titleEn": "English",
+      "icon": "🔤",
+      "color": "#3b82f6",
+      "description": "即將推出",
+      "hasSubjects": false
+    },
+    {
+      "id": "math",
+      "title": "數學",
+      "titleEn": "Mathematics",
+      "icon": "📐",
+      "color": "#f59e0b",
+      "description": "即將推出",
+      "hasSubjects": false
+    },
+    {
+      "id": "science",
+      "title": "自然",
+      "titleEn": "Natural Sciences",
+      "icon": "🔬",
+      "color": "#10b981",
+      "description": "物理 · 化學 · 生物 · 地科",
+      "hasSubjects": true,
+      "subSubjects": [
+        {
+          "id": "physics",
+          "title": "物理",
+          "titleEn": "Physics",
+          "icon": "⚡",
+          "color": "#f97316"
+        },
+        {
+          "id": "chemistry",
+          "title": "化學",
+          "titleEn": "Chemistry",
+          "icon": "🧪",
+          "color": "#a855f7"
+        },
+        {
+          "id": "biology",
+          "title": "生物",
+          "titleEn": "Biology",
+          "icon": "🧬",
+          "color": "#10b981"
+        },
+        {
+          "id": "earth-science",
+          "title": "地球科學",
+          "titleEn": "Earth Science",
+          "icon": "🌍",
+          "color": "#06b6d4"
+        }
+      ]
+    },
+    {
+      "id": "social",
+      "title": "社會",
+      "titleEn": "Social Studies",
+      "icon": "🌏",
+      "color": "#8b5cf6",
+      "description": "歷史 · 地理 · 公民",
+      "hasSubjects": true,
+      "subSubjects": [
+        {
+          "id": "history",
+          "title": "歷史",
+          "titleEn": "History",
+          "icon": "📖",
+          "color": "#b45309"
+        },
+        {
+          "id": "geography",
+          "title": "地理",
+          "titleEn": "Geography",
+          "icon": "🗺️",
+          "color": "#059669"
+        },
+        {
+          "id": "civics",
+          "title": "公民與社會",
+          "titleEn": "Civics",
+          "icon": "⚖️",
+          "color": "#7c3aed"
+        }
+      ]
+    }
+  ]
+}

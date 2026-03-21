@@ -29,15 +29,16 @@ Implement features, fix bugs, and write code following the project's established
 
 | File | Purpose |
 |------|---------|
-| `js/app.js` | All application logic (shared utils, homepage, viewer, quiz) |
+| `js/app.js` | All application logic (shared utils, homepage, subject, viewer, quiz) |
 | `css/style.css` | All styles with CSS custom properties |
-| `content/topics.json` | Master topic index — must stay in sync with content/question files |
-| `content/*.md` | Markmap source — `#`/`##`/`###` headers define mind map nodes |
-| `questions/*.json` | Quiz data — `{id, year, text, options[], answer, explanation}` |
+| `content/subjects.json` | Master subject index with hierarchy — must stay in sync |
+| `content/{subject}/{sub}/topics.json` | Topic listings per subject/sub-subject |
+| `content/{subject}/{sub}/*.md` | Markmap source — `#`/`##`/`###` headers define mind map nodes |
+| `questions/{subject}/{sub}/*.json` | Quiz data — `{id, year, text, options[], answer, explanation}` |
 
 ## Constraints
 
 - DO NOT add npm packages or build tools
 - DO NOT introduce TypeScript or any framework
 - DO NOT modify files outside the requested scope
-- ALWAYS keep `content/topics.json` in sync when adding/removing topics
+- ALWAYS keep `content/subjects.json` in sync when adding/removing topics

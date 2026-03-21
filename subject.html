@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>科目主題</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="viewer-nav">
+    <a id="back-btn" href="index.html" class="back-btn">← 返回</a>
+    <span class="topic-title" id="subject-title">載入中...</span>
+  </nav>
+
+  <div style="margin-top: 56px;">
+    <header class="site-header">
+      <h1 id="page-title">載入中...</h1>
+      <p id="page-subtitle"></p>
+    </header>
+
+    <section class="progress-section">
+      <div class="progress-label">
+        <span>學習進度</span>
+        <span id="progress-text">0 / 0</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-bar-fill" id="progress-fill" style="width: 0%"></div>
+      </div>
+    </section>
+
+    <main id="content-container"></main>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script>
+    initSubject();
+  </script>
+</body>
+</html>

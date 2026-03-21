@@ -8,55 +8,210 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-function getTopicParam() {
-  return new URLSearchParams(window.location.search).get('topic');
+function getParam(name) {
+  return new URLSearchParams(window.location.search).get(name);
 }
 
-async function loadTopics() {
+async function loadSubjects() {
   try {
-    const res = await fetch('content/topics.json');
+    const res = await fetch('content/subjects.json');
+    if (!res.ok) throw new Error(res.status);
     return res.json();
   } catch {
     document.body.innerHTML =
-      '<div class="loading" style="height:100vh">無法載入主題資料，請檢查網路連線後重新整理</div>';
-    throw new Error('Failed to load topics.json');
+      '<div class="loading" style="height:100vh">無法載入科目資料，請檢查網路連線後重新整理</div>';
+    throw new Error('Failed to load subjects.json');
   }
+}
+
+function getContentBase(subjectId, subId) {
+  return subId ? `content/${subjectId}/${subId}` : `content/${subjectId}`;
+}
+
+function getQuestionBase(subjectId, subId) {
+  return subId ? `questions/${subjectId}/${subId}` : `questions/${subjectId}`;
+}
+
+async function loadTopicsFor(subjectId, subId) {
+  const base = getContentBase(subjectId, subId);
+  const res = await fetch(base + '/topics.json');
+  if (!res.ok) throw new Error(res.status);
+  return res.json();
 }
 
 function getAllTopics(data) {
   return data.categories.flatMap(c => c.topics);
 }
 
-function isRead(topicId) {
-  return localStorage.getItem(STORAGE_PREFIX + 'read-' + topicId) === '1';
+function buildReadKey(subjectId, subId, topicId) {
+  const parts = [subjectId];
+  if (subId) parts.push(subId);
+  parts.push(topicId);
+  return STORAGE_PREFIX + 'read-' + parts.join('-');
 }
 
-function markAsRead(topicId) {
-  localStorage.setItem(STORAGE_PREFIX + 'read-' + topicId, '1');
+function isRead(subjectId, subId, topicId) {
+  return localStorage.getItem(buildReadKey(subjectId, subId, topicId)) === '1';
 }
 
-function markAsUnread(topicId) {
-  localStorage.removeItem(STORAGE_PREFIX + 'read-' + topicId);
+function markAsRead(subjectId, subId, topicId) {
+  localStorage.setItem(buildReadKey(subjectId, subId, topicId), '1');
 }
 
-/* ===== Homepage ===== */
+function markAsUnread(subjectId, subId, topicId) {
+  localStorage.removeItem(buildReadKey(subjectId, subId, topicId));
+}
+
+function buildViewerUrl(subjectId, subId, topicId) {
+  let url = 'viewer.html?subject=' + encodeURIComponent(subjectId);
+  if (subId) url += '&sub=' + encodeURIComponent(subId);
+  url += '&topic=' + encodeURIComponent(topicId);
+  return url;
+}
+
+function buildQuizUrl(subjectId, subId, topicId) {
+  let url = 'quiz.html?subject=' + encodeURIComponent(subjectId);
+  if (subId) url += '&sub=' + encodeURIComponent(subId);
+  url += '&topic=' + encodeURIComponent(topicId);
+  return url;
+}
+
+function buildSubjectUrl(subjectId, subId) {
+  let url = 'subject.html?subject=' + encodeURIComponent(subjectId);
+  if (subId) url += '&sub=' + encodeURIComponent(subId);
+  return url;
+}
+
+/* ===== Homepage (Subject Selection) ===== */
 
 async function initHomepage() {
-  const data = await loadTopics();
-  const allTopics = getAllTopics(data);
+  const data = await loadSubjects();
 
   document.getElementById('site-title').textContent = data.title;
   document.getElementById('site-subtitle').textContent = data.subtitle;
 
+  const container = document.getElementById('subjects-container');
+  const grid = document.createElement('div');
+  grid.className = 'subject-grid';
+
+  for (const subject of data.subjects) {
+    const card = document.createElement('a');
+    card.href = buildSubjectUrl(subject.id);
+    card.className = 'subject-card';
+    card.style.borderColor = subject.color;
+
+    card.innerHTML = `
+      <div class="subject-icon">${escapeHtml(subject.icon)}</div>
+      <div class="subject-info">
+        <div class="subject-title">${escapeHtml(subject.title)}</div>
+        <div class="subject-title-en">${escapeHtml(subject.titleEn)}</div>
+        <div class="subject-desc">${escapeHtml(subject.description)}</div>
+      </div>
+    `;
+
+    grid.appendChild(card);
+  }
+
+  container.appendChild(grid);
+}
+
+/* ===== Subject Page ===== */
+
+async function initSubject() {
+  const subjectId = getParam('subject');
+  const subId = getParam('sub');
+  if (!subjectId) { window.location.href = 'index.html'; return; }
+
+  const data = await loadSubjects();
+  const subject = data.subjects.find(s => s.id === subjectId);
+  if (!subject) { window.location.href = 'index.html'; return; }
+
+  // Back button
+  const backBtn = document.getElementById('back-btn');
+  if (subId) {
+    backBtn.href = buildSubjectUrl(subjectId);
+    document.getElementById('subject-title').textContent = subject.icon + ' ' + subject.title;
+  } else {
+    backBtn.href = 'index.html';
+    document.getElementById('subject-title').textContent = subject.icon + ' ' + subject.title;
+  }
+
+  // If subject has sub-subjects and no sub selected → show sub-subject cards
+  if (subject.hasSubjects && !subId) {
+    renderSubSubjects(subject);
+    return;
+  }
+
+  // Validate sub-subject if specified
+  if (subId && subject.subSubjects) {
+    const sub = subject.subSubjects.find(s => s.id === subId);
+    if (!sub) { window.location.href = buildSubjectUrl(subjectId); return; }
+    document.getElementById('subject-title').textContent = subject.icon + ' ' + subject.title + ' / ' + sub.title;
+  }
+
+  // Load topics for this subject/sub
+  try {
+    const topicsData = await loadTopicsFor(subjectId, subId);
+    renderTopicsList(topicsData, subjectId, subId);
+  } catch {
+    document.getElementById('content-container').innerHTML =
+      '<div class="loading" style="height:30vh">尚無主題內容</div>';
+  }
+}
+
+function renderSubSubjects(subject) {
+  document.getElementById('page-title').textContent = subject.title;
+  document.getElementById('page-subtitle').textContent = subject.description || '';
+
+  // Hide progress for sub-subject selection
+  const progressSection = document.querySelector('.progress-section');
+  if (progressSection) progressSection.style.display = 'none';
+
+  const container = document.getElementById('content-container');
+  const grid = document.createElement('div');
+  grid.className = 'subject-grid';
+
+  for (const sub of subject.subSubjects) {
+    const card = document.createElement('a');
+    card.href = buildSubjectUrl(subject.id, sub.id);
+    card.className = 'subject-card';
+    card.style.borderColor = sub.color;
+
+    card.innerHTML = `
+      <div class="subject-icon">${escapeHtml(sub.icon)}</div>
+      <div class="subject-info">
+        <div class="subject-title">${escapeHtml(sub.title)}</div>
+        <div class="subject-title-en">${escapeHtml(sub.titleEn)}</div>
+      </div>
+    `;
+
+    grid.appendChild(card);
+  }
+
+  container.appendChild(grid);
+}
+
+function renderTopicsList(topicsData, subjectId, subId) {
+  const allTopics = getAllTopics(topicsData);
+
+  document.getElementById('page-title').textContent = topicsData.title;
+  document.getElementById('page-subtitle').textContent = topicsData.subtitle;
+  document.title = topicsData.title;
+
   // Progress
-  const readCount = allTopics.filter(t => isRead(t.id)).length;
+  const readCount = allTopics.filter(t => isRead(subjectId, subId, t.id)).length;
   const total = allTopics.length;
   document.getElementById('progress-text').textContent = `${readCount} / ${total}`;
   document.getElementById('progress-fill').style.width = total > 0 ? `${(readCount / total) * 100}%` : '0%';
 
-  // Categories
-  const container = document.getElementById('categories-container');
-  for (const category of data.categories) {
+  if (total === 0) {
+    document.getElementById('content-container').innerHTML =
+      '<div class="loading" style="height:30vh">尚無主題內容，敬請期待</div>';
+    return;
+  }
+
+  const container = document.getElementById('content-container');
+  for (const category of topicsData.categories) {
     const section = document.createElement('section');
     section.className = 'category';
     const h2 = document.createElement('h2');
@@ -69,7 +224,7 @@ async function initHomepage() {
 
     for (const topic of category.topics) {
       const card = document.createElement('div');
-      card.className = 'card' + (isRead(topic.id) ? ' completed' : '');
+      card.className = 'card' + (isRead(subjectId, subId, topic.id) ? ' completed' : '');
       card.innerHTML = `
         <div class="card-check">✓</div>
         <div class="card-icon">${escapeHtml(topic.icon)}</div>
@@ -79,8 +234,8 @@ async function initHomepage() {
           <span class="card-badge exam">學測佔比 ${escapeHtml(String(topic.examRatio))}%</span>
         </div>
         <div class="card-actions">
-          <a href="viewer.html?topic=${encodeURIComponent(topic.id)}" class="btn btn-primary">查看心智圖</a>
-          <a href="quiz.html?topic=${encodeURIComponent(topic.id)}" class="btn btn-secondary">📝 練習</a>
+          <a href="${buildViewerUrl(subjectId, subId, topic.id)}" class="btn btn-primary">查看心智圖</a>
+          <a href="${buildQuizUrl(subjectId, subId, topic.id)}" class="btn btn-secondary">📝 練習</a>
         </div>
       `;
       grid.appendChild(card);
@@ -94,8 +249,8 @@ async function initHomepage() {
 /* ===== Viewer (Markmap) ===== */
 // Viewer initialization logic is in viewer.html inline script (uses markmap-autoloader)
 
-function updateReadButton(btn, topicId) {
-  if (isRead(topicId)) {
+function updateReadButton(btn, subjectId, subId, topicId) {
+  if (isRead(subjectId, subId, topicId)) {
     btn.textContent = '✓ 已完成';
     btn.classList.remove('btn-primary');
     btn.classList.add('btn-secondary');
@@ -109,26 +264,40 @@ function updateReadButton(btn, topicId) {
 /* ===== Quiz ===== */
 
 async function initQuiz() {
-  const topicId = getTopicParam();
-  if (!topicId) { window.location.href = 'index.html'; return; }
+  const subjectId = getParam('subject');
+  const subId = getParam('sub');
+  const topicId = getParam('topic');
+  if (!subjectId || !topicId) { window.location.href = 'index.html'; return; }
 
-  const data = await loadTopics();
-  const allTopics = getAllTopics(data);
+  let topicsData;
+  try {
+    topicsData = await loadTopicsFor(subjectId, subId);
+  } catch {
+    document.getElementById('questions-container').innerHTML =
+      '<div class="loading" style="height:30vh">無法載入主題資料</div>';
+    return;
+  }
+  const allTopics = getAllTopics(topicsData);
   const topic = allTopics.find(t => t.id === topicId);
-  if (!topic) { window.location.href = 'index.html'; return; }
+  if (!topic) { window.location.href = buildSubjectUrl(subjectId, subId); return; }
 
   document.title = topic.title + ' - 題庫練習';
   document.getElementById('quiz-title').textContent = topic.icon + ' ' + topic.title + ' 題庫';
   document.getElementById('quiz-heading').textContent = topic.title + ' — 學測練習題';
 
+  // Back button
+  document.getElementById('back-btn').href = buildSubjectUrl(subjectId, subId);
+
   // Mindmap button
   document.getElementById('btn-mindmap').addEventListener('click', () => {
-    window.location.href = 'viewer.html?topic=' + topicId;
+    window.location.href = buildViewerUrl(subjectId, subId, topicId);
   });
 
   // Load questions
+  const questionBase = getQuestionBase(subjectId, subId);
   try {
-    const res = await fetch('questions/' + topicId + '.json');
+    const res = await fetch(questionBase + '/' + topicId + '.json');
+    if (!res.ok) throw new Error(res.status);
     const qData = await res.json();
     renderQuiz(qData);
   } catch {
@@ -175,17 +344,14 @@ function renderQuiz(qData) {
         const isCorrect = chosen === q.answer;
         if (isCorrect) correct++;
 
-        // Disable all
         buttons.forEach(b => {
           b.classList.add('disabled');
           if (b.dataset.letter === q.answer) b.classList.add('correct');
         });
         if (!isCorrect) btn.classList.add('wrong');
 
-        // Show explanation
         if (q.explanation) explanation.classList.add('show');
 
-        // Check if all done
         if (answered === total) {
           showScore(correct, total);
         }
