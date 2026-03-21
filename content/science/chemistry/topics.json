@@ -1,5 +1,62 @@
 {
-  "title": "化學心智圖",
-  "subtitle": "即將推出",
-  "categories": []
+  "title": "高中化學心智圖",
+  "subtitle": "互動式學習 · 化學核心概念",
+  "categories": [
+    {
+      "id": "chemistry-foundations",
+      "name": "化學基礎",
+      "topics": [
+        {
+          "id": "composition-of-matter",
+          "file": "composition-of-matter.md",
+          "title": "物質的組成",
+          "titleEn": "Composition of Matter",
+          "icon": "⚛️",
+          "color": "#a855f7",
+          "examRatio": 12,
+          "questionCount": 8
+        },
+        {
+          "id": "structure-and-bonding",
+          "file": "structure-and-bonding.md",
+          "title": "物質的構造與鍵結",
+          "titleEn": "Structure and Bonding",
+          "icon": "🔗",
+          "color": "#6366f1",
+          "examRatio": 15,
+          "questionCount": 8
+        },
+        {
+          "id": "states-and-reactions",
+          "file": "states-and-reactions.md",
+          "title": "物質的狀態與反應",
+          "titleEn": "States and Reactions",
+          "icon": "🧪",
+          "color": "#06b6d4",
+          "examRatio": 14,
+          "questionCount": 8
+        },
+        {
+          "id": "common-reactions",
+          "file": "common-reactions.md",
+          "title": "常見的化學反應",
+          "titleEn": "Common Chemical Reactions",
+          "icon": "⚗️",
+          "color": "#f97316",
+          "examRatio": 16,
+          "questionCount": 8
+        },
+        {
+          "id": "chemistry-in-life",
+          "file": "chemistry-in-life.md",
+          "title": "生活中的化學",
+          "titleEn": "Chemistry in Life",
+          "icon": "🌿",
+          "color": "#10b981",
+          "examRatio": 10,
+          "questionCount": 8
+        }
+      ]
+    }
+  ]
 }

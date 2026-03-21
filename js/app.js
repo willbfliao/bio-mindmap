@@ -65,8 +65,35 @@ function markAsUnread(subjectId, subId, topicId) {
 function buildViewerUrl(subjectId, subId, topicId) {
   let url = 'viewer.html?subject=' + encodeURIComponent(subjectId);
   if (subId) url += '&sub=' + encodeURIComponent(subId);
-  url += '&topic=' + encodeURIComponent(topicId);
+  if (topicId) url += '&topic=' + encodeURIComponent(topicId);
   return url;
+}
+
+/* ===== Node-level progress (checkbox) ===== */
+
+function buildNodeKey(subjectId, subId, pathParts) {
+  const parts = [subjectId];
+  if (subId) parts.push(subId);
+  return STORAGE_PREFIX + 'node-' + parts.concat(pathParts).join('-');
+}
+
+function isNodeChecked(nodeId) {
+  const val = localStorage.getItem(nodeId);
+  return val === '1' || (val && val.length > 1);
+}
+
+function getNodeCheckedTime(nodeId) {
+  const val = localStorage.getItem(nodeId);
+  if (!val || val === '1') return null;
+  return val;
+}
+
+function toggleNodeCheck(nodeId) {
+  if (isNodeChecked(nodeId)) {
+    localStorage.removeItem(nodeId);
+  } else {
+    localStorage.setItem(nodeId, new Date().toISOString());
+  }
 }
 
 function buildQuizUrl(subjectId, subId, topicId) {
@@ -173,7 +200,7 @@ function renderSubSubjects(subject) {
 
   for (const sub of subject.subSubjects) {
     const card = document.createElement('a');
-    card.href = buildSubjectUrl(subject.id, sub.id);
+    card.href = buildViewerUrl(subject.id, sub.id);
     card.className = 'subject-card';
     card.style.borderColor = sub.color;
 

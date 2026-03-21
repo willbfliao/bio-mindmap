@@ -6,33 +6,248 @@
   <title>心智圖檢視器</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
-    .markmap { width: 100%; height: calc(100vh - 56px); }
-    .markmap > svg { width: 100%; height: 100%; display: block; }
+    /* ===== Markmap core layout ===== */
+    #markmap-wrap { width: 100%; height: calc(100vh - 56px); margin-top: 56px; position: relative; }
+    #markmap-wrap svg { width: 100%; height: 100%; display: block; }
+
+    /* ===== Markmap dark theme ===== */
     .markmap-node text { fill: #ffffff !important; font-weight: 500 !important; }
     .markmap-node circle { fill: var(--bg, #0f172a) !important; stroke-width: 2px !important; }
     .markmap-foreign { color: #ffffff !important; font-weight: 500 !important; }
+
+    /* ===== Detail Sidebar ===== */
+    #detail-sidebar {
+      position: fixed; top: 56px; right: 0; bottom: 0;
+      width: var(--sidebar-width, 380px);
+      max-width: 60vw;
+      background: var(--bg-card, #1e293b);
+      border-left: 1px solid rgba(255,255,255,0.1);
+      z-index: 200;
+      display: flex;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      overflow: hidden;
+    }
+    #detail-sidebar.open { transform: translateX(0); }
+
+    /* Resize handle */
+    .sidebar-resize-handle {
+      width: 5px; cursor: col-resize;
+      background: transparent;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .sidebar-resize-handle:hover,
+    .sidebar-resize-handle.dragging { background: var(--accent, #6366f1); }
+
+    .sidebar-inner {
+      flex: 1; display: flex; flex-direction: column;
+      overflow: hidden; min-width: 0;
+    }
+
+    /* Sidebar header */
+    .sidebar-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);
+      flex-shrink: 0;
+    }
+    .sidebar-header h3 { font-size: 1.1rem; font-weight: 600; margin: 0; }
+    .sidebar-close {
+      background: none; border: none; color: var(--text-muted);
+      font-size: 1.5rem; cursor: pointer; padding: 0 0.25rem;
+      line-height: 1;
+    }
+    .sidebar-close:hover { color: var(--text); }
+
+    /* Sidebar tabs */
+    .sidebar-tabs {
+      display: flex; border-bottom: 1px solid rgba(255,255,255,0.1);
+      flex-shrink: 0; overflow-x: auto;
+    }
+    .sidebar-tab {
+      flex: 1; padding: 0.6rem 0.5rem; text-align: center;
+      font-size: 0.8rem; cursor: pointer; white-space: nowrap;
+      background: none; border: none; border-bottom: 2px solid transparent;
+      color: var(--text-muted); transition: color 0.2s, border-color 0.2s;
+    }
+    .sidebar-tab:hover { color: var(--text); }
+    .sidebar-tab.active {
+      color: var(--accent, #6366f1);
+      border-bottom-color: var(--accent, #6366f1);
+    }
+
+    /* Sidebar body */
+    .sidebar-body {
+      flex: 1; overflow-y: auto; padding: 1rem;
+    }
+    .sidebar-body .tab-pane { display: none; }
+    .sidebar-body .tab-pane.active { display: block; }
+
+    /* Node checkbox in sidebar */
+    .sidebar-check-row {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 0; border-top: 1px solid rgba(255,255,255,0.08);
+      margin-top: 1rem;
+    }
+    .sidebar-check-row input[type="checkbox"] {
+      width: 18px; height: 18px; accent-color: var(--success, #10b981);
+      cursor: pointer;
+    }
+    .sidebar-check-row label {
+      font-size: 0.85rem; cursor: pointer; color: var(--text-muted);
+    }
+    .sidebar-check-time {
+      margin-left: auto; font-size: 0.75rem; color: var(--text-muted);
+      opacity: 0.7;
+    }
+
+    /* Sidebar content items */
+    .detail-item { margin-bottom: 0.75rem; line-height: 1.7; font-size: 0.9rem; }
+    .detail-item strong { color: var(--accent); }
+    .detail-item .search-link {
+      display: inline-block; margin-left: 0.35rem;
+      font-size: 0.75rem; color: var(--text-muted); opacity: 0.5;
+      text-decoration: none; vertical-align: middle;
+      transition: opacity 0.2s, color 0.2s;
+    }
+    .detail-item .search-link:hover { opacity: 1; color: var(--accent); }
+    .detail-section-title {
+      font-size: 0.8rem; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.05em;
+      margin: 1rem 0 0.5rem; padding-bottom: 0.25rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .detail-bullet { padding-left: 1rem; margin-bottom: 0.35rem; position: relative; }
+    .detail-bullet::before { content: '·'; position: absolute; left: 0; color: var(--text-muted); }
+
+    /* Quiz inside sidebar */
+    .sidebar-question { margin-bottom: 1.25rem; }
+    .sidebar-question .q-text { font-size: 0.85rem; margin-bottom: 0.5rem; line-height: 1.6; }
+    .sidebar-question .q-year { font-size: 0.7rem; color: var(--accent); margin-bottom: 0.3rem; }
+    .sidebar-question .sq-options { list-style: none; padding: 0; }
+    .sidebar-question .sq-opt-btn {
+      display: block; width: 100%; text-align: left;
+      padding: 0.5rem 0.75rem; margin-bottom: 0.3rem;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px; color: var(--text); font-size: 0.8rem;
+      cursor: pointer; transition: border-color 0.2s, background 0.2s;
+    }
+    .sq-opt-btn:hover:not(.sq-disabled) { border-color: var(--accent); background: rgba(99,102,241,0.1); }
+    .sq-opt-btn.sq-correct { border-color: var(--success); background: rgba(16,185,129,0.15); }
+    .sq-opt-btn.sq-wrong { border-color: #ef4444; background: rgba(239,68,68,0.15); }
+    .sq-opt-btn.sq-disabled { cursor: default; }
+    .sidebar-question .sq-explanation {
+      margin-top: 0.5rem; padding: 0.5rem 0.75rem;
+      background: rgba(255,255,255,0.04); border-left: 3px solid var(--accent);
+      border-radius: 4px; font-size: 0.8rem; line-height: 1.5;
+      display: none;
+    }
+    .sidebar-question .sq-explanation.show { display: block; }
+
+    /* Clickable node indicator */
+    .markmap-node.clickable-node { cursor: pointer; }
+    .markmap-node.clickable-node:hover text { text-decoration: underline; }
+
+    /* Node completion status on mindmap */
+    .markmap-node.node-checked circle {
+      fill: var(--success, #10b981) !important;
+      stroke: var(--success, #10b981) !important;
+    }
+    .markmap-node.node-checked text {
+      opacity: 0.6 !important;
+      text-decoration: line-through !important;
+      text-decoration-color: rgba(255,255,255,0.4) !important;
+    }
+    .markmap-node.node-unchecked circle {
+      fill: var(--bg, #0f172a) !important;
+      stroke-width: 2px !important;
+    }
+
+    /* Progress bar in nav */
+    .nav-progress {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.8rem; color: var(--text-muted);
+    }
+    .nav-progress-bar {
+      width: 80px; height: 6px; background: rgba(255,255,255,0.1);
+      border-radius: 3px; overflow: hidden;
+    }
+    .nav-progress-fill {
+      height: 100%; background: var(--success);
+      border-radius: 3px; transition: width 0.3s;
+    }
+
+    /* ===== Mobile sidebar ===== */
+    @media (max-width: 768px) {
+      #detail-sidebar { width: 100% !important; max-width: 100vw; }
+      .sidebar-resize-handle { display: none; }
+      .viewer-nav .topic-title { font-size: 0.85rem; }
+      .nav-progress { display: none; }
+    }
   </style>
 </head>
 <body>
   <nav class="viewer-nav">
     <a id="back-btn" href="index.html" class="back-btn">← 返回</a>
     <span class="topic-title" id="viewer-title">載入中...</span>
+    <div class="nav-progress" id="nav-progress">
+      <div class="nav-progress-bar"><div class="nav-progress-fill" id="nav-progress-fill"></div></div>
+      <span id="nav-progress-text">0/0</span>
+    </div>
     <div class="nav-actions">
       <button class="btn btn-secondary" id="btn-quiz">📝 練習題</button>
-      <button class="btn btn-primary" id="btn-mark-read">✓ 標記已讀</button>
     </div>
   </nav>
 
-  <div id="markmap-wrap" class="markmap" style="margin-top:56px;"></div>
+  <div id="markmap-wrap"></div>
 
+  <!-- Detail Sidebar -->
+  <aside id="detail-sidebar">
+    <div class="sidebar-resize-handle" id="sidebar-resize-handle"></div>
+    <div class="sidebar-inner">
+      <div class="sidebar-header">
+        <h3 id="sidebar-title">節點詳情</h3>
+        <button class="sidebar-close" id="sidebar-close">&times;</button>
+      </div>
+      <nav class="sidebar-tabs">
+        <button class="sidebar-tab active" data-tab="concepts">📘 概念與應用</button>
+        <button class="sidebar-tab" data-tab="exam">🎯 考試準備</button>
+      </nav>
+      <div class="sidebar-body">
+        <div class="tab-pane active" id="tab-concepts"></div>
+        <div class="tab-pane" id="tab-exam"></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Programmatic Markmap CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.15/dist/browser/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markmap-view@0.15/dist/browser/index.js"></script>
   <script src="js/app.js"></script>
   <script>
     (async function() {
       const subjectId = getParam('subject');
       const subId = getParam('sub');
-      const topicId = getParam('topic');
-      if (!subjectId || !topicId) { window.location.href = 'index.html'; return; }
+      if (!subjectId) { window.location.href = 'index.html'; return; }
 
+      /* ---------- Load subject metadata ---------- */
+      const subjectsData = await loadSubjects();
+      const subject = subjectsData.subjects.find(s => s.id === subjectId);
+      if (!subject) { window.location.href = 'index.html'; return; }
+
+      let displayTitle = subject.icon + ' ' + subject.title;
+      if (subId && subject.subSubjects) {
+        const sub = subject.subSubjects.find(s => s.id === subId);
+        if (sub) displayTitle = sub.icon + ' ' + sub.title;
+      }
+      document.title = displayTitle + ' - 心智圖';
+      document.getElementById('viewer-title').textContent = displayTitle;
+      document.getElementById('back-btn').href = subject.hasSubjects
+        ? buildSubjectUrl(subjectId)
+        : 'index.html';
+
+      /* ---------- Load topics metadata ---------- */
       let topicsData;
       try {
         topicsData = await loadTopicsFor(subjectId, subId);
@@ -42,51 +257,454 @@
         return;
       }
       const allTopics = getAllTopics(topicsData);
-      const topic = allTopics.find(t => t.id === topicId);
-      if (!topic) { window.location.href = buildSubjectUrl(subjectId, subId); return; }
 
-      document.title = topic.title + ' - 心智圖';
-      document.getElementById('viewer-title').textContent = topic.icon + ' ' + topic.title;
-      document.getElementById('back-btn').href = buildSubjectUrl(subjectId, subId);
-
-      // Mark read button
-      const btnRead = document.getElementById('btn-mark-read');
-      updateReadButton(btnRead, subjectId, subId, topicId);
-      btnRead.addEventListener('click', () => {
-        if (isRead(subjectId, subId, topicId)) {
-          markAsUnread(subjectId, subId, topicId);
-        } else {
-          markAsRead(subjectId, subId, topicId);
-        }
-        updateReadButton(btnRead, subjectId, subId, topicId);
-      });
-
-      // Quiz button
+      /* ---------- Quiz button → pick topic ---------- */
       document.getElementById('btn-quiz').addEventListener('click', () => {
-        window.location.href = buildQuizUrl(subjectId, subId, topicId);
+        if (allTopics.length === 1) {
+          window.location.href = buildQuizUrl(subjectId, subId, allTopics[0].id);
+        } else if (allTopics.length > 0) {
+          window.location.href = buildQuizUrl(subjectId, subId, allTopics[0].id);
+        }
       });
 
-      // Fetch markdown
+      /* ---------- Fetch individual topic markdowns in parallel & merge ---------- */
       const contentBase = getContentBase(subjectId, subId);
+      let mergedMd = '';
       try {
-        const res = await fetch(contentBase + '/' + topic.file);
-        if (!res.ok) throw new Error(res.status);
-        const md = await res.text();
-
-        const wrap = document.getElementById('markmap-wrap');
-        const el = document.createElement('script');
-        el.type = 'text/template';
-        el.className = 'markmap';
-        el.textContent = md;
-        wrap.appendChild(el);
-
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/markmap-autoloader';
-        document.head.appendChild(script);
-      } catch (err) {
+        const rootTitle = displayTitle.replace(/^[^\s]+\s/, ''); // strip emoji
+        const fetches = allTopics.map(topic =>
+          fetch(contentBase + '/' + topic.file)
+            .then(r => r.ok ? r.text() : null)
+            .catch(() => null)
+        );
+        const results = await Promise.all(fetches);
+        const parts = results
+          .filter(Boolean)
+          .map(md => md.replace(/^(#{1,5})\s/gm, (m, hashes) => '#' + hashes + ' '));
+        mergedMd = '# ' + rootTitle + '\n\n' + parts.join('\n\n');
+      } catch {
         document.getElementById('markmap-wrap').innerHTML =
           '<div class="loading" style="height:80vh">無法載入心智圖內容</div>';
+        return;
       }
+
+      if (!mergedMd.trim()) {
+        document.getElementById('markmap-wrap').innerHTML =
+          '<div class="loading" style="height:80vh">尚無心智圖內容</div>';
+        return;
+      }
+
+      /* ---------- Transform markdown → markmap tree ---------- */
+      const { Transformer } = window.markmap;
+      const { Markmap } = window.markmap;
+      const transformer = new Transformer();
+      const { root } = transformer.transform(mergedMd);
+
+      /* ---------- Build node ID map for checkboxes & sidebar ---------- */
+      const nodeMap = {}; // nodeId → { node, depth, path }
+      function buildNodeMap(node, depth, pathParts) {
+        const text = (node.content || '').replace(/<[^>]+>/g, '').trim();
+        if (depth >= 1 && text) {
+          const nodeId = buildNodeKey(subjectId, subId, pathParts.concat(text));
+          nodeMap[nodeId] = { node, depth, text, pathParts: pathParts.concat(text) };
+          node._nodeId = nodeId;
+          node._depth = depth;
+          node._plainText = text;
+        }
+        if (node.children) {
+          node.children.forEach(c => buildNodeMap(c, depth + 1, depth >= 1 && text ? pathParts.concat(text) : pathParts));
+        }
+      }
+      buildNodeMap(root, 0, []);
+
+      /* ---------- Render markmap ---------- */
+      const wrap = document.getElementById('markmap-wrap');
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('id', 'mindmap-svg');
+      wrap.appendChild(svg);
+
+      const mm = Markmap.create(svg, {
+        initialExpandLevel: 2,
+        duration: 300,
+        maxWidth: 300,
+        paddingX: 16,
+      }, root);
+
+      /* ---------- Node checkbox progress ---------- */
+      function updateProgress() {
+        const checkable = Object.keys(nodeMap).filter(id => nodeMap[id].depth >= 2);
+        const checked = checkable.filter(id => isNodeChecked(id));
+        const text = document.getElementById('nav-progress-text');
+        const fill = document.getElementById('nav-progress-fill');
+        if (text) text.textContent = checked.length + '/' + checkable.length;
+        if (fill) fill.style.width = checkable.length > 0
+          ? (checked.length / checkable.length * 100) + '%' : '0%';
+      }
+      updateProgress();
+
+      /* ---------- Node click → open sidebar ---------- */
+      const sidebar = document.getElementById('detail-sidebar');
+      const sidebarTitle = document.getElementById('sidebar-title');
+
+      // Preload detail & question data
+      const detailsCache = {};
+      const questionsCache = {};
+      for (const topic of allTopics) {
+        // details
+        fetch(contentBase + '/details/' + topic.id + '.json')
+          .then(r => r.ok ? r.json() : null)
+          .then(d => { if (d) detailsCache[topic.id] = d; })
+          .catch(() => {});
+        // questions
+        const qBase = getQuestionBase(subjectId, subId);
+        fetch(qBase + '/' + topic.id + '.json')
+          .then(r => r.ok ? r.json() : null)
+          .then(d => { if (d) questionsCache[topic.id] = d; })
+          .catch(() => {});
+      }
+
+      // After markmap renders, attach click handlers to nodes
+      setTimeout(() => attachNodeClickHandlers(), 500);
+      // Re-attach after expand/collapse
+      svg.addEventListener('click', () => {
+        setTimeout(() => attachNodeClickHandlers(), 350);
+      });
+
+      function attachNodeClickHandlers() {
+        svg.querySelectorAll('.markmap-node').forEach(el => {
+          const textEl = el.querySelector('text, .markmap-foreign');
+          if (!textEl) return;
+          const rawText = textEl.textContent.trim();
+
+          // Find matching nodeMap entry
+          const entry = Object.values(nodeMap).find(e => e.text === rawText && e.depth >= 2);
+          if (!entry) return;
+
+          el.classList.add('clickable-node');
+          el.style.cursor = 'pointer';
+
+          // Apply checked/unchecked visual
+          el.dataset.nodeId = entry.node._nodeId;
+          if (isNodeChecked(entry.node._nodeId)) {
+            el.classList.add('node-checked');
+            el.classList.remove('node-unchecked');
+          } else {
+            el.classList.add('node-unchecked');
+            el.classList.remove('node-checked');
+          }
+
+          // Remove old handler by cloning
+          const newTextEl = textEl.cloneNode(true);
+          textEl.parentNode.replaceChild(newTextEl, textEl);
+
+          newTextEl.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openSidebar(entry);
+          });
+        });
+      }
+
+      function updateNodeCheckVisuals() {
+        svg.querySelectorAll('.markmap-node[data-node-id]').forEach(el => {
+          const nodeId = el.dataset.nodeId;
+          if (isNodeChecked(nodeId)) {
+            el.classList.add('node-checked');
+            el.classList.remove('node-unchecked');
+          } else {
+            el.classList.remove('node-checked');
+            el.classList.add('node-unchecked');
+          }
+        });
+      }
+
+      function openSidebar(entry) {
+        sidebarTitle.textContent = entry.text;
+        sidebar.classList.add('open');
+
+        // Adjust markmap wrap width
+        const sidebarW = sidebar.offsetWidth;
+        wrap.style.marginRight = sidebarW + 'px';
+        setTimeout(() => mm.fit(), 350);
+
+        populateSidebar(entry);
+      }
+
+      function closeSidebar() {
+        sidebar.classList.remove('open');
+        wrap.style.marginRight = '0';
+        setTimeout(() => mm.fit(), 350);
+      }
+
+      document.getElementById('sidebar-close').addEventListener('click', closeSidebar);
+
+      /* ---------- Sidebar tab switching ---------- */
+      document.querySelectorAll('.sidebar-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
+          document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+          tab.classList.add('active');
+          document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+        });
+      });
+
+      /* ---------- Populate sidebar content ---------- */
+      function populateSidebar(entry) {
+        const nodeId = entry.node._nodeId;
+        const nodeText = entry.text;
+        const detailData = findDetailForNode(nodeText);
+
+        // --- Tab 1: 概念與應用 (concepts + associations inline) ---
+        const conceptsPane = document.getElementById('tab-concepts');
+        conceptsPane.innerHTML = '';
+        if (entry.node.children && entry.node.children.length > 0) {
+          renderNodeChildrenWithAssociations(entry.node, detailData, conceptsPane, entry.pathParts);
+        } else {
+          conceptsPane.innerHTML = '<p class="detail-item" style="color:var(--text-muted)">此節點暫無子項目</p>';
+        }
+        // Checkbox
+        const checkRow = document.createElement('div');
+        checkRow.className = 'sidebar-check-row';
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.id = 'sidebar-cb';
+        cb.checked = isNodeChecked(nodeId);
+        const timeSpan = document.createElement('span');
+        timeSpan.className = 'sidebar-check-time';
+        function updateCheckTime() {
+          const t = getNodeCheckedTime(nodeId);
+          if (t) {
+            const d = new Date(t);
+            timeSpan.textContent = d.getFullYear() + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + String(d.getDate()).padStart(2,'0') + ' ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+          } else {
+            timeSpan.textContent = '';
+          }
+        }
+        updateCheckTime();
+        cb.addEventListener('change', () => {
+          toggleNodeCheck(nodeId);
+          updateProgress();
+          updateNodeCheckVisuals();
+          updateCheckTime();
+        });
+        const lbl = document.createElement('label');
+        lbl.htmlFor = 'sidebar-cb';
+        lbl.textContent = '已完成複習';
+        checkRow.appendChild(cb);
+        checkRow.appendChild(lbl);
+        checkRow.appendChild(timeSpan);
+        conceptsPane.appendChild(checkRow);
+
+        // --- Tab 2: 考試準備 (exam tips + questions) ---
+        const examPane = document.getElementById('tab-exam');
+        examPane.innerHTML = '';
+        // Exam tips first
+        if (detailData && detailData.examTips && detailData.examTips.length > 0) {
+          const tipsTitle = document.createElement('div');
+          tipsTitle.className = 'detail-section-title';
+          tipsTitle.textContent = '🎯 考試重點';
+          examPane.appendChild(tipsTitle);
+          detailData.examTips.forEach(tip => {
+            const div = document.createElement('div');
+            div.className = 'detail-bullet';
+            div.textContent = tip;
+            examPane.appendChild(div);
+          });
+        }
+        // Then questions
+        const relatedQs = findQuestionsForNode(nodeText);
+        if (relatedQs.length > 0) {
+          const qTitle = document.createElement('div');
+          qTitle.className = 'detail-section-title';
+          qTitle.textContent = '📝 歷屆考題';
+          qTitle.style.marginTop = '1.25rem';
+          examPane.appendChild(qTitle);
+          relatedQs.forEach(q => renderSidebarQuestion(q, examPane));
+        }
+        // Show empty state only when both are empty
+        if (!examPane.hasChildNodes()) {
+          examPane.innerHTML = '<p class="detail-item" style="color:var(--text-muted)">尚無考試相關資料</p>';
+        }
+
+        // Reset to first tab
+        document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+        document.querySelector('.sidebar-tab[data-tab="concepts"]').classList.add('active');
+        document.getElementById('tab-concepts').classList.add('active');
+      }
+
+      function renderNodeChildrenWithAssociations(parentNode, detailData, container, pathParts) {
+        const associations = extractAssociations(parentNode);
+        if (detailData && detailData.associations) {
+          detailData.associations.forEach(a => {
+            if (!associations.includes(a)) associations.push(a);
+          });
+        }
+        const pathQuery = (pathParts || []).join(' ');
+
+        parentNode.children.forEach(child => {
+          const text = (child.content || '').replace(/<[^>]+>/g, '').trim();
+          if (!text) return;
+          const div = document.createElement('div');
+          div.className = 'detail-item';
+          const strong = document.createElement('strong');
+          strong.textContent = text;
+          div.appendChild(strong);
+          const searchQuery = (pathQuery + ' ' + text).trim();
+          const searchLink = document.createElement('a');
+          searchLink.className = 'search-link';
+          searchLink.href = 'https://www.google.com/search?udm=50&q=' + encodeURIComponent(searchQuery);
+          searchLink.target = '_blank';
+          searchLink.rel = 'noopener noreferrer';
+          searchLink.title = 'Google AI 搜尋 ' + searchQuery;
+          searchLink.textContent = '🔍';
+          div.appendChild(searchLink);
+          container.appendChild(div);
+          if (child.children && child.children.length > 0) {
+            child.children.forEach(sub => {
+              const subText = (sub.content || '').replace(/<[^>]+>/g, '').trim();
+              if (subText) {
+                const p = document.createElement('div');
+                p.className = 'detail-bullet';
+                p.textContent = subText;
+                container.appendChild(p);
+              }
+            });
+          }
+        });
+
+        // Append associations at the end of concepts
+        if (associations.length > 0) {
+          const title = document.createElement('div');
+          title.className = 'detail-section-title';
+          title.textContent = '💡 生活聯想與應用';
+          container.appendChild(title);
+          associations.forEach(a => {
+            const div = document.createElement('div');
+            div.className = 'detail-item';
+            div.innerHTML = '💡 ' + escapeHtml(a);
+            container.appendChild(div);
+          });
+        }
+      }
+
+      function extractAssociations(node) {
+        const results = [];
+        function walk(n) {
+          const text = (n.content || '').replace(/<[^>]+>/g, '').trim();
+          if (text.includes('💡')) {
+            results.push(text.replace(/^💡\s*聯想[：:]\s*/, '').replace(/^💡\s*/, ''));
+          }
+          if (n.children) n.children.forEach(walk);
+        }
+        walk(node);
+        return results;
+      }
+
+      function findDetailForNode(nodeText) {
+        for (const topicId in detailsCache) {
+          const d = detailsCache[topicId];
+          if (d.nodes && d.nodes[nodeText]) return d.nodes[nodeText];
+        }
+        return null;
+      }
+
+      function findQuestionsForNode(nodeText) {
+        const results = [];
+        for (const topicId in questionsCache) {
+          const qd = questionsCache[topicId];
+          if (!qd.questions) continue;
+          qd.questions.forEach(q => {
+            if (q.tags && q.tags.includes(nodeText)) {
+              results.push(q);
+            }
+          });
+        }
+        return results;
+      }
+
+      function renderSidebarQuestion(q, container) {
+        const div = document.createElement('div');
+        div.className = 'sidebar-question';
+        div.innerHTML = `
+          ${q.year ? '<div class="q-year">' + escapeHtml(String(q.year)) + ' 年學測</div>' : ''}
+          <div class="q-text">${escapeHtml(q.text)}</div>
+          <ul class="sq-options">
+            ${q.options.map((opt, i) => {
+              const letter = String.fromCharCode(65 + i);
+              return '<li><button class="sq-opt-btn" data-letter="' + letter + '">' + escapeHtml(opt) + '</button></li>';
+            }).join('')}
+          </ul>
+          <div class="sq-explanation">${escapeHtml(q.explanation || '')}</div>
+        `;
+        const buttons = div.querySelectorAll('.sq-opt-btn');
+        const explanation = div.querySelector('.sq-explanation');
+        buttons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            if (btn.classList.contains('sq-disabled')) return;
+            buttons.forEach(b => {
+              b.classList.add('sq-disabled');
+              if (b.dataset.letter === q.answer) b.classList.add('sq-correct');
+            });
+            if (btn.dataset.letter !== q.answer) btn.classList.add('sq-wrong');
+            if (explanation) explanation.classList.add('show');
+          });
+        });
+        container.appendChild(div);
+      }
+
+      /* ---------- Sidebar resize drag ---------- */
+      const resizeHandle = document.getElementById('sidebar-resize-handle');
+      let isResizing = false;
+      let startX = 0;
+      let startWidth = 0;
+
+      function onResizeStart(e) {
+        isResizing = true;
+        startX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+        startWidth = sidebar.offsetWidth;
+        resizeHandle.classList.add('dragging');
+        document.body.style.userSelect = 'none';
+        document.body.style.cursor = 'col-resize';
+      }
+
+      function onResizeMove(e) {
+        if (!isResizing) return;
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+        const diff = startX - clientX; // dragging left = wider
+        let newWidth = Math.max(280, Math.min(window.innerWidth * 0.6, startWidth + diff));
+        sidebar.style.setProperty('--sidebar-width', newWidth + 'px');
+        sidebar.style.width = newWidth + 'px';
+        wrap.style.marginRight = newWidth + 'px';
+      }
+
+      function onResizeEnd() {
+        if (!isResizing) return;
+        isResizing = false;
+        resizeHandle.classList.remove('dragging');
+        document.body.style.userSelect = '';
+        document.body.style.cursor = '';
+        // Persist width preference
+        localStorage.setItem(STORAGE_PREFIX + 'sidebar-width', sidebar.offsetWidth);
+        requestAnimationFrame(() => mm.fit());
+      }
+
+      resizeHandle.addEventListener('mousedown', onResizeStart);
+      document.addEventListener('mousemove', onResizeMove);
+      document.addEventListener('mouseup', onResizeEnd);
+      resizeHandle.addEventListener('touchstart', onResizeStart, { passive: true });
+      document.addEventListener('touchmove', onResizeMove, { passive: true });
+      document.addEventListener('touchend', onResizeEnd);
+
+      // Restore saved sidebar width
+      const savedWidth = localStorage.getItem(STORAGE_PREFIX + 'sidebar-width');
+      if (savedWidth) {
+        const w = parseInt(savedWidth, 10);
+        if (w >= 280 && w <= window.innerWidth * 0.6) {
+          sidebar.style.setProperty('--sidebar-width', w + 'px');
+          sidebar.style.width = w + 'px';
+        }
+      }
+
     })();
   </script>
 </body>
