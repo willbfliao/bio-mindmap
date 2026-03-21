@@ -1,5 +1,86 @@
 {
-  "title": "物理心智圖",
-  "subtitle": "即將推出",
-  "categories": []
+  "title": "高中物理心智圖",
+  "subtitle": "互動式學習 · 力學 · 電磁學 · 能量",
+  "categories": [
+    {
+      "id": "physics-history",
+      "name": "物理學史",
+      "topics": [
+        {
+          "id": "physics-history",
+          "file": "physics-history.md",
+          "title": "物理學史",
+          "titleEn": "History of Physics",
+          "icon": "📜",
+          "color": "#b45309",
+          "examRatio": 5,
+          "questionCount": 8
+        }
+      ]
+    },
+    {
+      "id": "matter-interactions",
+      "name": "物質的組成與交互作用",
+      "topics": [
+        {
+          "id": "matter-interactions",
+          "file": "matter-interactions.md",
+          "title": "物質的組成與交互作用",
+          "titleEn": "Matter Composition & Interactions",
+          "icon": "⚛️",
+          "color": "#8b5cf6",
+          "examRatio": 20,
+          "questionCount": 8
+        }
+      ]
+    },
+    {
+      "id": "kinematics",
+      "name": "運動學",
+      "topics": [
+        {
+          "id": "kinematics",
+          "file": "kinematics.md",
+          "title": "運動學",
+          "titleEn": "Kinematics",
+          "icon": "🏃",
+          "color": "#f97316",
+          "examRatio": 25,
+          "questionCount": 8
+        }
+      ]
+    },
+    {
+      "id": "electromagnetism",
+      "name": "電磁學",
+      "topics": [
+        {
+          "id": "electromagnetism",
+          "file": "electromagnetism.md",
+          "title": "電磁學",
+          "titleEn": "Electromagnetism",
+          "icon": "🧲",
+          "color": "#3b82f6",
+          "examRatio": 30,
+          "questionCount": 8
+        }
+      ]
+    },
+    {
+      "id": "energy",
+      "name": "能量",
+      "topics": [
+        {
+          "id": "energy",
+          "file": "energy.md",
+          "title": "能量",
+          "titleEn": "Energy",
+          "icon": "⚡",
+          "color": "#10b981",
+          "examRatio": 20,
+          "questionCount": 8
+        }
+      ]
+    }
+  ]
 }
