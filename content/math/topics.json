@@ -1,5 +1,70 @@
 {
-  "title": "數學心智圖",
-  "subtitle": "即將推出",
-  "categories": []
+  "title": "高中數學心智圖",
+  "subtitle": "互動式學習 · 函數 · 幾何 · 機率 · 代數",
+  "categories": [
+    {
+      "id": "functions",
+      "name": "函數與微積分",
+      "topics": [
+        {
+          "id": "functions-calculus",
+          "file": "functions-calculus.md",
+          "title": "函數與微積分",
+          "titleEn": "Functions & Calculus",
+          "icon": "📈",
+          "color": "#ef4444",
+          "examRatio": 30,
+          "questionCount": 8
+        }
+      ]
+    },
+    {
+      "id": "geometry",
+      "name": "幾何與向量",
+      "topics": [
+        {
+          "id": "geometry-vectors",
+          "file": "geometry-vectors.md",
+          "title": "幾何與向量",
+          "titleEn": "Geometry & Vectors",
+          "icon": "📐",
+          "color": "#3b82f6",
+          "examRatio": 25,
+          "questionCount": 8
+        }
+      ]
+    },
+    {
+      "id": "probability",
+      "name": "機率統計與數據分析",
+      "topics": [
+        {
+          "id": "probability-statistics",
+          "file": "probability-statistics.md",
+          "title": "機率統計與數據分析",
+          "titleEn": "Probability & Statistics",
+          "icon": "🎲",
+          "color": "#10b981",
+          "examRatio": 25,
+          "questionCount": 8
+        }
+      ]
+    },
+    {
+      "id": "algebra",
+      "name": "數列與矩陣",
+      "topics": [
+        {
+          "id": "sequences-matrices",
+          "file": "sequences-matrices.md",
+          "title": "數列與矩陣",
+          "titleEn": "Sequences & Matrices",
+          "icon": "🔢",
+          "color": "#f59e0b",
+          "examRatio": 20,
+          "questionCount": 8
+        }
+      ]
+    }
+  ]
 }

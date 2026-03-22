@@ -1,0 +1,211 @@
+{
+  "nodes": {
+    "多項式函數": {
+      "formulaDetails": [
+        {
+          "title": "二次函數標準式",
+          "latex": "y = ax^2 + bx + c",
+          "symbols": [
+            { "symbol": "a", "name": "二次項係數 (Leading Coefficient)", "unit": "無", "type": "純量" },
+            { "symbol": "b", "name": "一次項係數", "unit": "無", "type": "純量" },
+            { "symbol": "c", "name": "常數項 (y 截距)", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "拋物線圖形，a > 0 開口向上，a < 0 開口向下；|a| 越大開口越窄",
+          "examTips": [
+            "頂點座標 = (-b/(2a), (4ac-b²)/(4a))，是最常考的公式",
+            "判別式 D = b²-4ac 判斷與 x 軸交點數"
+          ]
+        },
+        {
+          "title": "頂點式（配方法）",
+          "latex": "y = a(x - h)^2 + k",
+          "symbols": [
+            { "symbol": "h", "name": "頂點 x 座標", "unit": "無", "type": "純量" },
+            { "symbol": "k", "name": "頂點 y 座標（最大或最小值）", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "頂點 (h, k) 為拋物線的最高點（a<0）或最低點（a>0），對稱軸為 x = h",
+          "examTips": [
+            "配方法步驟：提出 a → 完成平方 → 移出常數",
+            "最佳化問題常用頂點式求最大/最小值"
+          ]
+        },
+        {
+          "title": "餘式定理",
+          "latex": "f(x) \\div (x - a) \\text{ 的餘式} = f(a)",
+          "symbols": [
+            { "symbol": "f(x)", "name": "被除多項式", "unit": "無", "type": "函數" },
+            { "symbol": "a", "name": "代入值", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "f(a) = 0 時，(x-a) 整除 f(x)，即因式定理",
+          "examTips": [
+            "綜合除法是快速求餘式的工具",
+            "結合因式定理可找多項式的根"
+          ]
+        }
+      ],
+      "associations": [
+        "投籃的球在空中畫出的弧線就是拋物線——二次函數的圖形",
+        "手機費率方案中的最低消費，就像二次函數的最小值問題"
+      ],
+      "examTips": [
+        "二次函數求極值：用配方法化為頂點式最快",
+        "判別式 D 的三種情況（>0, =0, <0）對應圖形與 x 軸的關係",
+        "高次多項式先用因式定理猜根，再用綜合除法降次"
+      ]
+    },
+    "指數與對數函數": {
+      "formulaDetails": [
+        {
+          "title": "對數乘法律",
+          "latex": "\\log_a(xy) = \\log_a x + \\log_a y",
+          "symbols": [
+            { "symbol": "a", "name": "底數 (Base)", "unit": "無", "type": "純量" },
+            { "symbol": "x, y", "name": "真數 (Argument)", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "對數將乘法運算轉化為加法運算，這是對數發明的核心意義",
+          "examTips": [
+            "三大對數律：乘法變加法、除法變減法、次方變乘法",
+            "使用條件：底數 a > 0 且 a ≠ 1，真數 > 0"
+          ]
+        },
+        {
+          "title": "換底公式",
+          "latex": "\\log_a b = \\frac{\\log b}{\\log a} = \\frac{\\ln b}{\\ln a}",
+          "symbols": [
+            { "symbol": "\\log", "name": "常用對數 (Common Log)", "unit": "無", "type": "函數" },
+            { "symbol": "\\ln", "name": "自然對數 (Natural Log)", "unit": "無", "type": "函數" }
+          ],
+          "geometricMeaning": "任何底的對數都可以用常用對數或自然對數來表示",
+          "examTips": [
+            "計算機只有 log 和 ln，其他底數必須換底",
+            "換底公式是比較不同底對數大小的關鍵"
+          ]
+        }
+      ],
+      "associations": [
+        "地震規模用對數：規模每增加 1，能量增加約 32 倍",
+        "音量的分貝也是對數尺度——人耳對聲音的感受是對數性的"
+      ],
+      "examTips": [
+        "指數函數 y = aˣ 與對數函數 y = logₐx 互為反函數，圖形對稱於 y = x",
+        "底數 a > 1 時遞增，0 < a < 1 時遞減",
+        "對數方程式解完要回代驗算：真數必須 > 0"
+      ]
+    },
+    "三角函數": {
+      "formulaDetails": [
+        {
+          "title": "畢氏恆等式",
+          "latex": "\\sin^2\\theta + \\cos^2\\theta = 1",
+          "symbols": [
+            { "symbol": "\\theta", "name": "角度 (Angle)", "unit": "^\\circ \\text{ 或 rad}", "type": "純量" }
+          ],
+          "geometricMeaning": "單位圓上的點 (cosθ, sinθ) 滿足 x² + y² = 1",
+          "examTips": [
+            "已知 sinθ 或 cosθ 其中一個，可用此式求另一個（注意象限判正負）",
+            "變形：1 - sin²θ = cos²θ，1 - cos²θ = sin²θ"
+          ]
+        },
+        {
+          "title": "正弦定理",
+          "latex": "\\frac{a}{\\sin A} = \\frac{b}{\\sin B} = \\frac{c}{\\sin C} = 2R",
+          "symbols": [
+            { "symbol": "a, b, c", "name": "三角形三邊長", "unit": "無", "type": "純量" },
+            { "symbol": "A, B, C", "name": "三邊對應的角", "unit": "^\\circ", "type": "純量" },
+            { "symbol": "R", "name": "外接圓半徑", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "三角形的邊長與其對角的正弦值之比為常數，等於外接圓直徑",
+          "examTips": [
+            "已知兩角一邊（AAS, ASA）→ 用正弦定理",
+            "注意 SSA 的情況可能有兩解（歧義情況）"
+          ]
+        },
+        {
+          "title": "餘弦定理",
+          "latex": "c^2 = a^2 + b^2 - 2ab\\cos C",
+          "symbols": [
+            { "symbol": "a, b, c", "name": "三角形三邊長", "unit": "無", "type": "純量" },
+            { "symbol": "C", "name": "c 邊的對角", "unit": "^\\circ", "type": "純量" }
+          ],
+          "geometricMeaning": "勾股定理的推廣——當 C = 90° 時退化為 a² + b² = c²",
+          "examTips": [
+            "已知三邊求角 → 用餘弦定理",
+            "已知兩邊一夾角（SAS）→ 用餘弦定理"
+          ]
+        },
+        {
+          "title": "和角公式（正弦）",
+          "latex": "\\sin(\\alpha \\pm \\beta) = \\sin\\alpha\\cos\\beta \\pm \\cos\\alpha\\sin\\beta",
+          "symbols": [
+            { "symbol": "\\alpha, \\beta", "name": "兩個角", "unit": "^\\circ \\text{ 或 rad}", "type": "純量" }
+          ],
+          "geometricMeaning": "兩角和（或差）的正弦值可由個別角的三角比組合而成",
+          "examTips": [
+            "倍角公式 sin2θ = 2sinθcosθ 是 α = β 的特例",
+            "和差化積、積化和差都由此推導"
+          ]
+        }
+      ],
+      "associations": [
+        "摩天輪的座位高度隨時間變化就是正弦函數的波形",
+        "音樂中的聲波可以分解為不同頻率的正弦波"
+      ],
+      "examTips": [
+        "特殊角三角比（30°, 45°, 60°）必須背熟",
+        "廣義角：用單位圓判斷各象限的正負號",
+        "三角函數圖形：振幅 |A|、週期 2π/|B|、相位移 -C/B"
+      ]
+    },
+    "極限與微積分初步": {
+      "formulaDetails": [
+        {
+          "title": "導數定義",
+          "latex": "f'(x) = \\lim_{\\Delta x \\to 0} \\frac{f(x + \\Delta x) - f(x)}{\\Delta x}",
+          "symbols": [
+            { "symbol": "f'(x)", "name": "導函數 (Derivative)", "unit": "無", "type": "函數" },
+            { "symbol": "\\Delta x", "name": "自變數增量", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "f'(a) 是曲線 y = f(x) 在 x = a 處切線的斜率",
+          "examTips": [
+            "多項式的微分：(xⁿ)' = nxⁿ⁻¹ 是最基本的公式",
+            "導數為零的點是極值的候選點"
+          ]
+        },
+        {
+          "title": "冪函數微分法則",
+          "latex": "\\frac{d}{dx}(x^n) = nx^{n-1}",
+          "symbols": [
+            { "symbol": "n", "name": "冪次", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "xⁿ 圖形在任一點的切線斜率為 nxⁿ⁻¹",
+          "examTips": [
+            "常數的導數為 0：(c)' = 0",
+            "線性組合的導數：(af + bg)' = af' + bg'"
+          ]
+        },
+        {
+          "title": "微積分基本定理",
+          "latex": "\\int_a^b f(x)\\,dx = F(b) - F(a), \\quad F'(x) = f(x)",
+          "symbols": [
+            { "symbol": "F(x)", "name": "反導函數 (Antiderivative)", "unit": "無", "type": "函數" },
+            { "symbol": "a, b", "name": "積分上下限", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "定積分 = 曲線 y = f(x) 與 x 軸之間的有號面積",
+          "examTips": [
+            "不定積分：∫xⁿ dx = xⁿ⁺¹/(n+1) + C（n ≠ -1）",
+            "定積分求面積時，在 x 軸下方的部分要取絕對值"
+          ]
+        }
+      ],
+      "associations": [
+        "車速表顯示的瞬時速度就是位移函數的導數",
+        "里程表顯示的總距離就是速度函數的積分"
+      ],
+      "examTips": [
+        "極限計算：代入法 → 化簡法 → 羅必達法",
+        "微分應用：f'(x) > 0 遞增，f'(x) < 0 遞減，f'(x) = 0 可能是極值",
+        "積分就是微分的逆運算，求面積是最常見的應用"
+      ]
+    }
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "nodes": {
+    "數與式": {
+      "formulaDetails": [
+        {
+          "title": "絕對值不等式（小於型）",
+          "latex": "|x| < a \\iff -a < x < a \\quad (a > 0)",
+          "symbols": [
+            { "symbol": "|x|", "name": "x 的絕對值", "unit": "無", "type": "純量" },
+            { "symbol": "a", "name": "正實數", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "在數線上，x 到原點的距離小於 a，即 x 在 -a 到 a 之間",
+          "examTips": [
+            "|x-c| < a 表示 x 在 c-a 到 c+a 之間",
+            "|x| > a 則為 x < -a 或 x > a"
+          ]
+        },
+        {
+          "title": "三角不等式",
+          "latex": "|a + b| \\leq |a| + |b|",
+          "symbols": [
+            { "symbol": "a, b", "name": "實數", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "三角形任一邊長 ≤ 另外兩邊之和",
+          "examTips": [
+            "等號成立條件：a、b 同號（或其中一個為 0）",
+            "推廣：||a| - |b|| ≤ |a + b| ≤ |a| + |b|"
+          ]
+        }
+      ],
+      "associations": [
+        "絕對值就像「距離」——不管方向（正負），只看離原點多遠",
+        "手機電量百分比只看數字大小（絕對值），不分正負"
+      ],
+      "examTips": [
+        "絕對值方程式：分類討論（去絕對值後考慮正負）",
+        "因式分解常用方法：提公因式 → 分組 → 十字交乘 → 公式法",
+        "多項式除法：長除法步驟固定，綜合除法只能除以 (x - a) 的形式"
+      ]
+    },
+    "數列與級數": {
+      "formulaDetails": [
+        {
+          "title": "等差數列一般項",
+          "latex": "a_n = a_1 + (n-1)d",
+          "symbols": [
+            { "symbol": "a_n", "name": "第 n 項", "unit": "無", "type": "純量" },
+            { "symbol": "a_1", "name": "首項 (First Term)", "unit": "無", "type": "純量" },
+            { "symbol": "d", "name": "公差 (Common Difference)", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "等差數列的點在座標平面上排成一條直線，斜率 = 公差 d",
+          "examTips": [
+            "d > 0 遞增，d < 0 遞減，d = 0 為常數數列",
+            "等差中項：中間項 = 前後兩項的平均"
+          ]
+        },
+        {
+          "title": "等差級數求和",
+          "latex": "S_n = \\frac{n(a_1 + a_n)}{2} = \\frac{n[2a_1 + (n-1)d]}{2}",
+          "symbols": [
+            { "symbol": "S_n", "name": "前 n 項之和", "unit": "無", "type": "純量" },
+            { "symbol": "n", "name": "項數", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "等差級數和 = 項數 × (首項+末項) / 2，相當於梯形面積",
+          "examTips": [
+            "1+2+3+...+n = n(n+1)/2 是最基本的等差級數",
+            "已知首項和末項用第一種公式，已知首項和公差用第二種"
+          ]
+        },
+        {
+          "title": "等比級數求和",
+          "latex": "S_n = \\frac{a_1(1 - r^n)}{1 - r} \\quad (r \\neq 1)",
+          "symbols": [
+            { "symbol": "S_n", "name": "前 n 項之和", "unit": "無", "type": "純量" },
+            { "symbol": "a_1", "name": "首項", "unit": "無", "type": "純量" },
+            { "symbol": "r", "name": "公比 (Common Ratio)", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "等比級數的和隨 n 增大，當 |r| < 1 時收斂至 a₁/(1-r)",
+          "examTips": [
+            "r = 1 時退化為 Sₙ = na₁",
+            "無窮等比級數 |r| < 1 時 S = a₁/(1-r)"
+          ]
+        },
+        {
+          "title": "無窮等比級數",
+          "latex": "S = \\frac{a_1}{1 - r} \\quad (|r| < 1)",
+          "symbols": [
+            { "symbol": "S", "name": "無窮級數和", "unit": "無", "type": "純量" },
+            { "symbol": "r", "name": "公比（|r| < 1 收斂）", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "當 |r| < 1，後面的項越來越小趨近於 0，總和收斂到有限值",
+          "examTips": [
+            "|r| ≥ 1 時級數發散，無窮和不存在",
+            "循環小數可用無窮等比級數表示為分數"
+          ]
+        }
+      ],
+      "associations": [
+        "每個月存固定金額就是等差數列——存摺餘額等差增加",
+        "複利計算就是等比數列——本利和以固定比率成長"
+      ],
+      "examTips": [
+        "分辨等差和等比：看相鄰兩項是「差固定」還是「比固定」",
+        "數學歸納法兩步驟缺一不可：基底步驟 + 歸納步驟",
+        "Σ 符號的計算常用公式：Σk、Σk²、Σk³"
+      ]
+    },
+    "矩陣": {
+      "formulaDetails": [
+        {
+          "title": "二階行列式",
+          "latex": "\\det\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} = ad - bc",
+          "symbols": [
+            { "symbol": "a, b, c, d", "name": "矩陣元素", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "行列式的絕對值 = 以兩列向量為邊的平行四邊形面積",
+          "examTips": [
+            "主對角線乘積 - 副對角線乘積",
+            "行列式 = 0 時矩陣不可逆，方程組可能無解或無窮多解"
+          ]
+        },
+        {
+          "title": "二階反矩陣",
+          "latex": "A^{-1} = \\frac{1}{ad-bc}\\begin{pmatrix} d & -b \\\\ -c & a \\end{pmatrix}",
+          "symbols": [
+            { "symbol": "A^{-1}", "name": "A 的反矩陣 (Inverse)", "unit": "無", "type": "矩陣" },
+            { "symbol": "ad-bc", "name": "行列式（det(A)）", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "反矩陣是原矩陣的「逆運算」，AA⁻¹ = I 單位矩陣",
+          "examTips": [
+            "口訣：主對角互換、副對角變號、除以行列式",
+            "det(A) = 0 時反矩陣不存在"
+          ]
+        },
+        {
+          "title": "克乃美公式",
+          "latex": "x = \\frac{\\det(A_x)}{\\det(A)}, \\quad y = \\frac{\\det(A_y)}{\\det(A)}",
+          "symbols": [
+            { "symbol": "A", "name": "係數矩陣", "unit": "無", "type": "矩陣" },
+            { "symbol": "A_x", "name": "將常數行替換 x 行的矩陣", "unit": "無", "type": "矩陣" },
+            { "symbol": "A_y", "name": "將常數行替換 y 行的矩陣", "unit": "無", "type": "矩陣" }
+          ],
+          "geometricMeaning": "利用行列式直接求出聯立方程組的解",
+          "examTips": [
+            "前提：det(A) ≠ 0（係數行列式不為零）",
+            "Aₓ 是把常數項取代第一行（x 的係數行），Aᵧ 取代第二行"
+          ]
+        }
+      ],
+      "associations": [
+        "Excel 試算表就是一個矩陣——每格是 aᵢⱼ",
+        "電腦繪圖中的旋轉、縮放都是用矩陣乘法實現的"
+      ],
+      "examTips": [
+        "矩陣乘法：(m×n) × (n×p) = (m×p)，中間維度必須相同",
+        "矩陣乘法不滿足交換律 AB ≠ BA（除非特殊情況）",
+        "聯立方程組三種方法：代入消去法、加減消去法、克乃美公式"
+      ]
+    }
+  }
+}

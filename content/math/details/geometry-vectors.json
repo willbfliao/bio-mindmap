@@ -1,0 +1,199 @@
+{
+  "nodes": {
+    "直線與圓": {
+      "formulaDetails": [
+        {
+          "title": "兩點距離公式",
+          "latex": "d = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}",
+          "symbols": [
+            { "symbol": "d", "name": "兩點距離 (Distance)", "unit": "無", "type": "純量" },
+            { "symbol": "(x_1, y_1)", "name": "第一點座標", "unit": "無", "type": "座標" },
+            { "symbol": "(x_2, y_2)", "name": "第二點座標", "unit": "無", "type": "座標" }
+          ],
+          "geometricMeaning": "由勾股定理推導，水平距離與垂直距離構成直角三角形的兩股",
+          "examTips": [
+            "計算時先求各分量差的平方再開根號",
+            "此公式可推廣到三維空間"
+          ]
+        },
+        {
+          "title": "點到直線距離公式",
+          "latex": "d = \\frac{|ax_0 + by_0 + c|}{\\sqrt{a^2 + b^2}}",
+          "symbols": [
+            { "symbol": "(x_0, y_0)", "name": "點的座標", "unit": "無", "type": "座標" },
+            { "symbol": "ax + by + c = 0", "name": "直線方程式", "unit": "無", "type": "方程式" }
+          ],
+          "geometricMeaning": "點到直線的最短距離，即垂直距離",
+          "examTips": [
+            "直線必須先化為一般式 ax + by + c = 0",
+            "分子取絕對值，分母為法向量的長度"
+          ]
+        },
+        {
+          "title": "圓的標準式",
+          "latex": "(x - h)^2 + (y - k)^2 = r^2",
+          "symbols": [
+            { "symbol": "(h, k)", "name": "圓心座標 (Center)", "unit": "無", "type": "座標" },
+            { "symbol": "r", "name": "半徑 (Radius)", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "以 (h, k) 為圓心、r 為半徑的圓上所有點的軌跡方程式",
+          "examTips": [
+            "一般式化標準式：配方法",
+            "判斷圓與直線關係：比較圓心到直線距離 d 與半徑 r"
+          ]
+        }
+      ],
+      "associations": [
+        "地圖上兩地的直線距離就是兩點距離公式的應用",
+        "停車場畫的車位線就是平行線和垂直線的實例"
+      ],
+      "examTips": [
+        "直線問題：根據已知條件選擇合適的方程式形式",
+        "圓與直線：聯立後判別式 D 決定交點數",
+        "兩平行線距離公式：先統一一般式的係數"
+      ]
+    },
+    "平面向量": {
+      "formulaDetails": [
+        {
+          "title": "向量內積（座標形式）",
+          "latex": "\\vec{a} \\cdot \\vec{b} = a_1 b_1 + a_2 b_2",
+          "symbols": [
+            { "symbol": "\\vec{a} = (a_1, a_2)", "name": "向量 a", "unit": "無", "type": "向量" },
+            { "symbol": "\\vec{b} = (b_1, b_2)", "name": "向量 b", "unit": "無", "type": "向量" }
+          ],
+          "geometricMeaning": "內積 = 兩向量長度之積乘以夾角餘弦值",
+          "examTips": [
+            "內積為零 ⟺ 兩向量垂直",
+            "可用來求兩向量夾角"
+          ]
+        },
+        {
+          "title": "向量內積（角度形式）",
+          "latex": "\\vec{a} \\cdot \\vec{b} = |\\vec{a}||\\vec{b}|\\cos\\theta",
+          "symbols": [
+            { "symbol": "|\\vec{a}|", "name": "向量 a 的長度", "unit": "無", "type": "純量" },
+            { "symbol": "\\theta", "name": "兩向量夾角", "unit": "^\\circ", "type": "純量" }
+          ],
+          "geometricMeaning": "幾何上等於 a 在 b 方向投影長乘以 b 的長度",
+          "examTips": [
+            "cos θ = (→a · →b) / (|→a||→b|) 求夾角",
+            "內積 > 0 銳角，= 0 直角，< 0 鈍角"
+          ]
+        },
+        {
+          "title": "三角形面積（向量法）",
+          "latex": "\\text{面積} = \\frac{1}{2}|a_1 b_2 - a_2 b_1|",
+          "symbols": [
+            { "symbol": "\\vec{a} = (a_1, a_2)", "name": "三角形的一邊向量", "unit": "無", "type": "向量" },
+            { "symbol": "\\vec{b} = (b_1, b_2)", "name": "三角形的另一邊向量", "unit": "無", "type": "向量" }
+          ],
+          "geometricMeaning": "|a₁b₂ - a₂b₁| 為兩向量張成的平行四邊形面積，除以 2 得三角形面積",
+          "examTips": [
+            "此公式等價於外積的大小的一半",
+            "計算時注意取絕對值"
+          ]
+        }
+      ],
+      "associations": [
+        "拔河時力的合成就是向量加法——方向一致拉力相加",
+        "GPS 導航的「東偏北 30 度走 500 公尺」就是向量的極座標表示"
+      ],
+      "examTips": [
+        "向量加減法：三角形法則或平行四邊形法則",
+        "內積兩種形式（座標式、角度式）要靈活切換",
+        "垂直判定用內積 = 0，平行判定用 a₁b₂ = a₂b₁"
+      ]
+    },
+    "空間向量與空間幾何": {
+      "formulaDetails": [
+        {
+          "title": "空間兩點距離",
+          "latex": "d = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}",
+          "symbols": [
+            { "symbol": "(x_1, y_1, z_1)", "name": "第一點座標", "unit": "無", "type": "座標" },
+            { "symbol": "(x_2, y_2, z_2)", "name": "第二點座標", "unit": "無", "type": "座標" }
+          ],
+          "geometricMeaning": "平面距離公式的三維推廣",
+          "examTips": [
+            "空間中求距離、中點公式與平面完全類似，多一個 z 分量"
+          ]
+        },
+        {
+          "title": "點到平面距離",
+          "latex": "d = \\frac{|ax_0 + by_0 + cz_0 + d|}{\\sqrt{a^2 + b^2 + c^2}}",
+          "symbols": [
+            { "symbol": "(x_0, y_0, z_0)", "name": "空間中的點", "unit": "無", "type": "座標" },
+            { "symbol": "ax + by + cz + d = 0", "name": "平面方程式", "unit": "無", "type": "方程式" }
+          ],
+          "geometricMeaning": "點到平面的垂直距離，公式結構與點到直線距離相似",
+          "examTips": [
+            "法向量 (a, b, c) 垂直於平面",
+            "此公式結構和平面中點到直線距離一模一樣"
+          ]
+        }
+      ],
+      "associations": [
+        "教室是長方體空間，任兩個座位的直線距離就是空間距離公式",
+        "飛機的飛行方向就是一個三維向量"
+      ],
+      "examTips": [
+        "空間向量的內積與平面向量完全一樣，多加一項 a₃b₃",
+        "外積結果是向量（垂直於原兩向量），大小 = 兩向量張成的平行四邊形面積",
+        "平面方程式的法向量就是外積的結果"
+      ]
+    },
+    "圓錐曲線": {
+      "formulaDetails": [
+        {
+          "title": "橢圓標準式",
+          "latex": "\\frac{x^2}{a^2} + \\frac{y^2}{b^2} = 1 \\quad (a > b > 0)",
+          "symbols": [
+            { "symbol": "a", "name": "半長軸 (Semi-major Axis)", "unit": "無", "type": "純量" },
+            { "symbol": "b", "name": "半短軸 (Semi-minor Axis)", "unit": "無", "type": "純量" },
+            { "symbol": "c", "name": "焦點到中心距離", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "橢圓上任一點到兩焦點的距離和 = 2a（常數）",
+          "examTips": [
+            "c² = a² - b²（橢圓），a 在哪個變數下，長軸就在哪個軸上",
+            "離心率 e = c/a，越接近 1 越扁，越接近 0 越接近圓"
+          ]
+        },
+        {
+          "title": "雙曲線標準式",
+          "latex": "\\frac{x^2}{a^2} - \\frac{y^2}{b^2} = 1",
+          "symbols": [
+            { "symbol": "a", "name": "實軸半長 (Semi-transverse Axis)", "unit": "無", "type": "純量" },
+            { "symbol": "b", "name": "虛軸半長 (Semi-conjugate Axis)", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "雙曲線上任一點到兩焦點的距離差的絕對值 = 2a（常數）",
+          "examTips": [
+            "c² = a² + b²（雙曲線，注意與橢圓不同）",
+            "漸近線 y = ±(b/a)x 是常考重點"
+          ]
+        },
+        {
+          "title": "拋物線標準式",
+          "latex": "y^2 = 4px",
+          "symbols": [
+            { "symbol": "p", "name": "焦點到頂點距離 (Focus Distance)", "unit": "無", "type": "純量" }
+          ],
+          "geometricMeaning": "拋物線上任一點到焦點與準線等距",
+          "examTips": [
+            "4p 的值決定焦點和準線的位置",
+            "拋物線只有一個焦點，橢圓和雙曲線有兩個"
+          ]
+        }
+      ],
+      "associations": [
+        "衛星的軌道是橢圓——地球在其中一個焦點上",
+        "手電筒的反射面是拋物線形——光從焦點射出後平行反射"
+      ],
+      "examTips": [
+        "三種圓錐曲線的定義（等距條件）要清楚區分",
+        "橢圓 c² = a² - b²，雙曲線 c² = a² + b²，不要搞混",
+        "拋物線看 4p 的值：焦點在正方向 p 處，準線在負方向 -p 處"
+      ]
+    }
+  }
+}

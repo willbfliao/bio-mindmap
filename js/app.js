@@ -123,7 +123,8 @@ async function initHomepage() {
 
   for (const subject of data.subjects) {
     const card = document.createElement('a');
-    card.href = buildSubjectUrl(subject.id);
+    // Subjects without sub-subjects go directly to viewer (merged mind map)
+    card.href = subject.hasSubjects ? buildSubjectUrl(subject.id) : ('viewer.html?subject=' + encodeURIComponent(subject.id));
     card.className = 'subject-card';
     card.style.borderColor = subject.color;
 
