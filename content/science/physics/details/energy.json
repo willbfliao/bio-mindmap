@@ -1,0 +1,137 @@
+{
+  "nodes": {
+    "功的計算": {
+      "formulaDetails": [
+        {
+          "title": "功的定義",
+          "latex": "W = F \\cdot d \\cdot \\cos\\theta",
+          "symbols": [
+            { "symbol": "W", "name": "功 (Work)", "unit": "J = N \\cdot m", "type": "純量" },
+            { "symbol": "F", "name": "施力大小", "unit": "N", "type": "純量" },
+            { "symbol": "d", "name": "位移大小", "unit": "m", "type": "純量" },
+            { "symbol": "\\theta", "name": "力與位移的夾角", "unit": "^\\circ", "type": "純量" }
+          ],
+          "geometricMeaning": "F-x 圖下方面積 = 力所做的功；θ = 0° 時功最大，θ = 90° 時功為零，θ > 90° 時功為負",
+          "examTips": [
+            "正功（θ < 90°）：力幫助運動；負功（θ > 90°）：力阻礙運動",
+            "正向力、重力在水平運動時做功為零（θ = 90°）",
+            "摩擦力永遠做負功（方向與運動相反）"
+          ]
+        },
+        {
+          "title": "功率",
+          "latex": "P = \\frac{W}{t} = F \\cdot v",
+          "symbols": [
+            { "symbol": "P", "name": "功率 (Power)", "unit": "W = J/s", "type": "純量" },
+            { "symbol": "W", "name": "功", "unit": "J", "type": "純量" },
+            { "symbol": "t", "name": "時間", "unit": "s", "type": "純量" },
+            { "symbol": "v", "name": "速度", "unit": "m/s", "type": "純量" }
+          ],
+          "geometricMeaning": "功率是做功的速率，1 瓦特 = 每秒做 1 焦耳的功",
+          "examTips": [
+            "P = Fv 適用於等速運動（引擎出力 = 阻力時）",
+            "馬力換算：1 hp ≈ 746 W"
+          ]
+        }
+      ],
+      "associations": [
+        "搬重物爬樓梯比走平路累——因為向上做的功更多",
+        "推牆壁推到滿頭大汗，物理上卻沒做功（位移 = 0）"
+      ],
+      "examTips": [
+        "做功三要素：力、位移、力與位移的夾角",
+        "功是純量，但有正負之分（代表能量轉移方向）"
+      ]
+    },
+    "力學能的計算與守恆": {
+      "formulaDetails": [
+        {
+          "title": "動能",
+          "latex": "KE = \\frac{1}{2}mv^2",
+          "symbols": [
+            { "symbol": "KE", "name": "動能 (Kinetic Energy)", "unit": "J", "type": "純量" },
+            { "symbol": "m", "name": "質量", "unit": "kg", "type": "純量" },
+            { "symbol": "v", "name": "速率", "unit": "m/s", "type": "純量" }
+          ],
+          "geometricMeaning": "動能與速度平方成正比：速度加倍，動能變四倍",
+          "examTips": [
+            "動能永遠 ≥ 0（質量和速度平方都是正的）",
+            "速度加倍 → 動能 4 倍 → 煞車距離 4 倍（常考！）"
+          ]
+        },
+        {
+          "title": "重力位能",
+          "latex": "PE = mgh",
+          "symbols": [
+            { "symbol": "PE", "name": "重力位能 (Gravitational PE)", "unit": "J", "type": "純量" },
+            { "symbol": "m", "name": "質量", "unit": "kg", "type": "純量" },
+            { "symbol": "g", "name": "重力加速度", "unit": "m/s^2", "type": "純量" },
+            { "symbol": "h", "name": "高度（相對參考面）", "unit": "m", "type": "純量" }
+          ],
+          "geometricMeaning": "位能取決於參考面的選取，通常取最低點為零位能面",
+          "examTips": [
+            "位能可以為負（在參考面以下時）",
+            "只有高度差才有物理意義，參考面可自由選取"
+          ]
+        },
+        {
+          "title": "力學能守恆定律",
+          "latex": "KE_1 + PE_1 = KE_2 + PE_2",
+          "symbols": [],
+          "geometricMeaning": "在只有保守力做功的系統中，動能與位能可互相轉換，但總和不變",
+          "examTips": [
+            "適用條件：僅保守力（重力、彈力）做功，無摩擦",
+            "有摩擦時：力學能減少量 = 摩擦力做的功（負功）",
+            "雲霄飛車、擺錘、自由落體都是經典應用"
+          ]
+        }
+      ],
+      "associations": [
+        "雲霄飛車從最高點滑下，位能轉動能，速度越來越快",
+        "盪鞦韆到最高點時最慢（動能→位能），最低點時最快（位能→動能）"
+      ],
+      "examTips": [
+        "能量守恆是解題的強力工具，可避免複雜的力學分析",
+        "判斷題型：有無摩擦決定用「力學能守恆」還是「功能定理」"
+      ]
+    },
+    "質能互換": {
+      "formulaDetails": [
+        {
+          "title": "質能等價公式",
+          "latex": "E = mc^2",
+          "symbols": [
+            { "symbol": "E", "name": "能量 (Energy)", "unit": "J", "type": "純量" },
+            { "symbol": "m", "name": "質量（質量虧損）", "unit": "kg", "type": "純量" },
+            { "symbol": "c", "name": "光速", "unit": "3 \\times 10^8 \\; m/s", "type": "純量" }
+          ],
+          "geometricMeaning": "極小的質量可轉換為極大的能量（c² ≈ 9×10¹⁶），這是核能的基礎",
+          "examTips": [
+            "核反應中質量虧損 Δm 轉換為能量 E = Δmc²",
+            "1 u 的質量虧損 ≈ 931.5 MeV 的能量",
+            "愛因斯坦 1905 年狹義相對論的結論"
+          ]
+        }
+      ],
+      "associations": [
+        "核電廠用極少量的鈾就能發出巨大電力——因為 c² 是天文數字"
+      ],
+      "examTips": [
+        "質量虧損不是質量消失，而是轉換為能量",
+        "核融合的質量虧損比核分裂更大，釋放更多能量"
+      ]
+    },
+    "核融合與核分裂": {
+      "associations": [
+        "太陽靠核融合發光發熱——四個氫原子核融合成一個氦原子核",
+        "核電廠靠核分裂發電——鈾-235 分裂成較小原子核並釋放能量"
+      ],
+      "examTips": [
+        "核融合：輕核合成重核，釋放能量（太陽、氫彈）",
+        "核分裂：重核分裂成輕核，釋放能量（核電、原子彈）",
+        "兩者都有質量虧損，遵循 E = mc²",
+        "核融合比核分裂釋放更多能量且廢料較少，但技術尚未商業化"
+      ]
+    }
+  }
+}

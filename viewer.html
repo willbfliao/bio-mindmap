@@ -151,6 +151,53 @@
     }
     .sidebar-question .sq-explanation.show { display: block; }
 
+    /* ===== Formula Card Styles ===== */
+    .formula-card {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .formula-card:last-of-type { border-bottom: none; }
+    .formula-title {
+      font-size: 0.9rem; font-weight: 600;
+      color: var(--accent); margin-bottom: 0.5rem;
+    }
+    .formula-katex {
+      text-align: center; padding: 1rem;
+      background: rgba(255,255,255,0.04);
+      border-radius: 8px; margin-bottom: 0.75rem;
+      overflow-x: auto;
+    }
+    .formula-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.8rem; margin-bottom: 0.75rem;
+    }
+    .formula-table th {
+      text-align: left; padding: 0.4rem 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      color: var(--text-muted); font-weight: 500;
+    }
+    .formula-table td {
+      padding: 0.4rem 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .formula-table td .katex { font-size: 0.95em; }
+    .formula-section-title {
+      font-size: 0.85rem; font-weight: 600;
+      margin: 0.75rem 0 0.4rem;
+    }
+    .formula-geo {
+      font-size: 0.8rem; line-height: 1.6;
+      padding-left: 0.5rem; color: var(--text-muted);
+    }
+    .formula-tip {
+      font-size: 0.8rem; padding-left: 1rem;
+      margin-bottom: 0.25rem; position: relative;
+    }
+    .formula-tip::before {
+      content: '•'; position: absolute; left: 0; color: var(--accent);
+    }
+
     /* Clickable node indicator */
     .markmap-node.clickable-node { cursor: pointer; }
     .markmap-node.clickable-node .markmap-foreign {
@@ -267,6 +314,21 @@
   <script src="js/app.js"></script>
   <script>
     (async function() {
+      /* ===== Load KaTeX dynamically ===== */
+      const katexReady = (async function loadKaTeX() {
+        if (typeof katex !== 'undefined') return;
+        try {
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = 'https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css';
+          document.head.appendChild(link);
+          const code = await fetch('https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js').then(r => r.text());
+          (0, eval)(code);
+        } catch (e) {
+          console.warn('KaTeX load failed:', e);
+        }
+      })();
+
       const subjectId = getParam('subject');
       const subId = getParam('sub');
       if (!subjectId) { window.location.href = 'index.html'; return; }
@@ -559,15 +621,22 @@
       });
 
       /* ---------- Populate sidebar content ---------- */
-      function populateSidebar(entry) {
+      async function populateSidebar(entry) {
         const nodeId = entry.node._nodeId;
         const nodeText = entry.text;
         const detailData = findDetailForNode(nodeText);
+
+        // Ensure KaTeX is loaded before rendering formulas
+        if (detailData && detailData.formulaDetails) {
+          await katexReady;
+        }
 
         // --- Tab 1: 概念與應用 (concepts + associations inline) ---
         const conceptsPane = document.getElementById('tab-concepts');
         conceptsPane.innerHTML = '';
         if (entry.node.children && entry.node.children.length > 0) {
+          renderNodeChildrenWithAssociations(entry.node, detailData, conceptsPane, entry.pathParts);
+        } else if (detailData && detailData.formulaDetails) {
           renderNodeChildrenWithAssociations(entry.node, detailData, conceptsPane, entry.pathParts);
         } else {
           conceptsPane.innerHTML = '<p class="detail-item" style="color:var(--text-muted)">此節點暫無子項目</p>';
@@ -635,6 +704,103 @@
         document.getElementById('tab-concepts').classList.add('active');
       }
 
+      /* ===== Formula Card Renderer ===== */
+      function renderFormulaCard(fd, container) {
+        const card = document.createElement('div');
+        card.className = 'formula-card';
+
+        // Title
+        if (fd.title) {
+          const t = document.createElement('div');
+          t.className = 'formula-title';
+          t.textContent = fd.title;
+          card.appendChild(t);
+        }
+
+        // KaTeX rendered formula
+        if (fd.latex) {
+          const katexDiv = document.createElement('div');
+          katexDiv.className = 'formula-katex';
+          try {
+            katex.render(fd.latex, katexDiv, { displayMode: true, throwOnError: false });
+          } catch (e) {
+            katexDiv.textContent = fd.latex;
+          }
+          card.appendChild(katexDiv);
+        }
+
+        // Symbol table
+        if (fd.symbols && fd.symbols.length > 0) {
+          const secTitle = document.createElement('div');
+          secTitle.className = 'formula-section-title';
+          secTitle.textContent = '📋 符號與單位解析';
+          card.appendChild(secTitle);
+
+          const table = document.createElement('table');
+          table.className = 'formula-table';
+          const thead = document.createElement('thead');
+          thead.innerHTML = '<tr><th>符號</th><th>物理量名稱</th><th>SI 標準單位</th><th>純量 / 向量</th></tr>';
+          table.appendChild(thead);
+          const tbody = document.createElement('tbody');
+          fd.symbols.forEach(s => {
+            const tr = document.createElement('tr');
+            // Render symbol with KaTeX
+            const tdSym = document.createElement('td');
+            try {
+              katex.render(s.symbol, tdSym, { throwOnError: false });
+            } catch (e) {
+              tdSym.textContent = s.symbol;
+            }
+            const tdName = document.createElement('td');
+            tdName.textContent = s.name;
+            const tdUnit = document.createElement('td');
+            try {
+              katex.render(s.unit, tdUnit, { throwOnError: false });
+            } catch (e) {
+              tdUnit.textContent = s.unit;
+            }
+            const tdType = document.createElement('td');
+            tdType.textContent = s.type;
+            tr.appendChild(tdSym);
+            tr.appendChild(tdName);
+            tr.appendChild(tdUnit);
+            tr.appendChild(tdType);
+            tbody.appendChild(tr);
+          });
+          table.appendChild(tbody);
+          card.appendChild(table);
+        }
+
+        // Geometric meaning
+        if (fd.geometricMeaning) {
+          const secTitle = document.createElement('div');
+          secTitle.className = 'formula-section-title';
+          secTitle.textContent = '📐 圖表與幾何意義';
+          card.appendChild(secTitle);
+          const geo = document.createElement('div');
+          geo.className = 'formula-geo';
+          geo.textContent = fd.geometricMeaning;
+          card.appendChild(geo);
+        }
+
+        // Exam tips
+        if (fd.examTips && fd.examTips.length > 0) {
+          const secTitle = document.createElement('div');
+          secTitle.className = 'formula-section-title';
+          secTitle.textContent = '🎯 考試常考重點';
+          card.appendChild(secTitle);
+          fd.examTips.forEach(tip => {
+            const div = document.createElement('div');
+            div.className = 'formula-tip';
+            div.textContent = tip;
+            card.appendChild(div);
+          });
+        }
+
+        container.appendChild(card);
+      }
+
+      /* ===== Sidebar Content Renderer ===== */
       function renderNodeChildrenWithAssociations(parentNode, detailData, container, pathParts) {
         const associations = extractAssociations(parentNode);
         if (detailData && detailData.associations) {
@@ -644,14 +810,24 @@
         }
         const pathQuery = (pathParts || []).join(' ');
 
-        parentNode.children.forEach(child => {
+        // If formulaDetails exist, render formula cards first
+        const hasFormulas = detailData && detailData.formulaDetails && detailData.formulaDetails.length > 0;
+        if (hasFormulas) {
+          detailData.formulaDetails.forEach(fd => renderFormulaCard(fd, container));
+        }
+
+        // Render child nodes
+        (parentNode.children || []).forEach(child => {
           const text = (child.content || '').replace(/<[^>]+>/g, '').trim();
           if (!text) return;
           const div = document.createElement('div');
           div.className = 'detail-item';
-          const strong = document.createElement('strong');
-          strong.textContent = text;
-          div.appendChild(strong);
+          const span = document.createElement('span');
+          span.textContent = text;
+          if (!hasFormulas) {
+            span.style.fontWeight = '600';
+          }
+          div.appendChild(span);
           const searchQuery = (pathQuery + ' ' + text).trim();
           const searchLink = document.createElement('a');
           searchLink.className = 'search-link';

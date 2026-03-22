@@ -1,0 +1,235 @@
+{
+  "nodes": {
+    "等加速度三公式": {
+      "formulaDetails": [
+        {
+          "title": "速度-時間關係",
+          "latex": "v = v_0 + at",
+          "symbols": [
+            { "symbol": "v", "name": "末速度 (Final Velocity)", "unit": "m/s", "type": "向量" },
+            { "symbol": "v_0", "name": "初速度 (Initial Velocity)", "unit": "m/s", "type": "向量" },
+            { "symbol": "a", "name": "加速度 (Acceleration)", "unit": "m/s^2", "type": "向量" },
+            { "symbol": "t", "name": "時間 (Time)", "unit": "s", "type": "純量" }
+          ],
+          "geometricMeaning": "v-t 圖中為一條斜直線，斜率 = 加速度 a，y 截距 = 初速度 v₀",
+          "examTips": [
+            "由 v-t 圖斜率判斷加速度正負",
+            "注意 v、a 的正負號代表方向，非大小"
+          ]
+        },
+        {
+          "title": "位移-時間關係",
+          "latex": "x = v_0 t + \\frac{1}{2}at^2",
+          "symbols": [
+            { "symbol": "x", "name": "位移 (Displacement)", "unit": "m", "type": "向量" },
+            { "symbol": "v_0", "name": "初速度", "unit": "m/s", "type": "向量" },
+            { "symbol": "a", "name": "加速度", "unit": "m/s^2", "type": "向量" },
+            { "symbol": "t", "name": "時間", "unit": "s", "type": "純量" }
+          ],
+          "geometricMeaning": "x-t 圖中為拋物線；v-t 圖下方的面積 = 位移 x",
+          "examTips": [
+            "v-t 圖面積法求位移是常見考法",
+            "自由落體時 v₀ = 0，公式簡化為 x = ½gt²"
+          ]
+        },
+        {
+          "title": "速度-位移關係",
+          "latex": "v^2 = v_0^2 + 2ax",
+          "symbols": [
+            { "symbol": "v", "name": "末速度", "unit": "m/s", "type": "向量" },
+            { "symbol": "v_0", "name": "初速度", "unit": "m/s", "type": "向量" },
+            { "symbol": "a", "name": "加速度", "unit": "m/s^2", "type": "向量" },
+            { "symbol": "x", "name": "位移", "unit": "m", "type": "向量" }
+          ],
+          "geometricMeaning": "此公式消去時間 t，適用於不知道時間的情境",
+          "examTips": [
+            "煞車問題常用此公式：已知初速與加速度，求煞車距離",
+            "末速 v = 0 代入可直接求出停止距離"
+          ]
+        }
+      ],
+      "associations": [
+        "從樓上丟橡皮擦，越掉越快——這就是自由落體的等加速度運動",
+        "開車踩油門加速時，速度均勻增加就是等加速度運動"
+      ],
+      "examTips": [
+        "三公式的選用關鍵：看題目缺哪個物理量，選不含該量的公式",
+        "自由落體 a = g ≈ 9.8 m/s²，初速為零，是最常考的特殊情況",
+        "v-t 圖的斜率 = 加速度、面積 = 位移，是圖形題的核心考法"
+      ]
+    },
+    "牛頓第一定律": {
+      "associations": [
+        "公車急煞時身體往前傾，就是慣性的表現",
+        "太空中丟出的球會一直飛下去，因為沒有外力改變它的運動"
+      ],
+      "examTips": [
+        "慣性定律的核心：不受外力（或合力為零）時，保持原運動狀態",
+        "常考陷阱：靜止或等速直線運動都是合力為零的狀態"
+      ]
+    },
+    "牛頓第二定律": {
+      "formulaDetails": [
+        {
+          "title": "牛頓第二運動定律",
+          "latex": "\\vec{F}_{\\text{net}} = m\\vec{a}",
+          "symbols": [
+            { "symbol": "\\vec{F}_{\\text{net}}", "name": "淨力 (Net Force)", "unit": "N = kg \\cdot m/s^2", "type": "向量" },
+            { "symbol": "m", "name": "質量 (Mass)", "unit": "kg", "type": "純量" },
+            { "symbol": "\\vec{a}", "name": "加速度 (Acceleration)", "unit": "m/s^2", "type": "向量" }
+          ],
+          "geometricMeaning": "F-a 圖為通過原點的直線，斜率 = 質量 m；F-m 圖中 a 為定值時，F 與 m 成正比",
+          "examTips": [
+            "力的單位 1 N = 1 kg·m/s² 常在計算題中轉換",
+            "向量方向：加速度方向永遠與淨力方向相同",
+            "常考題型：受力圖分析 → 列 F = ma 方程式 → 求解"
+          ]
+        }
+      ],
+      "associations": [
+        "踢足球時越用力球飛越快；球越重越難踢遠——這就是 F = ma"
+      ],
+      "examTips": [
+        "受力分析圖（free body diagram）是解題的第一步",
+        "電梯問題：上升加速時體重計讀數增加，即為 N = m(g+a)"
+      ]
+    },
+    "牛頓第三定律": {
+      "associations": [
+        "游泳時手往後撥水，身體就往前進——作用力與反作用力",
+        "火箭噴射氣體向後，火箭本身就往前飛"
+      ],
+      "examTips": [
+        "作用力與反作用力作用在「不同」物體上，大小相等方向相反",
+        "易錯點：一對力不在同一物體上，不能用來求合力"
+      ]
+    },
+    "正向力": {
+      "formulaDetails": [
+        {
+          "title": "水平面正向力",
+          "latex": "N = mg",
+          "symbols": [
+            { "symbol": "N", "name": "正向力 (Normal Force)", "unit": "N", "type": "向量" },
+            { "symbol": "m", "name": "質量", "unit": "kg", "type": "純量" },
+            { "symbol": "g", "name": "重力加速度", "unit": "m/s^2 \\approx 9.8", "type": "純量" }
+          ],
+          "geometricMeaning": "正向力垂直於接觸面，水平面上等於重力",
+          "examTips": [
+            "水平面上無其他垂直力時 N = mg"
+          ]
+        },
+        {
+          "title": "斜面正向力",
+          "latex": "N = mg\\cos\\theta",
+          "symbols": [
+            { "symbol": "N", "name": "正向力", "unit": "N", "type": "向量" },
+            { "symbol": "\\theta", "name": "斜面傾角", "unit": "^\\circ", "type": "純量" }
+          ],
+          "geometricMeaning": "斜面上，重力分解為平行斜面 mg sinθ 與垂直斜面 mg cosθ，正向力 = 垂直分量",
+          "examTips": [
+            "斜面問題的關鍵：先分解重力為平行與垂直兩分量",
+            "角度 θ 越大，正向力越小，摩擦力也越小"
+          ]
+        }
+      ],
+      "associations": [
+        "書放在桌上不會穿過桌面，就是桌面提供正向力支撐"
+      ],
+      "examTips": [
+        "正向力是被動力，大小由平衡條件決定，不一定等於 mg"
+      ]
+    },
+    "摩擦力": {
+      "formulaDetails": [
+        {
+          "title": "靜摩擦力（最大值）",
+          "latex": "f_{s,\\max} = \\mu_s N",
+          "symbols": [
+            { "symbol": "f_{s,\\max}", "name": "最大靜摩擦力", "unit": "N", "type": "向量" },
+            { "symbol": "\\mu_s", "name": "靜摩擦係數", "unit": "無", "type": "純量" },
+            { "symbol": "N", "name": "正向力", "unit": "N", "type": "向量" }
+          ],
+          "geometricMeaning": "外力由小漸增時，靜摩擦力隨之等量增加直到最大值；超過後物體開始運動",
+          "examTips": [
+            "靜摩擦力是可變的，0 ≤ fs ≤ μsN",
+            "只有在「即將滑動」時才等於 μsN"
+          ]
+        },
+        {
+          "title": "動摩擦力",
+          "latex": "f_k = \\mu_k N",
+          "symbols": [
+            { "symbol": "f_k", "name": "動摩擦力", "unit": "N", "type": "向量" },
+            { "symbol": "\\mu_k", "name": "動摩擦係數", "unit": "無", "type": "純量" },
+            { "symbol": "N", "name": "正向力", "unit": "N", "type": "向量" }
+          ],
+          "geometricMeaning": "物體運動後，摩擦力變為定值 μkN，方向與運動方向相反",
+          "examTips": [
+            "μs > μk：推動比維持運動難",
+            "摩擦力方向永遠與相對運動（或趨勢）方向相反"
+          ]
+        }
+      ],
+      "associations": [
+        "推桌子一開始很難推動，動起來後比較輕鬆——靜摩擦 > 動摩擦"
+      ],
+      "examTips": [
+        "靜摩擦力不一定等於 μsN，要看受力平衡情況",
+        "斜面問題：摩擦力 = μk × mg cosθ"
+      ]
+    },
+    "彈力": {
+      "formulaDetails": [
+        {
+          "title": "虎克定律",
+          "latex": "F = -kx",
+          "symbols": [
+            { "symbol": "F", "name": "彈力 (Spring Force)", "unit": "N", "type": "向量" },
+            { "symbol": "k", "name": "彈性係數 (Spring Constant)", "unit": "N/m", "type": "純量" },
+            { "symbol": "x", "name": "形變量 (Displacement)", "unit": "m", "type": "向量" }
+          ],
+          "geometricMeaning": "F-x 圖為通過原點的直線，斜率 = k（取絕對值）；面積 = 彈性位能 ½kx²",
+          "examTips": [
+            "負號表示回復力方向與位移相反",
+            "超過彈性限度後虎克定律不適用",
+            "F-x 圖下方面積 = 彈簧做的功 = ½kx²"
+          ]
+        }
+      ],
+      "associations": [
+        "橡皮筋拉太多就彈不回去——超過彈性限度"
+      ],
+      "examTips": [
+        "串聯彈簧 k 變小（更軟），並聯 k 變大（更硬）"
+      ]
+    },
+    "克卜勒行星運動定律": {
+      "formulaDetails": [
+        {
+          "title": "克卜勒第三定律（週期定律）",
+          "latex": "T^2 = \\frac{4\\pi^2}{GM} a^3",
+          "symbols": [
+            { "symbol": "T", "name": "公轉週期", "unit": "s", "type": "純量" },
+            { "symbol": "a", "name": "橢圓軌道半長軸", "unit": "m", "type": "純量" },
+            { "symbol": "G", "name": "萬有引力常數", "unit": "N \\cdot m^2/kg^2", "type": "純量" },
+            { "symbol": "M", "name": "中心天體質量", "unit": "kg", "type": "純量" }
+          ],
+          "geometricMeaning": "T² 對 a³ 作圖為通過原點的直線，斜率 = 4π²/(GM)；離中心越遠，週期越長",
+          "examTips": [
+            "簡化記法：T² ∝ a³（同一中心天體時比例常數相同）",
+            "可用來比較不同行星的週期與軌道大小關係"
+          ]
+        }
+      ],
+      "associations": [
+        "離太陽越遠的行星，公轉一圈需要越久——海王星繞一圈要 165 年"
+      ],
+      "examTips": [
+        "第一定律：橢圓軌道，太陽在焦點上",
+        "第二定律：等面積速率 → 近日點速度快、遠日點速度慢",
+        "第三定律 T² ∝ a³ 是計算題最常考的"
+      ]
+    }
+  }
+}
