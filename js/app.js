@@ -34,7 +34,7 @@ function getQuestionBase(subjectId, subId) {
 
 async function loadTopicsFor(subjectId, subId) {
   const base = getContentBase(subjectId, subId);
-  const res = await fetch(base + '/topics.json');
+  const res = await fetch(base + '/topics.json', { cache: 'no-cache' });
   if (!res.ok) throw new Error(res.status);
   return res.json();
 }
@@ -245,6 +245,12 @@ function renderTopicsList(topicsData, subjectId, subId) {
     const h2 = document.createElement('h2');
     h2.className = 'category-title';
     h2.textContent = category.name;
+    if (category.tag) {
+      const tag = document.createElement('span');
+      tag.className = 'category-tag' + (category.tag === '必修' ? ' required' : ' elective');
+      tag.textContent = category.tag;
+      h2.appendChild(tag);
+    }
     section.appendChild(h2);
 
     const grid = document.createElement('div');

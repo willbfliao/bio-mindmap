@@ -4,7 +4,7 @@
     {
       "name": "Bio-Mindmap Dev Server",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8000"],
+      "runtimeArgs": [".claude/nocache_server.py", "8000"],
       "port": 8000
     }
   ]

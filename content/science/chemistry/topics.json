@@ -1,10 +1,12 @@
 {
   "title": "高中化學心智圖",
   "subtitle": "互動式學習 · 化學核心概念",
+  "groupByCategory": true,
   "categories": [
     {
-      "id": "chemistry-foundations",
-      "name": "化學基礎",
+      "id": "required-chemistry",
+      "name": "📘 必修化學（高一）",
+      "tag": "必修",
       "topics": [
         {
           "id": "composition-of-matter",
@@ -13,27 +15,27 @@
           "titleEn": "Composition of Matter",
           "icon": "⚛️",
           "color": "#a855f7",
-          "examRatio": 12,
+          "examRatio": 7,
           "questionCount": 8
         },
         {
-          "id": "structure-and-bonding",
-          "file": "structure-and-bonding.md",
-          "title": "物質的構造與鍵結",
-          "titleEn": "Structure and Bonding",
+          "id": "structure-of-matter",
+          "file": "structure-of-matter.md",
+          "title": "物質的構造",
+          "titleEn": "Structure of Matter",
           "icon": "🔗",
-          "color": "#6366f1",
-          "examRatio": 15,
+          "color": "#a855f7",
+          "examRatio": 6,
           "questionCount": 8
         },
         {
-          "id": "states-and-reactions",
-          "file": "states-and-reactions.md",
-          "title": "物質的狀態與反應",
-          "titleEn": "States and Reactions",
-          "icon": "🧪",
-          "color": "#06b6d4",
-          "examRatio": 14,
+          "id": "chemical-reactions",
+          "file": "chemical-reactions.md",
+          "title": "化學反應",
+          "titleEn": "Chemical Reactions",
+          "icon": "⚗️",
+          "color": "#a855f7",
+          "examRatio": 7,
           "questionCount": 8
         },
         {
@@ -41,19 +43,227 @@
           "file": "common-reactions.md",
           "title": "常見的化學反應",
           "titleEn": "Common Chemical Reactions",
-          "icon": "⚗️",
-          "color": "#f97316",
-          "examRatio": 16,
+          "icon": "🧪",
+          "color": "#a855f7",
+          "examRatio": 6,
           "questionCount": 8
         },
         {
-          "id": "chemistry-in-life",
-          "file": "chemistry-in-life.md",
-          "title": "生活中的化學",
+          "id": "life-chemistry",
+          "file": "life-chemistry.md",
+          "title": "生活化學",
           "titleEn": "Chemistry in Life",
           "icon": "🌿",
-          "color": "#10b981",
-          "examRatio": 10,
+          "color": "#a855f7",
+          "examRatio": 4,
+          "questionCount": 8
+        }
+      ]
+    },
+    {
+      "id": "elective-chemistry-1",
+      "name": "📙 選修化學Ⅰ：物質與能量（高二）",
+      "tag": "選修",
+      "topics": [
+        {
+          "id": "gases",
+          "file": "gases.md",
+          "title": "氣體",
+          "titleEn": "Gases",
+          "icon": "💨",
+          "color": "#8b5cf6",
+          "examRatio": 5,
+          "questionCount": 8
+        },
+        {
+          "id": "states-and-phase-changes",
+          "file": "states-and-phase-changes.md",
+          "title": "物質的狀態與相變化",
+          "titleEn": "States of Matter and Phase Changes",
+          "icon": "🧊",
+          "color": "#8b5cf6",
+          "examRatio": 5,
+          "questionCount": 8
+        },
+        {
+          "id": "solution-properties",
+          "file": "solution-properties.md",
+          "title": "溶液的性質",
+          "titleEn": "Solution Properties",
+          "icon": "🫧",
+          "color": "#8b5cf6",
+          "examRatio": 5,
+          "questionCount": 8
+        },
+        {
+          "id": "reaction-energy",
+          "file": "reaction-energy.md",
+          "title": "化學反應與能量",
+          "titleEn": "Chemical Reactions and Energy",
+          "icon": "🔥",
+          "color": "#8b5cf6",
+          "examRatio": 5,
+          "questionCount": 8
+        }
+      ]
+    },
+    {
+      "id": "elective-chemistry-2",
+      "name": "📕 選修化學Ⅱ：物質構造與反應速率（高二）",
+      "tag": "選修",
+      "topics": [
+        {
+          "id": "atomic-structure",
+          "file": "atomic-structure.md",
+          "title": "原子構造",
+          "titleEn": "Atomic Structure",
+          "icon": "⚛️",
+          "color": "#6366f1",
+          "examRatio": 5,
+          "questionCount": 8
+        },
+        {
+          "id": "bonding-and-molecular-structure",
+          "file": "bonding-and-molecular-structure.md",
+          "title": "化學鍵與分子構造",
+          "titleEn": "Chemical Bonding and Molecular Structure",
+          "icon": "🔗",
+          "color": "#6366f1",
+          "examRatio": 6,
+          "questionCount": 8
+        },
+        {
+          "id": "intermolecular-forces",
+          "file": "intermolecular-forces.md",
+          "title": "分子間作用力",
+          "titleEn": "Intermolecular Forces",
+          "icon": "🧲",
+          "color": "#6366f1",
+          "examRatio": 4,
+          "questionCount": 8
+        },
+        {
+          "id": "reaction-rates",
+          "file": "reaction-rates.md",
+          "title": "化學反應速率",
+          "titleEn": "Reaction Rates",
+          "icon": "⏱️",
+          "color": "#6366f1",
+          "examRatio": 5,
+          "questionCount": 8
+        }
+      ]
+    },
+    {
+      "id": "elective-chemistry-3",
+      "name": "📗 選修化學Ⅲ：化學反應平衡（高三）",
+      "tag": "選修",
+      "topics": [
+        {
+          "id": "chemical-equilibrium",
+          "file": "chemical-equilibrium.md",
+          "title": "化學平衡",
+          "titleEn": "Chemical Equilibrium",
+          "icon": "⚖️",
+          "color": "#d946ef",
+          "examRatio": 5,
+          "questionCount": 8
+        },
+        {
+          "id": "aqueous-equilibrium",
+          "file": "aqueous-equilibrium.md",
+          "title": "水溶液中的平衡",
+          "titleEn": "Aqueous Equilibrium",
+          "icon": "💧",
+          "color": "#d946ef",
+          "examRatio": 5,
+          "questionCount": 8
+        },
+        {
+          "id": "redox-reactions",
+          "file": "redox-reactions.md",
+          "title": "氧化還原反應",
+          "titleEn": "Redox Reactions",
+          "icon": "⚡",
+          "color": "#d946ef",
+          "examRatio": 4,
+          "questionCount": 8
+        },
+        {
+          "id": "electrochemistry",
+          "file": "electrochemistry.md",
+          "title": "電化學",
+          "titleEn": "Electrochemistry",
+          "icon": "🔋",
+          "color": "#d946ef",
+          "examRatio": 4,
+          "questionCount": 8
+        }
+      ]
+    },
+    {
+      "id": "elective-chemistry-4",
+      "name": "📓 選修化學Ⅳ：無機化學與有機化學（高三）",
+      "tag": "選修",
+      "topics": [
+        {
+          "id": "nonmetal-elements",
+          "file": "nonmetal-elements.md",
+          "title": "非金屬元素",
+          "titleEn": "Nonmetal Elements",
+          "icon": "🟡",
+          "color": "#c084fc",
+          "examRatio": 2,
+          "questionCount": 8
+        },
+        {
+          "id": "metal-elements",
+          "file": "metal-elements.md",
+          "title": "金屬元素",
+          "titleEn": "Metal Elements",
+          "icon": "🪙",
+          "color": "#c084fc",
+          "examRatio": 2,
+          "questionCount": 8
+        },
+        {
+          "id": "coordination-compounds",
+          "file": "coordination-compounds.md",
+          "title": "配位化合物",
+          "titleEn": "Coordination Compounds",
+          "icon": "🎯",
+          "color": "#c084fc",
+          "examRatio": 1,
+          "questionCount": 8
+        },
+        {
+          "id": "organic-chemistry-basics",
+          "file": "organic-chemistry-basics.md",
+          "title": "有機化學（基礎）",
+          "titleEn": "Organic Chemistry Basics",
+          "icon": "🛢️",
+          "color": "#c084fc",
+          "examRatio": 3,
+          "questionCount": 8
+        },
+        {
+          "id": "functional-group-compounds",
+          "file": "functional-group-compounds.md",
+          "title": "官能基化合物",
+          "titleEn": "Functional Group Compounds",
+          "icon": "🏷️",
+          "color": "#c084fc",
+          "examRatio": 2,
+          "questionCount": 8
+        },
+        {
+          "id": "polymers",
+          "file": "polymers.md",
+          "title": "聚合物",
+          "titleEn": "Polymers",
+          "icon": "🧵",
+          "color": "#c084fc",
+          "examRatio": 2,
           "questionCount": 8
         }
       ]

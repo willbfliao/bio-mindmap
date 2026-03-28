@@ -395,7 +395,7 @@
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
   <script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.15/dist/browser/index.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/markmap-view@0.15/dist/browser/index.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/app.js?v=2"></script>
   <script>
     (async function() {
       /* ===== Load KaTeX dynamically ===== */
@@ -458,16 +458,36 @@
       let mergedMd = '';
       try {
         const rootTitle = displayTitle.replace(/^[^\s]+\s/, ''); // strip emoji
-        const fetches = allTopics.map(topic =>
-          fetch(contentBase + '/' + topic.file)
-            .then(r => r.ok ? r.text() : null)
-            .catch(() => null)
-        );
-        const results = await Promise.all(fetches);
-        const parts = results
-          .filter(Boolean)
-          .map(md => md.replace(/^(#{1,5})\s/gm, (m, hashes) => '#' + hashes + ' '));
-        mergedMd = '# ' + rootTitle + '\n\n' + parts.join('\n\n');
+        if (topicsData.groupByCategory) {
+          /* Category-aware merge: root → category → topic (bump headings +2) */
+          const catParts = [];
+          for (const cat of topicsData.categories) {
+            const catName = cat.name.replace(/^[^\s]+\s/, '');
+            const fetches = cat.topics.map(topic =>
+              fetch(contentBase + '/' + topic.file, { cache: 'no-cache' })
+                .then(r => r.ok ? r.text() : null)
+                .catch(() => null)
+            );
+            const results = await Promise.all(fetches);
+            const topicMds = results
+              .filter(Boolean)
+              .map(md => md.replace(/^(#{1,4})\s/gm, (m, hashes) => '##' + hashes + ' '));
+            catParts.push('## ' + catName + '\n\n' + topicMds.join('\n\n'));
+          }
+          mergedMd = '# ' + rootTitle + '\n\n' + catParts.join('\n\n');
+        } else {
+          /* Flat merge (no categories): root → topic (bump headings +1) */
+          const fetches = allTopics.map(topic =>
+            fetch(contentBase + '/' + topic.file)
+              .then(r => r.ok ? r.text() : null)
+              .catch(() => null)
+          );
+          const results = await Promise.all(fetches);
+          const parts = results
+            .filter(Boolean)
+            .map(md => md.replace(/^(#{1,5})\s/gm, (m, hashes) => '#' + hashes + ' '));
+          mergedMd = '# ' + rootTitle + '\n\n' + parts.join('\n\n');
+        }
       } catch {
         document.getElementById('markmap-wrap').innerHTML =
           '<div class="loading" style="height:80vh">無法載入心智圖內容</div>';
