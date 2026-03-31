@@ -1,6 +1,6 @@
 {
   "title": "高中國文心智圖",
-  "subtitle": "互動式學習 · 古文十五篇 · 108課綱",
+  "subtitle": "互動式學習 · 古文十五篇＋國學常識＋語文能力 · 108課綱",
   "groupByCategory": true,
   "categories": [
     {
@@ -184,6 +184,80 @@
           "icon": "🌺",
           "color": "#059669",
           "examRatio": 5,
+          "questionCount": 8
+        }
+      ]
+    },
+    {
+      "id": "literary-knowledge",
+      "name": "國學常識",
+      "tag": "常考文學分類、文學史與重要典籍",
+      "topics": [
+        {
+          "id": "literary-genres",
+          "file": "literary-genres.md",
+          "title": "韻文與非韻文",
+          "titleEn": "Literary Genres",
+          "icon": "📜",
+          "color": "#0891b2",
+          "examRatio": 8,
+          "questionCount": 8
+        },
+        {
+          "id": "literary-history",
+          "file": "literary-history.md",
+          "title": "文學史流變",
+          "titleEn": "Literary History",
+          "icon": "📖",
+          "color": "#0891b2",
+          "examRatio": 8,
+          "questionCount": 8
+        },
+        {
+          "id": "book-classification",
+          "file": "book-classification.md",
+          "title": "重要典籍分類",
+          "titleEn": "Book Classification",
+          "icon": "🏛️",
+          "color": "#0891b2",
+          "examRatio": 7,
+          "questionCount": 8
+        }
+      ]
+    },
+    {
+      "id": "language-skills",
+      "name": "語文能力",
+      "tag": "常考修辭辨識、文法句式與字詞成語",
+      "topics": [
+        {
+          "id": "rhetoric",
+          "file": "rhetoric.md",
+          "title": "修辭法總整理",
+          "titleEn": "Rhetoric Devices",
+          "icon": "🎭",
+          "color": "#d97706",
+          "examRatio": 10,
+          "questionCount": 8
+        },
+        {
+          "id": "classical-grammar",
+          "file": "classical-grammar.md",
+          "title": "文言文基礎文法",
+          "titleEn": "Classical Chinese Grammar",
+          "icon": "📝",
+          "color": "#d97706",
+          "examRatio": 10,
+          "questionCount": 8
+        },
+        {
+          "id": "word-usage",
+          "file": "word-usage.md",
+          "title": "字音字形與成語",
+          "titleEn": "Word Usage and Idioms",
+          "icon": "🔤",
+          "color": "#d97706",
+          "examRatio": 8,
           "questionCount": 8
         }
       ]
