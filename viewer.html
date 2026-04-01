@@ -493,8 +493,11 @@
       try {
         const rootTitle = displayTitle.replace(/^[^\s]+\s/, ''); // strip emoji
         if (topicsData.groupByCategory) {
-          /* Category-aware merge: root → category → topic (bump headings +2) */
-          const catParts = [];
+          /* Category-aware merge with optional group nesting:
+             - Categories with "group" field: root → group → category → topic (bump +3)
+             - Categories without "group":    root → category → topic (bump +2) */
+          const groupMap = new Map(); // group name → array of category markdown parts
+          const ungrouped = [];       // categories without a group
           for (const cat of topicsData.categories) {
             const catName = cat.name.replace(/^[^\s]+\s/, '');
             const fetches = cat.topics.map(topic =>
@@ -503,12 +506,26 @@
                 .catch(() => null)
             );
             const results = await Promise.all(fetches);
-            const topicMds = results
-              .filter(Boolean)
-              .map(md => md.replace(/^(#{1,4})\s/gm, (m, hashes) => '##' + hashes + ' '));
-            catParts.push('## ' + catName + '\n\n' + topicMds.join('\n\n'));
+            if (cat.group) {
+              const topicMds = results
+                .filter(Boolean)
+                .map(md => md.replace(/^(#{1,3})\s/gm, (m, hashes) => '###' + hashes + ' '));
+              const catMd = '### ' + catName + '\n\n' + topicMds.join('\n\n');
+              if (!groupMap.has(cat.group)) groupMap.set(cat.group, []);
+              groupMap.get(cat.group).push(catMd);
+            } else {
+              const topicMds = results
+                .filter(Boolean)
+                .map(md => md.replace(/^(#{1,4})\s/gm, (m, hashes) => '##' + hashes + ' '));
+              ungrouped.push('## ' + catName + '\n\n' + topicMds.join('\n\n'));
+            }
           }
-          mergedMd = '# ' + rootTitle + '\n\n' + catParts.join('\n\n');
+          const allParts = [];
+          for (const [groupName, catMds] of groupMap) {
+            allParts.push('## ' + groupName + '\n\n' + catMds.join('\n\n'));
+          }
+          allParts.push(...ungrouped);
+          mergedMd = '# ' + rootTitle + '\n\n' + allParts.join('\n\n');
         } else {
           /* Flat merge (no categories): root → topic (bump headings +1) */
           const fetches = allTopics.map(topic =>
@@ -1130,7 +1147,7 @@
         document.body.style.cursor = '';
         // Persist width preference
         localStorage.setItem(STORAGE_PREFIX + 'sidebar-width', sidebar.offsetWidth);
-        requestAnimationFrame(() => mm.fit());
+        // Do not auto-center: let user keep their current pan/zoom position
       }
 
       resizeHandle.addEventListener('mousedown', onResizeStart);
