@@ -595,6 +595,22 @@
       const transformer = new Transformer();
       const { root } = transformer.transform(mergedMd);
 
+      /* ---------- Render markmap ---------- */
+      // NOTE: buildNodeMap must run AFTER Markmap.create because initializeData()
+      // replaces each node's children array with shallow copies ({ ...child }),
+      // invalidating any node references captured before that call.
+      const wrap = document.getElementById('markmap-wrap');
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('id', 'mindmap-svg');
+      wrap.appendChild(svg);
+
+      const mm = Markmap.create(svg, {
+        initialExpandLevel: 2,
+        duration: 300,
+        maxWidth: 300,
+        paddingX: 16,
+      }, root);
+
       /* ---------- Build node ID map for checkboxes & sidebar ---------- */
       const nodeMap = {}; // nodeId → { node, depth, path }
       function buildNodeMap(node, depth, pathParts) {
@@ -612,19 +628,6 @@
         }
       }
       buildNodeMap(root, 0, []);
-
-      /* ---------- Render markmap ---------- */
-      const wrap = document.getElementById('markmap-wrap');
-      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.setAttribute('id', 'mindmap-svg');
-      wrap.appendChild(svg);
-
-      const mm = Markmap.create(svg, {
-        initialExpandLevel: 2,
-        duration: 300,
-        maxWidth: 300,
-        paddingX: 16,
-      }, root);
 
       /* ---------- Node checkbox progress ---------- */
       function updateProgress() {
@@ -1219,6 +1222,11 @@
         searchResults.innerHTML = '';
       }
 
+      function toggleSearch() {
+        if (searchContainer.classList.contains('open')) closeSearch();
+        else openSearch();
+      }
+
       btnSearch.addEventListener('click', (e) => {
         e.stopPropagation();
         openSearch();
@@ -1353,26 +1361,14 @@
         return false;
       }
 
-      // Find the SVG DOM element matching a node's text
-      function findSvgNodeElement(text, pathParts) {
+      // Find the SVG DOM element by matching d3 __data__.data reference (works with KaTeX)
+      function findSvgNodeElement(targetINode) {
         const allNodes = svg.querySelectorAll('.markmap-node');
-        let match = null;
-        allNodes.forEach(el => {
-          const textEl = el.querySelector('text, .markmap-foreign');
-          if (!textEl) return;
-          if (textEl.textContent.trim() === text) {
-            if (!match) match = el;
-            // Disambiguate by parent
-            if (pathParts && pathParts.length >= 2) {
-              const parentG = el.parentElement && el.parentElement.closest('.markmap-node');
-              const parentTextEl = parentG && parentG.querySelector('text, .markmap-foreign');
-              if (parentTextEl && parentTextEl.textContent.trim() === pathParts[pathParts.length - 2]) {
-                match = el;
-              }
-            }
-          }
-        });
-        return match;
+        for (const el of allNodes) {
+          const d3node = el.__data__;
+          if (d3node && d3node.data === targetINode) return el;
+        }
+        return null;
       }
 
       // Navigate to a node: unfold, zoom, highlight
@@ -1380,14 +1376,14 @@
         // Close search panel
         closeSearch();
 
-        // Unfold ancestors
+        // Unfold ancestors — then renderData (NOT setData, which resets fold states via initializeData)
         unfoldToNode(entry.node, root);
-        mm.setData(root);
+        mm.renderData();
 
         setTimeout(() => {
           attachNodeClickHandlers();
 
-          const targetEl = findSvgNodeElement(entry.text, entry.pathParts);
+          const targetEl = findSvgNodeElement(entry.node);
           if (targetEl) {
             // Parse transform to get node position
             const transform = targetEl.getAttribute('transform');
