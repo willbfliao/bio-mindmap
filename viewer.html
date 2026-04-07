@@ -527,8 +527,29 @@
 
       /* ---------- Fetch individual topic markdowns in parallel & merge ---------- */
       const contentBase = getContentBase(subjectId, subId);
+      const topicId = getParam('topic');
       let mergedMd = '';
-      try {
+
+      // Single-topic mode: when navigating from topic list with ?topic=X
+      if (topicId) {
+        const topic = allTopics.find(t => t.id === topicId);
+        if (topic) {
+          // Update page title and nav title to show the specific topic
+          const topicTitle = topic.icon + ' ' + topic.title;
+          document.title = topic.title + ' - 心智圖';
+          document.getElementById('viewer-title').textContent = topicTitle;
+          // Back button → subject listing page
+          document.getElementById('back-btn').href = buildSubjectUrl(subjectId, subId);
+          try {
+            const res = await fetch(contentBase + '/' + topic.file, { cache: 'no-cache' });
+            mergedMd = res.ok ? (await res.text()) : '';
+          } catch {
+            mergedMd = '';
+          }
+        }
+      }
+
+      if (!topicId) try {
         const rootTitle = displayTitle.replace(/^[^\s]+\s/, ''); // strip emoji
         if (topicsData.groupByCategory) {
           /* Category-aware merge with optional group nesting:
@@ -605,7 +626,7 @@
       wrap.appendChild(svg);
 
       const mm = Markmap.create(svg, {
-        initialExpandLevel: 2,
+        initialExpandLevel: 1,
         duration: 300,
         maxWidth: 300,
         paddingX: 16,
@@ -645,10 +666,11 @@
       const sidebar = document.getElementById('detail-sidebar');
       const sidebarTitle = document.getElementById('sidebar-title');
 
-      // Preload detail & question data
+      // Preload detail & question data (single-topic mode: only load relevant topic)
       const detailsCache = {};
       const questionsCache = {};
-      for (const topic of allTopics) {
+      const topicsToLoad = topicId ? allTopics.filter(t => t.id === topicId) : allTopics;
+      for (const topic of topicsToLoad) {
         // details
         fetch(contentBase + '/details/' + topic.id + '.json')
           .then(r => r.ok ? r.json() : null)
@@ -712,6 +734,9 @@
       }
 
       function attachNodeClickHandlers() {
+        // Build set of H2 section header texts (depth 1) for expand-on-click
+        const depth1Texts = new Set(Object.values(nodeMap).filter(e => e.depth === 1).map(e => e.text));
+
         // Build text→entries lookup to detect duplicates
         const textToEntries = {};
         Object.values(nodeMap).forEach(e => {
@@ -724,6 +749,17 @@
           const textEl = el.querySelector('text, .markmap-foreign');
           if (!textEl) return;
           const rawText = textEl.textContent.trim();
+
+          // H2 section headers: clicking text toggles expand/collapse
+          if (depth1Texts.has(rawText) && !textEl.dataset.expand_bound) {
+            textEl.dataset.expand_bound = '1';
+            textEl.style.cursor = 'pointer';
+            textEl.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const circle = el.querySelector('circle');
+              if (circle) circle.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+            });
+          }
 
           // Resolve matching nodeMap entry, disambiguate duplicates by parent
           let entry;
