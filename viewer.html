@@ -694,7 +694,8 @@
         const text = (node.content || '').replace(/<[^>]+>/g, '').trim();
         if (depth >= 1 && text) {
           const nodeId = buildNodeKey(subjectId, subId, pathParts.concat(text));
-          nodeMap[nodeId] = { node, depth, text, pathParts: pathParts.concat(text) };
+          const hasChildren = !!(node.children && node.children.length > 0);
+          nodeMap[nodeId] = { node, depth, text, pathParts: pathParts.concat(text), hasChildren };
           node._nodeId = nodeId;
           node._depth = depth;
           node._plainText = text;
@@ -708,7 +709,7 @@
 
       /* ---------- Node checkbox progress ---------- */
       function updateProgress() {
-        const checkable = Object.keys(nodeMap).filter(id => nodeMap[id].depth >= 2);
+        const checkable = Object.keys(nodeMap).filter(id => nodeMap[id].depth >= 2 && nodeMap[id].hasChildren);
         const checked = checkable.filter(id => isNodeChecked(id));
         const text = document.getElementById('nav-progress-text');
         const fill = document.getElementById('nav-progress-fill');
@@ -789,6 +790,16 @@
         el.appendChild(label);
       }
 
+      // Click/dblclick disambiguation timer
+      let _clickTimer = null;
+
+      function toggleNodeFold(node) {
+        if (!node.payload) node.payload = {};
+        node.payload.fold = node.payload.fold ? 0 : 1;
+        mm.renderData();
+        setTimeout(() => attachNodeClickHandlers(), 350);
+      }
+
       function attachNodeClickHandlers() {
         // Build depth-1 (H2 section headers) entry lookup for sidebar
         const depth1Entries = {};
@@ -809,13 +820,20 @@
           if (!textEl) return;
           const rawText = textEl.textContent.trim();
 
-          // H2 section headers: clicking text opens sidebar with all children
+          // H2 section headers: click → fold, dblclick → sidebar
           if (depth1Entries[rawText] && !textEl.dataset.expand_bound) {
             textEl.dataset.expand_bound = '1';
             textEl.style.cursor = 'pointer';
+            const d1entry = depth1Entries[rawText];
             textEl.addEventListener('click', (e) => {
               e.stopPropagation();
-              openSidebar(depth1Entries[rawText]);
+              clearTimeout(_clickTimer);
+              _clickTimer = setTimeout(() => toggleNodeFold(d1entry.node), 250);
+            });
+            textEl.addEventListener('dblclick', (e) => {
+              e.stopPropagation();
+              clearTimeout(_clickTimer);
+              openSidebar(d1entry);
             });
           }
 
@@ -836,6 +854,9 @@
             }) || candidates[0];
           }
 
+          // Skip leaf nodes (no children) — not clickable
+          if (!entry.node.children || entry.node.children.length === 0) return;
+
           const boundNodeId = entry.node._nodeId;
           el.classList.add('clickable-node');
           el.style.cursor = 'pointer';
@@ -850,12 +871,19 @@
             el.classList.remove('node-checked');
           }
 
-          // Add click handler (use flag to avoid duplicates)
+          // Add click (fold) + dblclick (sidebar) handlers
           if (!textEl.dataset.bound) {
             textEl.dataset.bound = '1';
+            const boundEntry = entry;
             textEl.addEventListener('click', (e) => {
               e.stopPropagation();
-              openSidebar(entry);
+              clearTimeout(_clickTimer);
+              _clickTimer = setTimeout(() => toggleNodeFold(boundEntry.node), 250);
+            });
+            textEl.addEventListener('dblclick', (e) => {
+              e.stopPropagation();
+              clearTimeout(_clickTimer);
+              openSidebar(boundEntry);
             });
           }
 
