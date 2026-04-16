@@ -145,6 +145,61 @@ Subjects with `hasSubjects: true` (自然, 社會) contain sub-subjects. Others 
 - Progress state stored in LocalStorage with `isRead(subjectId, subId, topicId)` / `markAsRead(...)` helpers
 - Node-level progress stored as ISO timestamp via `toggleNodeCheck()` / `isNodeChecked()` / `getNodeCheckedTime()`
 
+## Core Workflow
+
+Every non-trivial feature follows this five-phase flow. Do NOT skip phases or merge them silently.
+
+### Phase 1 — Clarify (planning agent)
+
+Ask questions before writing any code. Output: shared understanding of scope, constraints, and acceptance criteria.
+
+- Identify ambiguities and list them as numbered questions
+- State assumptions explicitly — let the user confirm or correct
+- Define **done** in measurable terms (e.g., "smoke-test passes", "quiz renders 5 questions")
+
+### Phase 2 — Design (planning agent)
+
+Produce a **sectioned design document** for incremental user approval. Do NOT proceed to Phase 3 until every section is confirmed.
+
+- Break the design into logical sections (data schema → UI flow → edge cases)
+- Present **one section at a time**; wait for user confirmation before the next
+- Flag tradeoffs and alternatives — don't decide silently
+
+### Phase 3 — Task Breakdown (planning agent)
+
+Convert the approved design into a numbered task list. Each task should be completable in **2–5 minutes**.
+
+- Format: `[Task N] → file: [path] → verify: [check]`
+- Each task has a single, verifiable acceptance criterion
+- Order tasks by dependency; independent tasks can be parallelized
+
+### Phase 4 — TDD Implementation (coding agent)
+
+For each task, follow a strict Red → Green → Refactor cycle:
+
+1. **Red** — Write a failing test (or validation check) that captures the expected behavior
+2. **Green** — Write the minimum code to make the test pass
+3. **Refactor** — Clean up only what you just wrote, without changing behavior
+
+In this project (no npm/test framework), "test" means:
+- JSON schema: `python3 -c "import json; json.load(open('file'))"`
+- File references: `python3 scripts/smoke-test.py`
+- Manual verification: describe the expected UI state for the user to confirm
+
+### Phase 5 — Review (reviewer agent)
+
+After each task is implemented, perform a mini code review before moving to the next:
+
+- Check changed files against Code Style and Conventions (this document)
+- Verify no forbidden patterns (see **Do NOT** list)
+- Confirm XSS prevention: all dynamic content uses `escapeHtml()`
+- Confirm every changed line traces to the user's request (Surgical Changes)
+- Report: `✅ pass` or list issues with severity and file references
+
+---
+
+**Skip/compress phases for trivial tasks** (typo fix, single-line config change). Use judgment.
+
 ## Behavioral Guidelines
 
 Guidelines to reduce common LLM coding mistakes. Bias toward caution over speed; for trivial tasks, use judgment.

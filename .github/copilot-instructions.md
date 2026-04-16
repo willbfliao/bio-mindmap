@@ -9,6 +9,7 @@
 - Tech Stack & Architecture
 - Code Style & Conventions
 - Content Structure
+- Core Workflow (Clarify → Design → Task Breakdown → TDD Implementation → Review)
 - Behavioral Guidelines (Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven Execution)
 - Do NOT 清單
 

@@ -20,10 +20,12 @@ Use for implementing features, fixing bugs, adding topics, and modifying UI.
 
 **Constraints**: Read target files before editing. Match existing code style. Minimal changes only. No npm, no framework.
 
-**SOP** (after Common Rules — ref: Code Style & Conventions):
+**SOP** (after Common Rules — ref: Core Workflow Phase 4, Code Style & Conventions):
 1. Read target file(s) to understand current code
-2. Implement changes — match existing patterns (camelCase, section headers, `escapeHtml()`)
-3. Verify: no broken references, changes trace directly to user's request
+2. **Red** — write a failing test or validation check that captures expected behavior
+3. **Green** — write the minimum code to make the test pass; match existing patterns (camelCase, section headers, `escapeHtml()`)
+4. **Refactor** — clean up only what you just wrote, without changing behavior
+5. Verify: no broken references, changes trace directly to user's request
 
 ## content
 
@@ -46,25 +48,27 @@ Use for architecture decisions, feature scoping, and task decomposition.
 
 **Constraints**: DO NOT write code. Produce numbered task lists with file references and acceptance criteria.
 
-**SOP** (after Common Rules — ref: Architecture, Project Directory Structure):
-1. Identify affected files and components
-2. Produce numbered plan with verifiable acceptance criteria per step
-3. Flag any risks, tradeoffs, or ambiguities (Think Before Coding principle)
-4. Output format: `[Step] → file: [path] → verify: [check]`
+**SOP** (after Common Rules — ref: Core Workflow Phase 1–3, Architecture, Project Directory Structure):
+1. **Clarify** (Phase 1) — identify ambiguities and list as numbered questions; state assumptions explicitly; define **done** in measurable terms
+2. **Design** (Phase 2) — produce a sectioned design document; present **one section at a time** for user confirmation; flag tradeoffs and alternatives
+3. **Task Breakdown** (Phase 3) — convert approved design into numbered task list (each 2–5 min); format: `[Task N] → file: [path] → verify: [check]`; order by dependency
+4. Do NOT proceed to next phase until user confirms the current phase
 
 ## reviewer
 
 Review code changes, audit code quality, check for security issues, evaluate pull requests.
 Use for code review, best practices validation, and accessibility checks.
+Also performs **mini code review after each task** per Core Workflow Phase 5.
 
 **Constraints**: Read-only analysis. Flag XSS risks, broken references, CSS inconsistencies, data schema violations.
 
-**SOP** (after Common Rules — ref: Code Style, Conventions, Do NOT):
+**SOP** (after Common Rules — ref: Core Workflow Phase 5, Code Style, Conventions, Do NOT):
 1. Check each changed file against coding standards
 2. Verify XSS prevention: all dynamic content uses `escapeHtml()`
 3. Verify no forbidden patterns (npm, TypeScript, framework, `markmap-autoloader`, `window.markmapView`)
-4. Check data integrity: JSON schema compliance, file reference validity
-5. Report: list issues with severity (critical/warning/info) and file:line references
+4. Confirm every changed line traces to the user's request (Surgical Changes)
+5. Check data integrity: JSON schema compliance, file reference validity
+6. Report: `✅ pass` or list issues with severity (critical/warning/info) and file:line references
 
 ## testing
 
