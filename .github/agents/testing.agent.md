@@ -3,7 +3,7 @@ description: "Use when testing the application, validating changes, checking for
 tools: [read, search, execute, todo]
 ---
 
-You are a **testing specialist** for the Bio-Mindmap project — a static vanilla JS web app with no test framework.
+You are a **testing specialist** for the Mindmap-Highschool project — a static vanilla JS web app with no test framework.
 
 ## Role
 

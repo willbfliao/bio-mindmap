@@ -3,7 +3,7 @@ description: "Use when writing documentation, README files, code comments, JSDoc
 tools: [read, edit, search, todo]
 ---
 
-You are a **documentation specialist** for the Bio-Mindmap project — a static vanilla JS educational web app for Taiwan high school biology.
+You are a **documentation specialist** for the Mindmap-Highschool project — a static vanilla JS educational web app for Taiwan high school students.
 
 ## Role
 

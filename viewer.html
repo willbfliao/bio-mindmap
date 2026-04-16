@@ -3,9 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self';">
   <title>心智圖檢視器</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
+    /* ===== Viewer-specific CSS variables ===== */
+    :root {
+      --clickable-node: #a5b4fc;
+      --clickable-node-hover: #c7d2fe;
+    }
+
     /* ===== Markmap core layout ===== */
     #markmap-wrap { width: 100%; height: calc(100vh - 56px); margin-top: 56px; position: relative; }
     #markmap-wrap svg { width: 100%; height: 100%; display: block; }
@@ -239,7 +246,7 @@
     }
     .sq-opt-btn:hover:not(.sq-disabled) { border-color: var(--accent); background: rgba(99,102,241,0.1); }
     .sq-opt-btn.sq-correct { border-color: var(--success); background: rgba(16,185,129,0.15); }
-    .sq-opt-btn.sq-wrong { border-color: #ef4444; background: rgba(239,68,68,0.15); }
+    .sq-opt-btn.sq-wrong { border-color: var(--error, #ef4444); background: rgba(239,68,68,0.15); }
     .sq-opt-btn.sq-disabled { cursor: default; }
     .sidebar-question .sq-explanation {
       margin-top: 0.6rem; padding: 0.75rem 0.85rem;
@@ -311,19 +318,19 @@
     /* Clickable node indicator */
     .markmap-node.clickable-node { cursor: pointer; }
     .markmap-node.clickable-node .markmap-foreign {
-      color: #a5b4fc !important;
+      color: var(--clickable-node) !important;
     }
     .markmap-node.clickable-node text {
-      fill: #a5b4fc !important;
+      fill: var(--clickable-node) !important;
     }
     .markmap-node.clickable-node:hover .markmap-foreign {
-      color: #c7d2fe !important;
+      color: var(--clickable-node-hover) !important;
       text-decoration: underline;
     }
     .markmap-node.clickable-node:hover text {
-      fill: #c7d2fe !important;
+      fill: var(--clickable-node-hover) !important;
       text-decoration: underline;
-      text-decoration-color: #c7d2fe;
+      text-decoration-color: var(--clickable-node-hover);
     }
     /* Non-clickable nodes (root & category) dimmer */
     .markmap-node:not(.clickable-node) .markmap-foreign {
@@ -495,8 +502,8 @@
         <button class="btn btn-secondary" id="btn-search">🔍 搜尋</button>
         <div class="search-panel" id="search-panel">
           <div class="search-input-wrap">
-            <input type="text" id="search-input" placeholder="搜尋心智圖節點..." autocomplete="off">
-            <button class="search-close-btn" id="search-close-btn">&times;</button>
+            <input type="text" id="search-input" placeholder="搜尋心智圖節點..." autocomplete="off" aria-label="搜尋心智圖節點">
+            <button class="search-close-btn" id="search-close-btn" aria-label="關閉搜尋">&times;</button>
           </div>
         </div>
         <div class="search-results-wrap" id="search-results-wrap">
@@ -518,7 +525,7 @@
           <div class="sidebar-path" id="sidebar-path"></div>
           <h3 id="sidebar-title">節點詳情</h3>
         </div>
-        <button class="sidebar-close" id="sidebar-close">&times;</button>
+        <button class="sidebar-close" id="sidebar-close" aria-label="關閉側欄">&times;</button>
       </div>
       <div class="sidebar-check-row" id="sidebar-check-row">
         <input type="checkbox" id="sidebar-cb">
@@ -537,13 +544,13 @@
   </aside>
 
   <!-- KaTeX (must load BEFORE markmap-lib so its katex plugin can detect it) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
 
   <!-- Programmatic Markmap CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-  <script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.15/dist/browser/index.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/markmap-view@0.15/dist/browser/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.15.5/dist/browser/index.js" integrity="sha384-AVDQOckjK6RwSlhHhFnApwq9ETT8HOlp5L6hVKuNWeozZo2aJGgJTJ719XKUS/4W" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markmap-view@0.15.8/dist/browser/index.js" integrity="sha384-cWnlwEdzWoXF/uaO1O5rDdlXPSrDtkx2Yk6FZWyOa1UUjSydXMBVgZVt5GELc5pk" crossorigin="anonymous"></script>
   <script src="js/app.js?v=2"></script>
   <script>
     (async function() {
@@ -551,7 +558,8 @@
 
       const subjectId = getParam('subject');
       const subId = getParam('sub');
-      if (!subjectId) { window.location.href = 'index.html'; return; }
+      if (!subjectId || !isValidParam(subjectId)) { window.location.href = 'index.html'; return; }
+      if (subId && !isValidParam(subId)) { window.location.href = 'index.html'; return; }
 
       /* ---------- Load subject metadata ---------- */
       const subjectsData = await loadSubjects();
@@ -594,6 +602,7 @@
       /* ---------- Fetch individual topic markdowns in parallel & merge ---------- */
       const contentBase = getContentBase(subjectId, subId);
       const topicId = getParam('topic');
+      if (topicId && !isValidParam(topicId)) { window.location.href = 'index.html'; return; }
       let mergedMd = '';
 
       // Single-topic mode: when navigating from topic list with ?topic=X
@@ -973,7 +982,7 @@
       }
 
       function openSidebar(entry) {
-        sidebarTitle.innerHTML = entry.node._htmlContent || escapeHtml(entry.text);
+        sidebarTitle.innerHTML = sanitizeHtml(entry.node._htmlContent) || escapeHtml(entry.text);
         const pathEl = document.getElementById('sidebar-path');
         const breadcrumb = entry.pathParts.slice(0, -1);
         pathEl.textContent = breadcrumb.length > 0 ? breadcrumb.join(' › ') : '';
@@ -1207,7 +1216,7 @@
               const div = document.createElement('div');
               div.className = 'detail-item';
               const span = document.createElement('span');
-              span.innerHTML = child.content || escapeHtml(text);
+              span.innerHTML = sanitizeHtml(child.content) || escapeHtml(text);
               if (!hasFormulas) span.style.fontWeight = '600';
               div.appendChild(span);
               const searchQuery = (pathQuery + ' ' + text).trim();
@@ -1230,7 +1239,7 @@
               const cls = depth === 1 ? 'detail-bullet' : depth === 2 ? 'detail-bullet-l2' : 'detail-bullet-l3';
               const p = document.createElement('div');
               p.className = cls;
-              p.innerHTML = child.content || escapeHtml(text);
+              p.innerHTML = sanitizeHtml(child.content) || escapeHtml(text);
               target.appendChild(p);
               // Recurse if there are deeper children
               if (child.children && child.children.length > 0 && depth < maxDepth) {

@@ -1,6 +1,6 @@
 # Coding Agent
 
-You are a **coding specialist** for the Bio-Mindmap project — a static vanilla JS educational web app.
+You are a **coding specialist** for the Mindmap-Highschool project — a static vanilla JS educational web app.
 
 ## Role
 

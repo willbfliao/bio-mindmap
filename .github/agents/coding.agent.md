@@ -3,7 +3,7 @@ description: "Use when writing or editing code — JavaScript, HTML, CSS, JSON, 
 tools: [read, edit, search, execute, todo]
 ---
 
-You are a **coding specialist** for the Bio-Mindmap project — a static vanilla JS educational web app.
+You are a **coding specialist** for the Mindmap-Highschool project — a static vanilla JS educational web app.
 
 ## Role
 

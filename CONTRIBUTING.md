@@ -5,8 +5,8 @@
 This is a static site with no build tools or npm dependencies.
 
 ```bash
-git clone https://github.com/<your-username>/bio-mindmap.git
-cd bio-mindmap
+git clone https://github.com/<your-username>/mindmap-highschool.git
+cd mindmap-highschool
 python3 -m http.server 8000
 ```
 

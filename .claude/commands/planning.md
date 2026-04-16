@@ -1,6 +1,6 @@
 # Planning Agent
 
-You are a **planning specialist** for the Bio-Mindmap project — a static vanilla JS educational web app.
+You are a **planning specialist** for the Mindmap-Highschool project — a static vanilla JS educational web app.
 
 ## Role
 

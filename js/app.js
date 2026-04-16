@@ -2,10 +2,53 @@
 
 const STORAGE_PREFIX = 'bio-mindmap-';
 
+// Core XSS prevention — do not remove
 function escapeHtml(str) {
   const div = document.createElement('div');
   div.textContent = str;
   return div.innerHTML;
+}
+
+/**
+ * Sanitize HTML from Markmap transform output.
+ * Allows only safe inline tags; strips everything else (scripts, event handlers, etc.).
+ */
+function sanitizeHtml(html) {
+  if (!html) return '';
+  const ALLOWED_TAGS = new Set(['em', 'strong', 'code', 'span', 'sub', 'sup', 'b', 'i', 'br']);
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  function clean(node) {
+    const frag = document.createDocumentFragment();
+    for (const child of Array.from(node.childNodes)) {
+      if (child.nodeType === Node.TEXT_NODE) {
+        frag.appendChild(document.createTextNode(child.textContent));
+      } else if (child.nodeType === Node.ELEMENT_NODE) {
+        const tag = child.tagName.toLowerCase();
+        if (ALLOWED_TAGS.has(tag)) {
+          const el = document.createElement(tag);
+          // Copy only safe attributes (class, style for KaTeX)
+          for (const attr of Array.from(child.attributes)) {
+            if (attr.name === 'class' || attr.name === 'style') {
+              el.setAttribute(attr.name, attr.value);
+            }
+          }
+          el.appendChild(clean(child));
+          frag.appendChild(el);
+        } else {
+          // Unwrap: keep text content, discard the tag
+          frag.appendChild(clean(child));
+        }
+      }
+    }
+    return frag;
+  }
+  const container = document.createElement('span');
+  container.appendChild(clean(doc.body));
+  return container.innerHTML;
+}
+
+function isValidParam(val) {
+  return typeof val === 'string' && /^[a-z0-9-]+$/.test(val);
 }
 
 function getParam(name) {
@@ -18,8 +61,9 @@ async function loadSubjects() {
     if (!res.ok) throw new Error(res.status);
     return res.json();
   } catch {
-    document.body.innerHTML =
-      '<div class="loading" style="height:100vh">無法載入科目資料，請檢查網路連線後重新整理</div>';
+    const errMsg = '<div class="loading" style="height:100vh">無法載入科目資料，請檢查網路連線後重新整理</div>';
+    const main = document.querySelector('main') || document.getElementById('subjects-container') || document.getElementById('content-container');
+    if (main) { main.innerHTML = errMsg; } else { document.body.innerHTML = errMsg; }
     throw new Error('Failed to load subjects.json');
   }
 }
@@ -205,7 +249,8 @@ async function initHomepage() {
 async function initSubject() {
   const subjectId = getParam('subject');
   const subId = getParam('sub');
-  if (!subjectId) { window.location.href = 'index.html'; return; }
+  if (!subjectId || !isValidParam(subjectId)) { window.location.href = 'index.html'; return; }
+  if (subId && !isValidParam(subId)) { window.location.href = 'index.html'; return; }
 
   const data = await loadSubjects();
   const subject = data.subjects.find(s => s.id === subjectId);
@@ -358,7 +403,8 @@ async function initQuiz() {
   const subjectId = getParam('subject');
   const subId = getParam('sub');
   const topicId = getParam('topic');
-  if (!subjectId || !topicId) { window.location.href = 'index.html'; return; }
+  if (!subjectId || !topicId || !isValidParam(subjectId) || !isValidParam(topicId)) { window.location.href = 'index.html'; return; }
+  if (subId && !isValidParam(subId)) { window.location.href = 'index.html'; return; }
 
   let topicsData;
   try {
@@ -460,4 +506,5 @@ function showScore(correct, total) {
     `答對率 ${Math.round((correct / total) * 100)}%`;
   summary.classList.add('show');
   summary.scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('btn-retry').addEventListener('click', () => location.reload());
 }

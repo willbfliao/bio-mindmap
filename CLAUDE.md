@@ -1,4 +1,4 @@
-# Bio-Mindmap — Project Guidelines (唯一真理來源)
+# Mindmap-Highschool — Project Guidelines (唯一真理來源)
 
 > **此檔案為專案的唯一真理來源 (Single Source of Truth)。**
 > 所有 AI 工具（Claude Code、GitHub Copilot、Agent）皆必須以此檔案為最終依據。
@@ -21,7 +21,7 @@
 
 ## Overview
 
-Bio-Mindmap is a **static** educational web app for Taiwan high school students. It displays multi-subject content as interactive mind maps (via Markmap) and provides exam practice questions. Subjects include 國文, 英文, 數學, 自然 (物理/化學/生物/地科), and 社會 (歷史/地理/公民). All UI text is in **Traditional Chinese (繁體中文)**.
+Mindmap-Highschool is a **static** educational web app for Taiwan high school students. It displays multi-subject content as interactive mind maps (via Markmap) and provides exam practice questions. Subjects include 國文, 英文, 數學, 自然 (物理/化學/生物/地科), and 社會 (歷史/地理/公民). All UI text is in **Traditional Chinese (繁體中文)**.
 
 ## Tech Stack
 
@@ -54,7 +54,7 @@ python3 -c "import json; json.load(open('path/to/file.json'))"
 ## Project Directory Structure
 
 ```
-bio-mindmap/
+mindmap-highschool/
 ├── CLAUDE.md                          # 核心中樞（本檔案）
 ├── AGENTS.md                          # 角色流程定義
 ├── .github/

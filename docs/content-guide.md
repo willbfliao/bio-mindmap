@@ -1,6 +1,6 @@
 # 內容撰寫指南
 
-本指南說明如何為 Bio-Mindmap 新增主題內容、撰寫心智圖 Markdown 及建立題庫 JSON。
+本指南說明如何為 Mindmap-Highschool 新增主題內容、撰寫心智圖 Markdown 及建立題庫 JSON。
 
 ---
 
