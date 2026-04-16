@@ -1,7 +1,23 @@
-# Bio-Mindmap — Project Guidelines
+# Bio-Mindmap — Project Guidelines (唯一真理來源)
 
-> This file is the single source of truth for project context.
-> Also referenced by `.github/copilot-instructions.md` for GitHub Copilot.
+> **此檔案為專案的唯一真理來源 (Single Source of Truth)。**
+> 所有 AI 工具（Claude Code、GitHub Copilot、Agent）皆必須以此檔案為最終依據。
+
+---
+
+## Cross-Reference（三位一體架構）
+
+本專案的 AI 協作規範由三份檔案組成，各司其職、互不衝突：
+
+| 檔案 | 角色 | 職責 |
+|------|------|------|
+| **`CLAUDE.md`**（本檔案） | 核心中樞 | 技術棧、目錄結構、開發指令、編碼規範、行為準則 |
+| **`.github/copilot-instructions.md`** | 行為映射 | GitHub Copilot 回應風格、程式碼生成偏好、工具行為約束（引用本檔規則，不重複定義） |
+| **`AGENTS.md`** | 角色流程 | Agent 角色定義、標準作業流程 (SOP)、任務分派規則（引用本檔指令） |
+
+**規則**：當指令衝突時，以 `CLAUDE.md` 為準。
+
+---
 
 ## Overview
 
@@ -15,7 +31,64 @@ Bio-Mindmap is a **static** educational web app for Taiwan high school students.
 - **LocalStorage** for read/completion progress tracking
 - **GitHub Pages** deployment (auto via GitHub Actions on push to `main`)
 
-No `package.json` exists. To serve locally: `python3 -m http.server 8000` or `npx http-server`.
+No `package.json` exists. External libs loaded via CDN only.
+
+## Core Development Commands
+
+```bash
+# 本地開發伺服器
+python3 -m http.server 8000
+# 或
+npx http-server
+
+# 內容驗證
+python3 scripts/smoke-test.py        # 煙霧測試（檔案參照、JSON 格式）
+python3 scripts/validate-chemistry.py # 化學內容驗證
+
+# JSON 格式檢查（單檔）
+python3 -c "import json; json.load(open('path/to/file.json'))"
+```
+
+> 本專案無 `package.json`，不使用 npm/build/lint 工具。所有驗證透過上述腳本執行。
+
+## Project Directory Structure
+
+```
+bio-mindmap/
+├── CLAUDE.md                          # 核心中樞（本檔案）
+├── AGENTS.md                          # 角色流程定義
+├── .github/
+│   ├── copilot-instructions.md        # AI 行為映射
+│   └── agents/                        # Copilot Agent 詳細 prompt
+│       ├── coding.agent.md
+│       ├── content.agent.md
+│       ├── planning.agent.md
+│       ├── reviewer.agent.md
+│       ├── testing.agent.md
+│       └── doc-writer.agent.md
+├── index.html                         # 首頁（科目選擇）
+├── subject.html                       # 科目/主題列表
+├── viewer.html                        # 心智圖檢視器
+├── quiz.html                          # 測驗頁面
+├── js/
+│   └── app.js                         # 共用核心邏輯
+├── css/
+│   └── style.css                      # 全域樣式
+├── content/
+│   ├── subjects.json                  # 科目索引（主結構）
+│   └── {subject}/
+│       ├── topics.json                # 主題列表（無子科目時）
+│       └── {sub}/
+│           ├── topics.json            # 主題列表（有子科目時）
+│           ├── *.md                   # Markmap 心智圖內容
+│           └── details/*.json         # 節點詳細資料
+├── questions/
+│   └── {subject}/{sub}/*.json         # 測驗題 JSON
+└── scripts/
+    ├── smoke-test.py                  # 煙霧測試
+    ├── validate-chemistry.py          # 化學驗證
+    └── add-tags.js                    # 標籤工具
+```
 
 ## Architecture
 
@@ -72,16 +145,69 @@ Subjects with `hasSubjects: true` (自然, 社會) contain sub-subjects. Others 
 - Progress state stored in LocalStorage with `isRead(subjectId, subId, topicId)` / `markAsRead(...)` helpers
 - Node-level progress stored as ISO timestamp via `toggleNodeCheck()` / `isNodeChecked()` / `getNodeCheckedTime()`
 
-## Agents / Roles
+## Behavioral Guidelines
 
-| Role | Purpose |
-|------|---------|
-| `coding` | Write/edit code — JS, HTML, CSS, JSON, Markdown |
-| `content` | Create educational content — mind map .md, quiz .json, topics.json |
-| `planning` | Plan features, decompose tasks, architecture decisions |
-| `reviewer` | Code review, security audit, best practices check |
-| `testing` | Validate changes, smoke test, data integrity checks |
-| `doc-writer` | Documentation, README, code comments |
+Guidelines to reduce common LLM coding mistakes. Bias toward caution over speed; for trivial tasks, use judgment.
+
+### 1. Think Before Coding
+
+**Don't assume. Don't hide confusion. Surface tradeoffs.**
+
+Before implementing:
+- State your assumptions explicitly. If uncertain, ask.
+- If multiple interpretations exist, present them - don't pick silently.
+- If a simpler approach exists, say so. Push back when warranted.
+- If something is unclear, stop. Name what's confusing. Ask.
+
+### 2. Simplicity First
+
+**Minimum code that solves the problem. Nothing speculative.**
+
+- No features beyond what was asked.
+- No abstractions for single-use code.
+- No "flexibility" or "configurability" that wasn't requested.
+- No error handling for impossible scenarios.
+- If you write 200 lines and it could be 50, rewrite it.
+
+Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
+
+### 3. Surgical Changes
+
+**Touch only what you must. Clean up only your own mess.**
+
+When editing existing code:
+- Don't "improve" adjacent code, comments, or formatting.
+- Don't refactor things that aren't broken.
+- Match existing style, even if you'd do it differently.
+- If you notice unrelated dead code, mention it - don't delete it.
+
+When your changes create orphans:
+- Remove imports/variables/functions that YOUR changes made unused.
+- Don't remove pre-existing dead code unless asked.
+
+The test: Every changed line should trace directly to the user's request.
+
+### 4. Goal-Driven Execution
+
+**Define success criteria. Loop until verified.**
+
+Transform tasks into verifiable goals:
+- "Add validation" → "Write tests for invalid inputs, then make them pass"
+- "Fix the bug" → "Write a test that reproduces it, then make it pass"
+- "Refactor X" → "Ensure tests pass before and after"
+
+For multi-step tasks, state a brief plan:
+```
+1. [Step] → verify: [check]
+2. [Step] → verify: [check]
+3. [Step] → verify: [check]
+```
+
+Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
+
+---
+
+**These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
 
 ## Do NOT
 

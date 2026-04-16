@@ -1,71 +1,38 @@
-# Project Guidelines
+# Copilot Instructions
 
-> **Shared source of truth**: See [CLAUDE.md](../CLAUDE.md) for the canonical project guidelines.
-> This file mirrors that content for GitHub Copilot compatibility.
+> 所有代碼生成必須嚴格遵循專案根目錄 `CLAUDE.md` 中的規範。
+> 本檔案僅定義 GitHub Copilot 的工具行為偏好，不重複 `CLAUDE.md` 的規則。
 
-## Overview
+## 規範引用
 
-Bio-Mindmap is a **static** educational web app for Taiwan high school students. It displays multi-subject content as interactive mind maps (via Markmap) and provides exam practice questions. Subjects include 國文, 英文, 數學, 自然 (物理/化學/生物/地科), and 社會 (歷史/地理/公民). All UI text is in **Traditional Chinese (繁體中文)**.
+執行任何任務前，必須先參考 `CLAUDE.md` 取得：
+- Tech Stack & Architecture
+- Code Style & Conventions
+- Content Structure
+- Behavioral Guidelines (Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven Execution)
+- Do NOT 清單
 
-## Tech Stack
+角色定義與 SOP 請參考 `AGENTS.md`。
 
-- **Vanilla JS** — no framework, no TypeScript, no bundler
-- **Markmap** via CDN (`jsDelivr`) for mind map rendering (`markmap-lib@0.15`, `markmap-view@0.15`, `d3@7`)
-- **Plain CSS** with CSS custom properties for theming
-- **LocalStorage** for read/completion progress tracking
-- **GitHub Pages** deployment (auto via GitHub Actions on push to `main`)
+## 回應風格
 
-No `package.json` exists. To serve locally: `python3 -m http.server 8000` or `npx http-server`.
+- 簡潔回覆，避免解釋已知概念
+- 繁體中文為使用者溝通語言
+- 英文用於程式碼（變數名、函數名、註解）
+- 有不確定時先問，不要猜
 
-## Architecture
+## 程式碼生成偏好
 
-Four-page structure with shared logic in `js/app.js`:
+- Vanilla JS only — 禁止引入任何框架或 TypeScript
+- 使用 `async/await` + `try/catch`，不用 `.then()` chain
+- DOM 操作使用 `document.createElement()` 或 `.innerHTML` template
+- 動態內容必須使用 `escapeHtml()` 防止 XSS
+- CSS 使用 `:root` custom properties，不使用 hardcoded 色碼
+- 外部套件僅限 CDN 引入，禁止 npm
 
-| Page | Purpose | Data Source |
-|------|---------|-------------|
-| `index.html` | Subject selector grid | `content/subjects.json` |
-| `subject.html` | Sub-subject or topic listing | `content/{subject}/{sub}/topics.json` |
-| `viewer.html` | Markmap mind map viewer + sidebar | `content/{subject}/{sub}/*.md` |
-| `quiz.html` | Exam practice & scoring | `questions/{subject}/{sub}/*.json` |
+## 工具行為約束
 
-Navigation flow: Homepage → select subject → (optional sub-subject) → viewer (merged mind map) or Quiz.
-
-Routing uses URL query params (`?subject=science&sub=biology&topic=nervous-system`).
-
-### Viewer Architecture
-
-- Individual `.md` files fetched in parallel via `Promise.all`, merged at runtime
-- Programmatic Markmap: `new Transformer().transform(md)` → `Markmap.create(svg, opts, root)`
-- Both `markmap-lib` and `markmap-view` export to `window.markmap` global
-- Sidebar with 2 tabs: 📘 概念與應用 / 🎯 考試準備
-- Node completion tracked per-node in LocalStorage with ISO timestamps
-
-## Code Style
-
-- **camelCase** for JS functions/variables; **kebab-case** for CSS classes
-- Section headers: `/* ===== SECTION NAME ===== */`
-- Functions grouped by page feature: Homepage, Subject, Viewer, Quiz
-- Use `async/await` for fetch calls with try/catch
-- DOM creation via `document.createElement()` and `.innerHTML` string templates
-- CSS follows BEM-like naming (`.card-icon`, `.btn-primary`)
-- XSS prevention: use `escapeHtml()` for user-visible dynamic content
-
-## Content Structure
-
-- `content/subjects.json` — master subject index with hierarchy (subjects, sub-subjects)
-- `content/{subject}/topics.json` — topics for subjects without sub-subjects
-- `content/{subject}/{sub}/topics.json` — topics for sub-subjects
-- `content/{subject}/{sub}/*.md` — Markmap source; headers define map nodes
-- `content/{subject}/{sub}/details/*.json` — node detail data (associations, examTips)
-- `questions/{subject}/{sub}/*.json` — multiple-choice questions with `answer`, `explanation`, and `tags`
-
-Subjects with `hasSubjects: true` (自然, 社會) contain sub-subjects. Others are flat.
-
-## Conventions
-
-- All user-facing strings must be in Traditional Chinese
-- English variable/function names in code
-- CSS custom properties defined in `:root` for theming — use them instead of hardcoded colors
-- Keep the project dependency-free (no npm packages); external libs loaded via CDN only
-- Progress state stored in LocalStorage with `isRead(subjectId, subId, topicId)` / `markAsRead(...)` helpers
-- Node-level progress stored as ISO timestamp via `toggleNodeCheck()` / `isNodeChecked()` / `getNodeCheckedTime()`
+- 編輯前必須先讀取目標檔案
+- 每次變動僅觸及必要範圍（參照 `CLAUDE.md` → Surgical Changes）
+- JSON 檔案修改後驗證：`python3 -c "import json; json.load(open('file'))"`
+- 新增主題後須更新對應 `topics.json` 並執行 `python3 scripts/smoke-test.py`
