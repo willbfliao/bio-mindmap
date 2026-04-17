@@ -2,111 +2,118 @@
 
 ## 多項式函數
 ### 一次函數
-- 一次函數（linear function）: $y = ax + b$，圖形為直線
-- 斜率（slope）: $a$ 值決定傾斜程度與方向
-  - $a > 0$ 向右上升，$a < 0$ 向右下降
-- $y$ 截距（y-intercept）: $b$ 值為直線與 $y$ 軸的交點
-- 零點（zero）: $x = -\frac{b}{a}$，直線與 $x$ 軸的交點
+- $y = ax + b$: 直線圖形
+- 斜率 $a$
+  - $a > 0$ 右上升
+  - $a < 0$ 右下降
+- $y$ 截距: $b$
+- 零點: $x = -\frac{b}{a}$
 ### 二次函數
-- 標準式（standard form）: $y = ax^2 + bx + c$
-- 頂點式（vertex form）: $y = a(x - h)^2 + k$，頂點為 $(h, k)$
-- 頂點公式（vertex formula）: $h = -\frac{b}{2a}$，$k = \frac{4ac - b^2}{4a}$
-- 開口方向（opening direction）: $a > 0$ 開口向上，$a < 0$ 開口向下
-- 判別式（discriminant）: $D = b^2 - 4ac$
+- 標準式 $y = ax^2 + bx + c$
+- 頂點式 $y = a(x-h)^2 + k$
+- 頂點公式 $h = -\frac{b}{2a}$
+- 開口方向
+  - $a > 0$ 向上（最小值）
+  - $a < 0$ 向下（最大值）
+- 判別式 $D = b^2 - 4ac$
   - $D > 0$ 兩相異實根
   - $D = 0$ 重根
   - $D < 0$ 無實根
-- 對稱軸（axis of symmetry）: $x = -\frac{b}{2a}$
+- 對稱軸 $x = -\frac{b}{2a}$
 ### 高次多項式
-- 多項式除法（polynomial division）: 長除法與綜合除法
-- 餘式定理（remainder theorem）: $f(x)$ 除以 $(x - a)$ 的餘式為 $f(a)$
-- 因式定理（factor theorem）: $f(a) = 0$ 則 $(x - a)$ 為 $f(x)$ 的因式
-- 勘根定理（intermediate value theorem）: 連續函數若 $f(a) \cdot f(b) < 0$，則 $(a, b)$ 間至少有一根
-- 💡 聯想：二次函數曲線就像投籃的拋物線，頂點是球飛到最高的瞬間
-- 💡 聯想：判別式 $D$ 就像考試成績，$D > 0$ 過關有根、$D = 0$ 壓線擦過、$D < 0$ 不及格沒根
+- 餘式定理: 除以 $(x-a)$ 餘式 $= f(a)$
+- 因式定理: $f(a) = 0 \Rightarrow (x-a)$ 為因式
+- 綜合除法: 快速求餘式
+- 勘根定理: $f(a) \cdot f(b) < 0$ → 區間有根
+- 💡 投籃拋物線就是二次函數，頂點是最高點
+- 💡 判別式像考試：$D>0$ 過關、$D=0$ 壓線、$D<0$ 不及格
 
-## 指數與對數函數
+## 指數與對數
+### 指數律
+- 同底相乘 $a^m \times a^n = a^{m+n}$
+- 次方的次方 $(a^m)^n = a^{mn}$
+- 零次方 $a^0 = 1$
 ### 指數函數
-- 指數律（laws of exponents）: $a^m \times a^n = a^{m+n}$，$(a^m)^n = a^{mn}$
-- 指數函數圖形（exponential graph）: $y = a^x$（$a > 0$ 且 $a \neq 1$）
-  - $a > 1$ 為遞增函數
-  - $0 < a < 1$ 為遞減函數
-- 恆過定點（fixed point）: $(0, 1)$，因為 $a^0 = 1$
-### 對數函數
-- 對數定義（logarithm definition）: $y = \log_a x$ 等價於 $a^y = x$
-- 對數律（laws of logarithms）:
-  - $\log_a(xy) = \log_a x + \log_a y$
-  - $\log_a\!\left(\frac{x}{y}\right) = \log_a x - \log_a y$
-  - $\log_a(x^n) = n \cdot \log_a x$
-- 換底公式（change of base）: $\log_a b = \frac{\log b}{\log a}$
-- 常用對數（common log）: $\log_{10}$，自然對數（natural log）: $\ln = \log_e$
+- 圖形 $y = a^x$（$a > 0, a \neq 1$）
+- $a > 1$ 遞增
+- $0 < a < 1$ 遞減
+- 恆過定點 $(0, 1)$
+### 對數定義
+- $\log_a x = y \iff a^y = x$
+- 底數 $a > 0, a \neq 1$
+- 真數 $x > 0$
+### 對數三律
+- 乘法律 $\log_a(xy) = \log_a x + \log_a y$
+- 除法律 $\log_a\!\left(\frac{x}{y}\right) = \log_a x - \log_a y$
+- 次方律 $\log_a(x^n) = n \log_a x$
+### 換底公式
+- $\log_a b = \frac{\log b}{\log a} = \frac{\ln b}{\ln a}$
+- 常用對數 $\log = \log_{10}$
+- 自然對數 $\ln = \log_e$
 ### 指數與對數方程式
-- 指數方程式（exponential equations）: 同底比較指數
-- 對數方程式（logarithmic equations）: 化為指數形式求解
-- 定義域限制（domain restriction）: 對數的真數必須 $> 0$
-- 💡 聯想：地震規模用對數，規模每增加 1 能量增 30 倍——這就是對數壓縮大數的威力
-- 💡 聯想：細菌每小時分裂一次就是 $2^t$ 指數成長，從 1 個到 10 億個只需要 30 小時
-### 指數成長與衰退模型
-- 指數成長（exponential growth）: $N(t) = N_0 \cdot a^t$（$a > 1$）
-  - 人口成長、細菌繁殖、複利計算
-- 指數衰退（exponential decay）: $N(t) = N_0 \cdot a^t$（$0 < a < 1$）
+- 指數方程式: 同底比指數
+- 對數方程式: 化為指數形式
+- 驗算: 真數 $> 0$
+### 指數成長與衰退
+- 成長 $N(t) = N_0 \cdot a^t$（$a > 1$）
+  - 人口成長、複利計算
+- 衰退 $N(t) = N_0 \cdot a^t$（$0 < a < 1$）
   - 放射性衰變、藥物代謝
-- 半衰期（half-life）: 衰退至 $\frac{1}{2}$ 所需時間 $t_{1/2}$，$N_0 \cdot a^{t_{1/2}} = \frac{N_0}{2}$
-- 倍增時間（doubling time）: 成長至 $2$ 倍所需時間
-- 💡 聯想：COVID-19 初期感染人數每 3 天翻倍，就是指數成長的真實案例
+- 半衰期 $t_{1/2}$: 衰減至一半
+- 倍增時間: 成長至兩倍
+- 💡 地震規模用對數，每增 1 級能量增 32 倍
+- 💡 細菌分裂 $2^t$ 成長，1→10 億只需 30 小時
 
 ## 三角函數
 ### 三角比
-- 直角三角形定義（right triangle definition）:
-  - $\sin\theta = \frac{\text{對邊}}{\text{斜邊}}$
-  - $\cos\theta = \frac{\text{鄰邊}}{\text{斜邊}}$
-  - $\tan\theta = \frac{\text{對邊}}{\text{鄰邊}}$
-- 特殊角（special angles）: $30°$、$45°$、$60°$ 的三角比值
-- 互餘關係（complementary relation）: $\sin\theta = \cos(90° - \theta)$
+- $\sin\theta$: 對邊/斜邊
+- $\cos\theta$: 鄰邊/斜邊
+- $\tan\theta$: 對邊/鄰邊
+- 特殊角 30°、45°、60°
+- 互餘 $\sin\theta = \cos(90° - \theta)$
 ### 廣義角與弧度
-- 廣義角（general angle）: 角度可為任意實數
-- 弧度（radian）: $\pi \text{ rad} = 180°$
-- 弧長公式（arc length）: $s = r\theta$（$\theta$ 為弧度）
-- 扇形面積（sector area）: $A = \frac{1}{2}r^2\theta$
+- 弧度 $\pi$ rad $= 180°$
+- 弧長 $s = r\theta$
+- 扇形面積 $A = \frac{1}{2}r^2\theta$
+- ASTC 象限判正負
 ### 三角函數圖形
-- 正弦函數（sine function）: $y = \sin x$，週期 $2\pi$
-- 餘弦函數（cosine function）: $y = \cos x$，週期 $2\pi$
-- 正切函數（tangent function）: $y = \tan x$，週期 $\pi$
-- 振幅（amplitude）: $y = A\sin(Bx + C)$ 中 $|A|$ 為振幅
-- 週期（period）: $T = \frac{2\pi}{|B|}$
+- $y = A\sin(Bx + C)$
+- 振幅 $|A|$
+- 週期 $T = \frac{2\pi}{|B|}$
+- 相位移 $-C/B$
 ### 三角恆等式
-- 畢氏恆等式（Pythagorean identity）: $\sin^2\theta + \cos^2\theta = 1$
-- 和角公式（addition formulas）:
-  - $\sin(\alpha \pm \beta) = \sin\alpha\cos\beta \pm \cos\alpha\sin\beta$
-  - $\cos(\alpha \pm \beta) = \cos\alpha\cos\beta \mp \sin\alpha\sin\beta$
-- 倍角公式（double angle）: $\sin 2\theta = 2\sin\theta\cos\theta$，$\cos 2\theta = \cos^2\theta - \sin^2\theta$
-- 正弦定理（law of sines）: $\frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C} = 2R$
-- 餘弦定理（law of cosines）: $c^2 = a^2 + b^2 - 2ab\cos C$
-- 💡 聯想：摩天輪的座艙高度隨時間變化就是正弦函數，一圈就是一個週期
-- 💡 聯想：手機的聲音訊號就是多個三角函數疊加在一起的波形
+- 畢氏恆等式 $\sin^2\theta + \cos^2\theta = 1$
+- 和角公式 $\sin(\alpha \pm \beta) = \sin\alpha\cos\beta \pm \cos\alpha\sin\beta$
+- 餘弦和角 $\cos(\alpha \pm \beta) = \cos\alpha\cos\beta \mp \sin\alpha\sin\beta$
+- 倍角公式 $\sin 2\theta = 2\sin\theta\cos\theta$
+### 正弦與餘弦定理
+- 正弦定理 $\frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C} = 2R$
+- 餘弦定理 $c^2 = a^2 + b^2 - 2ab\cos C$
+- AAS / ASA → 正弦定理
+- SAS / SSS → 餘弦定理
+- 💡 摩天輪座艙高度隨時間變化 = 正弦波形
+- 💡 手機聲波 = 多個三角函數疊加
 
 ## 極限與微積分初步
 ### 極限概念
-- 函數極限（limit of function）: $\lim_{x \to a} f(x) = L$
-- 單邊極限（one-sided limits）: 左極限與右極限須相等
-- 極限運算性質（limit properties）: 可加減乘除（分母不為零）
-- 連續性（continuity）: $f(a) = \lim_{x \to a} f(x)$
+- $\lim_{x \to a} f(x) = L$
+- 左極限 $=$ 右極限 → 極限存在
+- 連續: $f(a) = \lim_{x \to a} f(x)$
+- 不定型 $\frac{0}{0}$: 化簡後代入
 ### 導數
-- 導數定義（derivative definition）: $f'(x) = \lim_{\Delta x \to 0} \frac{f(x + \Delta x) - f(x)}{\Delta x}$
-- 切線斜率（tangent slope）: $f'(a)$ 為曲線在 $x = a$ 處的切線斜率
-- 基本微分公式（basic differentiation）:
-  - $(x^n)' = nx^{n-1}$
-  - $(c)' = 0$
-  - $(cf(x))' = cf'(x)$
-  - $(f \pm g)' = f' \pm g'$
+- 定義 $f'(x) = \lim_{\Delta x \to 0} \frac{f(x+\Delta x)-f(x)}{\Delta x}$
+- 冪法則 $(x^n)' = nx^{n-1}$
+- 常數微分 $(c)' = 0$
+- 幾何意義: 切線斜率
 ### 微分應用
-- 遞增遞減判定（increasing/decreasing）: $f'(x) > 0$ 遞增，$f'(x) < 0$ 遞減
-- 極值判定（extrema）: $f'(x) = 0$ 且導數變號為極值
-- 最佳化問題（optimization）: 利用微分求最大值或最小值
+- $f'(x) > 0$ 遞增
+- $f'(x) < 0$ 遞減
+- $f'(x) = 0$ → 極值候選
+- 最佳化: 建式 → 微分 → 令 $f'=0$ → 驗證
 ### 積分初步
-- 不定積分（indefinite integral）: $\int x^n \, dx = \frac{x^{n+1}}{n+1} + C$
-- 定積分（definite integral）: $\int_a^b f(x) \, dx = F(b) - F(a)$
-- 面積計算（area calculation）: 曲線與 $x$ 軸圍成的面積
-- 微積分基本定理（fundamental theorem）: 微分與積分互為逆運算
-- 💡 聯想：瞬時速度是「位移的導數」，開車看時速表就是在讀導數
-- 💡 聯想：走路的總距離就是「速度的積分」，把每秒的速度加起來就是你走了多遠
+- 不定積分 $\int x^n dx = \frac{x^{n+1}}{n+1} + C$
+- 定積分 $\int_a^b f(x) dx = F(b) - F(a)$
+- 面積: 曲線與 $x$ 軸圍成區域
+- 微積分基本定理: 微分 ↔ 積分互逆
+- 💡 時速表讀數 = 位移的導數（瞬時速度）
+- 💡 總距離 = 速度函數的積分

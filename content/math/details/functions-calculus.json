@@ -88,65 +88,6 @@
         "高次多項式先用因式定理猜根，再用綜合除法降次"
       ]
     },
-    "指數與對數函數": {
-      "formulaDetails": [
-        {
-          "title": "對數乘法律",
-          "latex": "\\log_a(xy) = \\log_a x + \\log_a y",
-          "symbols": [
-            {
-              "symbol": "a",
-              "name": "底數 (Base)",
-              "unit": "無",
-              "type": "純量"
-            },
-            {
-              "symbol": "x, y",
-              "name": "真數 (Argument)",
-              "unit": "無",
-              "type": "純量"
-            }
-          ],
-          "geometricMeaning": "對數將乘法運算轉化為加法運算，這是對數發明的核心意義",
-          "examTips": [
-            "三大對數律：乘法變加法、除法變減法、次方變乘法",
-            "使用條件：底數 a > 0 且 a ≠ 1，真數 > 0"
-          ]
-        },
-        {
-          "title": "換底公式",
-          "latex": "\\log_a b = \\frac{\\log b}{\\log a} = \\frac{\\ln b}{\\ln a}",
-          "symbols": [
-            {
-              "symbol": "\\log",
-              "name": "常用對數 (Common Log)",
-              "unit": "無",
-              "type": "函數"
-            },
-            {
-              "symbol": "\\ln",
-              "name": "自然對數 (Natural Log)",
-              "unit": "無",
-              "type": "函數"
-            }
-          ],
-          "geometricMeaning": "任何底的對數都可以用常用對數或自然對數來表示",
-          "examTips": [
-            "計算機只有 log 和 ln，其他底數必須換底",
-            "換底公式是比較不同底對數大小的關鍵"
-          ]
-        }
-      ],
-      "associations": [
-        "地震規模用對數：規模每增加 1，能量增加約 32 倍",
-        "音量的分貝也是對數尺度——人耳對聲音的感受是對數性的"
-      ],
-      "examTips": [
-        "指數函數 y = aˣ 與對數函數 y = logₐx 互為反函數，圖形對稱於 y = x",
-        "底數 a > 1 時遞增，0 < a < 1 時遞減",
-        "對數方程式解完要回代驗算：真數必須 > 0"
-      ]
-    },
     "三角函數": {
       "formulaDetails": [
         {
@@ -164,58 +105,6 @@
           "examTips": [
             "已知 sinθ 或 cosθ 其中一個，可用此式求另一個（注意象限判正負）",
             "變形：1 - sin²θ = cos²θ，1 - cos²θ = sin²θ"
-          ]
-        },
-        {
-          "title": "正弦定理",
-          "latex": "\\frac{a}{\\sin A} = \\frac{b}{\\sin B} = \\frac{c}{\\sin C} = 2R",
-          "symbols": [
-            {
-              "symbol": "a, b, c",
-              "name": "三角形三邊長",
-              "unit": "無",
-              "type": "純量"
-            },
-            {
-              "symbol": "A, B, C",
-              "name": "三邊對應的角",
-              "unit": "^\\circ",
-              "type": "純量"
-            },
-            {
-              "symbol": "R",
-              "name": "外接圓半徑",
-              "unit": "無",
-              "type": "純量"
-            }
-          ],
-          "geometricMeaning": "三角形的邊長與其對角的正弦值之比為常數，等於外接圓直徑",
-          "examTips": [
-            "已知兩角一邊（AAS, ASA）→ 用正弦定理",
-            "注意 SSA 的情況可能有兩解（歧義情況）"
-          ]
-        },
-        {
-          "title": "餘弦定理",
-          "latex": "c^2 = a^2 + b^2 - 2ab\\cos C",
-          "symbols": [
-            {
-              "symbol": "a, b, c",
-              "name": "三角形三邊長",
-              "unit": "無",
-              "type": "純量"
-            },
-            {
-              "symbol": "C",
-              "name": "c 邊的對角",
-              "unit": "^\\circ",
-              "type": "純量"
-            }
-          ],
-          "geometricMeaning": "勾股定理的推廣——當 C = 90° 時退化為 a² + b² = c²",
-          "examTips": [
-            "已知三邊求角 → 用餘弦定理",
-            "已知兩邊一夾角（SAS）→ 用餘弦定理"
           ]
         },
         {
@@ -320,64 +209,6 @@
         "極限計算：代入法 → 化簡法 → 羅必達法",
         "微分應用：f'(x) > 0 遞增，f'(x) < 0 遞減，f'(x) = 0 可能是極值",
         "積分就是微分的逆運算，求面積是最常見的應用"
-      ]
-    },
-    "指數成長與衰退模型": {
-      "formulaDetails": [
-        {
-          "title": "指數成長模型",
-          "latex": "N(t) = N_0 \\cdot a^t \\quad (a > 1)",
-          "symbols": [
-            {
-              "symbol": "N_0",
-              "name": "初始量",
-              "unit": "無",
-              "type": "純量"
-            },
-            {
-              "symbol": "a",
-              "name": "成長倍率（每單位時間乘以 a）",
-              "unit": "無",
-              "type": "純量"
-            },
-            {
-              "symbol": "t",
-              "name": "時間",
-              "unit": "無",
-              "type": "純量"
-            }
-          ],
-          "geometricMeaning": "數量隨時間呈指數增長的曲線，越後面增長越快",
-          "examTips": [
-            "常見應用：人口成長、細菌繁殖、複利計算",
-            "注意區分「倍增時間」和「成長率」"
-          ]
-        },
-        {
-          "title": "半衰期公式",
-          "latex": "N_0 \\cdot a^{t_{1/2}} = \\frac{N_0}{2}",
-          "symbols": [
-            {
-              "symbol": "t_{1/2}",
-              "name": "半衰期",
-              "unit": "時間單位",
-              "type": "純量"
-            }
-          ],
-          "geometricMeaning": "物質衰減至一半所需的時間，與初始量無關",
-          "examTips": [
-            "放射性衰變、藥物代謝都是指數衰退",
-            "半衰期 = ln2 / |ln a| 或用對數直接求"
-          ]
-        }
-      ],
-      "associations": [
-        "COVID-19 疫情初期的感染人數翻倍就是指數成長",
-        "碳-14 定年法利用半衰期推算文物年代"
-      ],
-      "examTips": [
-        "指數成長與衰退是近年素養題熱門主題",
-        "解題關鍵：找出初始值 N₀ 和成長/衰退倍率 a"
       ]
     },
     "二次函數": {
@@ -545,39 +376,6 @@
       ],
       "examTips": [
         "指數函數圖形的恆過定點 (0,1) 是選擇題常考點"
-      ]
-    },
-    "對數函數": {
-      "formulaDetails": [
-        {
-          "title": "對數定義",
-          "latex": "y = \\log_a x \\iff a^y = x",
-          "symbols": [
-            {
-              "symbol": "a",
-              "name": "底數 (a > 0, a ≠ 1)",
-              "unit": "無",
-              "type": "純量"
-            },
-            {
-              "symbol": "x",
-              "name": "真數 (x > 0)",
-              "unit": "無",
-              "type": "純量"
-            }
-          ],
-          "geometricMeaning": "對數是指數的逆運算，圖形與指數函數對稱於 y = x",
-          "examTips": [
-            "對數三律：乘法→加法、除法→減法、次方→乘法",
-            "定義域限制：真數 > 0 是解題必檢查項"
-          ]
-        }
-      ],
-      "associations": [
-        "pH 值就是氫離子濃度的負對數——對數壓縮大數的威力"
-      ],
-      "examTips": [
-        "對數方程式解完務必回代，確認真數 > 0"
       ]
     },
     "指數與對數方程式": {
@@ -859,6 +657,322 @@
       ],
       "examTips": [
         "微積分基本定理：微分與積分互為逆運算"
+      ]
+    },
+    "指數與對數": {
+      "formulaDetails": [],
+      "associations": [
+        "指數函數 y = aˣ 與對數函數 y = logₐx 互為反函數，圖形對稱於 y = x",
+        "音量的分貝也是對數尺度——人耳對聲音的感受是對數性的"
+      ],
+      "examTips": [
+        "指數函數 y = aˣ 與對數函數 y = logₐx 互為反函數，圖形對稱於 y = x",
+        "底數 a > 1 時遞增，0 < a < 1 時遞減",
+        "對數方程式解完要回代驗算：真數必須 > 0"
+      ]
+    },
+    "對數定義": {
+      "formulaDetails": [
+        {
+          "title": "對數定義",
+          "latex": "y = \\log_a x \\iff a^y = x",
+          "symbols": [
+            {
+              "symbol": "a",
+              "name": "底數 (a > 0, a ≠ 1)",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "x",
+              "name": "真數 (x > 0)",
+              "unit": "無",
+              "type": "純量"
+            }
+          ],
+          "geometricMeaning": "對數是指數的逆運算，圖形與指數函數對稱於 y = x",
+          "examTips": [
+            "對數三律：乘法→加法、除法→減法、次方→乘法",
+            "定義域限制：真數 > 0 是解題必檢查項"
+          ]
+        }
+      ],
+      "associations": [
+        "pH 值就是氫離子濃度的負對數——對數壓縮大數的威力"
+      ],
+      "examTips": [
+        "對數三律：乘法→加法、除法→減法、次方→乘法",
+        "定義域限制：真數 > 0 是解題必檢查項"
+      ]
+    },
+    "對數三律": {
+      "formulaDetails": [
+        {
+          "title": "對數乘法律",
+          "latex": "\\log_a(xy) = \\log_a x + \\log_a y",
+          "symbols": [
+            {
+              "symbol": "a",
+              "name": "底數 (Base)",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "x, y",
+              "name": "真數 (Argument)",
+              "unit": "無",
+              "type": "純量"
+            }
+          ],
+          "geometricMeaning": "對數將乘法運算轉化為加法運算，這是對數發明的核心意義",
+          "examTips": [
+            "三大對數律：乘法變加法、除法變減法、次方變乘法",
+            "使用條件：底數 a > 0 且 a ≠ 1，真數 > 0"
+          ]
+        },
+        {
+          "title": "對數除法律",
+          "latex": "\\log_a\\!\\left(\\frac{x}{y}\\right) = \\log_a x - \\log_a y",
+          "symbols": [
+            {
+              "symbol": "a",
+              "name": "底數 (Base)",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "x, y",
+              "name": "真數 (Argument)",
+              "unit": "無",
+              "type": "純量"
+            }
+          ],
+          "geometricMeaning": "對數將除法運算轉化為減法運算",
+          "examTips": [
+            "常用於化簡對數表達式",
+            "x, y 都必須 > 0"
+          ]
+        },
+        {
+          "title": "對數次方律",
+          "latex": "\\log_a(x^n) = n \\log_a x",
+          "symbols": [
+            {
+              "symbol": "n",
+              "name": "指數（次方）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "x",
+              "name": "真數 (x > 0)",
+              "unit": "無",
+              "type": "純量"
+            }
+          ],
+          "geometricMeaning": "對數將次方運算轉化為乘法運算",
+          "examTips": [
+            "常用於解指數方程式：兩邊取對數後用次方律降次",
+            "注意 log_a(1) = 0，因為 a^0 = 1"
+          ]
+        }
+      ],
+      "associations": [
+        "對數律就像翻譯機——把乘除次方翻譯成加減乘，讓計算變簡單",
+        "地震規模用對數：規模每增加 1，能量增加約 32 倍"
+      ],
+      "examTips": [
+        "三大對數律是化簡對數運算的核心工具",
+        "使用條件：底數 a > 0 且 a ≠ 1，真數 > 0"
+      ]
+    },
+    "換底公式": {
+      "formulaDetails": [
+        {
+          "title": "換底公式",
+          "latex": "\\log_a b = \\frac{\\log b}{\\log a} = \\frac{\\ln b}{\\ln a}",
+          "symbols": [
+            {
+              "symbol": "\\log",
+              "name": "常用對數 (Common Log)",
+              "unit": "無",
+              "type": "函數"
+            },
+            {
+              "symbol": "\\ln",
+              "name": "自然對數 (Natural Log)",
+              "unit": "無",
+              "type": "函數"
+            }
+          ],
+          "geometricMeaning": "任何底的對數都可以用常用對數或自然對數來表示",
+          "examTips": [
+            "計算機只有 log 和 ln，其他底數必須換底",
+            "換底公式是比較不同底對數大小的關鍵"
+          ]
+        }
+      ],
+      "associations": [
+        "計算機只有 log 和 ln 按鍵，其他底數都要用換底公式"
+      ],
+      "examTips": [
+        "換底公式是比較不同底對數大小的關鍵",
+        "常用對數 log = log₁₀，自然對數 ln = logₑ"
+      ]
+    },
+    "指數成長與衰退": {
+      "formulaDetails": [
+        {
+          "title": "指數成長模型",
+          "latex": "N(t) = N_0 \\cdot a^t \\quad (a > 1)",
+          "symbols": [
+            {
+              "symbol": "N_0",
+              "name": "初始量",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "a",
+              "name": "成長倍率（每單位時間乘以 a）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "t",
+              "name": "時間",
+              "unit": "無",
+              "type": "純量"
+            }
+          ],
+          "geometricMeaning": "數量隨時間呈指數增長的曲線，越後面增長越快",
+          "examTips": [
+            "常見應用：人口成長、細菌繁殖、複利計算",
+            "注意區分「倍增時間」和「成長率」"
+          ]
+        },
+        {
+          "title": "半衰期公式",
+          "latex": "N_0 \\cdot a^{t_{1/2}} = \\frac{N_0}{2}",
+          "symbols": [
+            {
+              "symbol": "t_{1/2}",
+              "name": "半衰期",
+              "unit": "時間單位",
+              "type": "純量"
+            }
+          ],
+          "geometricMeaning": "物質衰減至一半所需的時間，與初始量無關",
+          "examTips": [
+            "放射性衰變、藥物代謝都是指數衰退",
+            "半衰期 = ln2 / |ln a| 或用對數直接求"
+          ]
+        }
+      ],
+      "associations": [
+        "COVID-19 疫情初期的感染人數翻倍就是指數成長",
+        "碳-14 定年法利用半衰期推算文物年代"
+      ],
+      "examTips": [
+        "指數成長與衰退是近年素養題熱門主題",
+        "解題關鍵：找出初始值 N₀ 和成長/衰退倍率 a"
+      ]
+    },
+    "指數律": {
+      "formulaDetails": [
+        {
+          "title": "指數律",
+          "latex": "a^m \\times a^n = a^{m+n}, \\quad (a^m)^n = a^{mn}",
+          "symbols": [
+            {
+              "symbol": "a",
+              "name": "底數",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "m, n",
+              "name": "指數",
+              "unit": "無",
+              "type": "純量"
+            }
+          ],
+          "geometricMeaning": "指數律是所有指數運算的基礎規則",
+          "examTips": [
+            "同底相乘指數相加，次方的次方指數相乘",
+            "a⁰ = 1 是恆過定點 (0,1) 的原因"
+          ]
+        }
+      ],
+      "associations": [
+        "細菌每小時分裂一次就是 2^t 指數成長"
+      ],
+      "examTips": [
+        "指數律是化簡指數方程式的基礎",
+        "同底比較指數：a > 1 時底同取指數大小"
+      ]
+    },
+    "正弦與餘弦定理": {
+      "formulaDetails": [
+        {
+          "title": "正弦定理",
+          "latex": "\\frac{a}{\\sin A} = \\frac{b}{\\sin B} = \\frac{c}{\\sin C} = 2R",
+          "symbols": [
+            {
+              "symbol": "a, b, c",
+              "name": "三角形三邊長",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "A, B, C",
+              "name": "三邊對應的角",
+              "unit": "^\\circ",
+              "type": "純量"
+            },
+            {
+              "symbol": "R",
+              "name": "外接圓半徑",
+              "unit": "無",
+              "type": "純量"
+            }
+          ],
+          "geometricMeaning": "三角形的邊長與其對角的正弦值之比為常數，等於外接圓直徑",
+          "examTips": [
+            "已知兩角一邊（AAS, ASA）→ 用正弦定理",
+            "注意 SSA 的情況可能有兩解（歧義情況）"
+          ]
+        },
+        {
+          "title": "餘弦定理",
+          "latex": "c^2 = a^2 + b^2 - 2ab\\cos C",
+          "symbols": [
+            {
+              "symbol": "a, b, c",
+              "name": "三角形三邊長",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "C",
+              "name": "c 邊的對角",
+              "unit": "^\\circ",
+              "type": "純量"
+            }
+          ],
+          "geometricMeaning": "勾股定理的推廣——當 C = 90° 時退化為 a² + b² = c²",
+          "examTips": [
+            "已知三邊求角 → 用餘弦定理",
+            "已知兩邊一夾角（SAS）→ 用餘弦定理"
+          ]
+        }
+      ],
+      "associations": [
+        "正弦定理和餘弦定理是解三角形的兩大工具，像左右手一樣互補"
+      ],
+      "examTips": [
+        "AAS/ASA 用正弦定理，SAS/SSS 用餘弦定理",
+        "正弦定理的 2R 可以求外接圓半徑"
       ]
     }
   }
