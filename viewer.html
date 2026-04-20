@@ -1346,7 +1346,7 @@
             }
           });
         }
-        renderChildren(parentNode, container, 0, 4);
+        if (!hasFormulas) renderChildren(parentNode, container, 0, 4);
 
         // Append associations at the end of concepts
         if (associations.length > 0) {
@@ -1389,10 +1389,15 @@
       }
 
       function findDetailForNode(nodeText, pathParts) {
-        // Scoped lookup only (avoid cross-topic collision)
+        // Scoped lookup (all-topics mode: pathParts includes H1 topic title)
         const scopedId = resolveTopicIdFromPath(pathParts);
         if (scopedId && detailsCache[scopedId]) {
           const d = detailsCache[scopedId];
+          if (d.nodes && d.nodes[nodeText]) return d.nodes[nodeText];
+        }
+        // Single-topic mode fallback: only one file loaded, use it directly
+        if (topicId && detailsCache[topicId]) {
+          const d = detailsCache[topicId];
           if (d.nodes && d.nodes[nodeText]) return d.nodes[nodeText];
         }
         return null;

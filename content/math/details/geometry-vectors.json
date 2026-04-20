@@ -124,6 +124,12 @@
               "type": "純量"
             },
             {
+              "symbol": "|\\vec{b}|",
+              "name": "向量 b 的長度",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
               "symbol": "\\theta",
               "name": "兩向量夾角",
               "unit": "^\\circ",
@@ -288,9 +294,21 @@
           "symbols": [
             {
               "symbol": "p",
-              "name": "焦點到頂點距離 (Focus Distance)",
+              "name": "焦點到頂點距離（p > 0 開口朝右）",
               "unit": "無",
               "type": "純量"
+            },
+            {
+              "symbol": "F(p, 0)",
+              "name": "焦點座標",
+              "unit": "無",
+              "type": "座標"
+            },
+            {
+              "symbol": "x = -p",
+              "name": "準線方程式",
+              "unit": "無",
+              "type": "方程式"
             }
           ],
           "geometricMeaning": "拋物線上任一點到焦點與準線等距",
@@ -415,6 +433,18 @@
               "name": "兩向量的內積",
               "unit": "無",
               "type": "純量"
+            },
+            {
+              "symbol": "|\\vec{a}|",
+              "name": "向量 a 的長度",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "|\\vec{b}|",
+              "name": "向量 b 的長度",
+              "unit": "無",
+              "type": "純量"
             }
           ],
           "geometricMeaning": "內積的絕對值不超過兩向量長度之積，等號在兩向量平行時成立",
@@ -436,8 +466,8 @@
     "直線方程式": {
       "formulaDetails": [
         {
-          "title": "直線方程式的四種形式",
-          "latex": "y = mx + b, \\quad y - y_1 = m(x - x_1), \\quad ax + by + c = 0",
+          "title": "斜截式",
+          "latex": "y = mx + b",
           "symbols": [
             {
               "symbol": "m",
@@ -452,10 +482,77 @@
               "type": "純量"
             }
           ],
-          "geometricMeaning": "不同形式適用於不同已知條件，描述的都是同一條直線",
+          "geometricMeaning": "已知斜率與 y 截距時最直觀，看圖判讀最快",
           "examTips": [
-            "斜截式看圖最快，一般式算距離最方便",
-            "截距式 x/a + y/b = 1 適用於已知兩截距"
+            "給圖看斜率正負、y 截距位置就能寫出方程式"
+          ]
+        },
+        {
+          "title": "點斜式",
+          "latex": "y - y_1 = m(x - x_1)",
+          "symbols": [
+            {
+              "symbol": "m",
+              "name": "斜率",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "(x_1, y_1)",
+              "name": "直線上的已知點",
+              "unit": "無",
+              "type": "座標"
+            }
+          ],
+          "geometricMeaning": "已知一點和斜率即可寫出直線方程式",
+          "examTips": [
+            "兩點求斜率：m = (y₂ - y₁) / (x₂ - x₁)，再套點斜式"
+          ]
+        },
+        {
+          "title": "一般式",
+          "latex": "ax + by + c = 0",
+          "symbols": [
+            {
+              "symbol": "a, b, c",
+              "name": "直線方程式係數（a、b 不同時為 0）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "(a, b)",
+              "name": "直線的法向量",
+              "unit": "無",
+              "type": "向量"
+            }
+          ],
+          "geometricMeaning": "可表示任意直線（含垂直線），法向量為 (a, b)",
+          "examTips": [
+            "算點到直線距離前先化為一般式",
+            "斜率 = -a/b（b ≠ 0）"
+          ]
+        },
+        {
+          "title": "截距式",
+          "latex": "\\frac{x}{p} + \\frac{y}{q} = 1",
+          "symbols": [
+            {
+              "symbol": "p",
+              "name": "x 截距",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "q",
+              "name": "y 截距",
+              "unit": "無",
+              "type": "純量"
+            }
+          ],
+          "geometricMeaning": "直線與 x 軸交於 (p, 0)、與 y 軸交於 (0, q)",
+          "examTips": [
+            "已知兩截距時最快",
+            "截距式不適用於過原點或平行於座標軸的直線"
           ]
         }
       ],
@@ -476,7 +573,7 @@
               "symbol": "(x_0, y_0)",
               "name": "點座標",
               "unit": "無",
-              "type": "純量"
+              "type": "座標"
             },
             {
               "symbol": "ax+by+c=0",
@@ -536,7 +633,7 @@
               "symbol": "(h,k)",
               "name": "圓心",
               "unit": "無",
-              "type": "純量"
+              "type": "座標"
             },
             {
               "symbol": "r",
@@ -576,6 +673,12 @@
               "name": "分量",
               "unit": "無",
               "type": "純量"
+            },
+            {
+              "symbol": "\\vec{i}, \\vec{j}",
+              "name": "x、y 軸的單位向量",
+              "unit": "無",
+              "type": "向量"
             }
           ],
           "geometricMeaning": "向量具有大小（長度）與方向，可分解為水平與垂直分量",
@@ -595,20 +698,49 @@
     "向量運算": {
       "formulaDetails": [
         {
-          "title": "向量加法與純量乘法",
-          "latex": "\\vec{a} + \\vec{b} = (a_1+b_1, a_2+b_2), \\quad k\\vec{a} = (ka_1, ka_2)",
+          "title": "向量加法（座標式）",
+          "latex": "\\vec{a} + \\vec{b} = (a_1 + b_1, \\; a_2 + b_2)",
+          "symbols": [
+            {
+              "symbol": "\\vec{a} = (a_1, a_2)",
+              "name": "向量 a",
+              "unit": "無",
+              "type": "向量"
+            },
+            {
+              "symbol": "\\vec{b} = (b_1, b_2)",
+              "name": "向量 b",
+              "unit": "無",
+              "type": "向量"
+            }
+          ],
+          "geometricMeaning": "幾何上對應三角形法則或平行四邊形法則；座標上分量各自相加",
+          "examTips": [
+            "減法 a⃗ - b⃗ = 加上反向向量 (-b⃗)",
+            "向量相等 ⇔ 對應分量相等"
+          ]
+        },
+        {
+          "title": "純量乘法",
+          "latex": "k\\vec{a} = (k a_1, \\; k a_2)",
           "symbols": [
             {
               "symbol": "k",
-              "name": "純量",
+              "name": "純量（實數）",
               "unit": "無",
               "type": "純量"
+            },
+            {
+              "symbol": "\\vec{a} = (a_1, a_2)",
+              "name": "原向量",
+              "unit": "無",
+              "type": "向量"
             }
           ],
-          "geometricMeaning": "加法：平行四邊形法則；純量乘法：伸縮方向",
+          "geometricMeaning": "向量長度伸縮為 |k| 倍；k>0 同向、k<0 反向、k=0 為零向量",
           "examTips": [
-            "減法 = 加上反向向量",
-            "k > 0 同向、k < 0 反向、|k| 決定倍率"
+            "兩向量平行 ⇔ 其中一個為另一個的純量倍",
+            "物理上分力、合力計算常用純量乘"
           ]
         }
       ],
@@ -626,8 +758,26 @@
           "latex": "\\text{proj}_{\\vec{b}}\\vec{a} = \\frac{\\vec{a} \\cdot \\vec{b}}{|\\vec{b}|^2}\\vec{b}",
           "symbols": [
             {
+              "symbol": "\\vec{a}",
+              "name": "被投影的向量",
+              "unit": "無",
+              "type": "向量"
+            },
+            {
+              "symbol": "\\vec{b}",
+              "name": "投影方向的向量",
+              "unit": "無",
+              "type": "向量"
+            },
+            {
               "symbol": "\\vec{a} \\cdot \\vec{b}",
-              "name": "內積",
+              "name": "兩向量的內積",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "|\\vec{b}|^2",
+              "name": "向量 b 的長度平方",
               "unit": "無",
               "type": "純量"
             }
@@ -653,10 +803,22 @@
           "latex": "d = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2}",
           "symbols": [
             {
-              "symbol": "(x,y,z)",
-              "name": "三維座標",
+              "symbol": "d",
+              "name": "兩點距離",
               "unit": "無",
               "type": "純量"
+            },
+            {
+              "symbol": "(x_1, y_1, z_1)",
+              "name": "第一點座標",
+              "unit": "無",
+              "type": "座標"
+            },
+            {
+              "symbol": "(x_2, y_2, z_2)",
+              "name": "第二點座標",
+              "unit": "無",
+              "type": "座標"
             }
           ],
           "geometricMeaning": "畢氏定理在三維的推廣",
@@ -676,28 +838,70 @@
     "空間向量運算": {
       "formulaDetails": [
         {
-          "title": "空間內積與外積",
-          "latex": "\\vec{a} \\cdot \\vec{b} = a_1b_1 + a_2b_2 + a_3b_3",
+          "title": "空間內積（座標形式）",
+          "latex": "\\vec{a} \\cdot \\vec{b} = a_1 b_1 + a_2 b_2 + a_3 b_3",
+          "symbols": [
+            {
+              "symbol": "\\vec{a} \\cdot \\vec{b}",
+              "name": "內積（結果為純量）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "(a_1, a_2, a_3)",
+              "name": "向量 a 的三個分量",
+              "unit": "無",
+              "type": "座標"
+            },
+            {
+              "symbol": "(b_1, b_2, b_3)",
+              "name": "向量 b 的三個分量",
+              "unit": "無",
+              "type": "座標"
+            }
+          ],
+          "geometricMeaning": "內積為純量，用來判斷兩向量的夾角與垂直關係（內積為 0 即垂直）",
+          "examTips": [
+            "內積 = 0 ⇔ 兩向量垂直",
+            "也可寫成 |a⃗||b⃗|cosθ，與座標式互用求夾角"
+          ]
+        },
+        {
+          "title": "空間外積（行列式展開）",
+          "latex": "\\vec{a} \\times \\vec{b} = \\begin{vmatrix} \\vec{i} & \\vec{j} & \\vec{k} \\\\ a_1 & a_2 & a_3 \\\\ b_1 & b_2 & b_3 \\end{vmatrix}",
           "symbols": [
             {
               "symbol": "\\vec{a} \\times \\vec{b}",
               "name": "外積（結果為向量）",
               "unit": "無",
               "type": "向量"
+            },
+            {
+              "symbol": "|\\vec{a} \\times \\vec{b}|",
+              "name": "外積長度 = 平行四邊形面積",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "\\vec{i}, \\vec{j}, \\vec{k}",
+              "name": "三個座標軸的單位向量",
+              "unit": "無",
+              "type": "向量"
             }
           ],
-          "geometricMeaning": "內積得純量判斷夾角；外積得垂直向量，大小 = 平行四邊形面積",
+          "geometricMeaning": "外積得一向量，方向同時垂直於 a⃗ 與 b⃗（右手法則），大小等於兩向量張成的平行四邊形面積",
           "examTips": [
             "|a⃗×b⃗| = |a⃗||b⃗|sinθ",
-            "外積用行列式展開計算"
+            "外積常用來求平面法向量",
+            "三角形面積 = ½|a⃗×b⃗|"
           ]
         }
       ],
       "associations": [
-        "螺絲釘的扭力方向就是外積——垂直於施力面"
+        "螺絲釘的扭力方向就是外積——垂直於施力面（右手法則）"
       ],
       "examTips": [
-        "內積判垂直（=0）、外積求法向量和面積"
+        "內積判垂直（=0）、外積求法向量與面積"
       ]
     },
     "兩平面的關係與點面距公式": {
@@ -710,7 +914,7 @@
               "symbol": "(p,q,r)",
               "name": "點座標",
               "unit": "無",
-              "type": "純量"
+              "type": "座標"
             },
             {
               "symbol": "ax+by+cz=d",
@@ -736,26 +940,84 @@
     "空間直線": {
       "formulaDetails": [
         {
-          "title": "參數式與比例式",
-          "latex": "\\begin{cases} x=x_0+at \\\\ y=y_0+bt \\\\ z=z_0+ct \\end{cases}",
+          "title": "參數式",
+          "latex": "\\begin{cases} x=x_0+at \\\\ y=y_0+bt \\\\ z=z_0+ct \\end{cases}, \\quad t \\in \\mathbb{R}",
           "symbols": [
             {
-              "symbol": "(a,b,c)",
+              "symbol": "(x_0, y_0, z_0)",
+              "name": "直線上一已知點（起點）",
+              "unit": "無",
+              "type": "座標"
+            },
+            {
+              "symbol": "(a, b, c)",
               "name": "方向向量",
               "unit": "無",
               "type": "向量"
             },
             {
               "symbol": "t",
-              "name": "參數",
+              "name": "參數，t ∈ ℝ，代入不同值得直線上各點",
               "unit": "無",
               "type": "純量"
             }
           ],
-          "geometricMeaning": "直線由一個起點加上方向向量的倍數所描述",
+          "geometricMeaning": "直線由一個起點加上方向向量的倍數所描述；t 遍歷實數即得整條直線",
           "examTips": [
-            "比例式分母即方向向量",
-            "兩面式：兩平面交線，方向向量 = 兩法向量外積"
+            "方向向量 (a,b,c) 不可為零向量",
+            "已知兩點 P, Q 時，方向向量可取 \\overrightarrow{PQ}"
+          ]
+        },
+        {
+          "title": "比例式（對稱式）",
+          "latex": "\\frac{x - x_0}{a} = \\frac{y - y_0}{b} = \\frac{z - z_0}{c}",
+          "symbols": [
+            {
+              "symbol": "(x_0, y_0, z_0)",
+              "name": "直線上一已知點",
+              "unit": "無",
+              "type": "座標"
+            },
+            {
+              "symbol": "(a, b, c)",
+              "name": "方向向量，分母不得為 0",
+              "unit": "無",
+              "type": "向量"
+            }
+          ],
+          "geometricMeaning": "與參數式等價；比例式分母即方向向量各分量",
+          "examTips": [
+            "比例式分母 a、b、c 必須非零；若某分量為 0，需另外處理（改用參數式）",
+            "兩平面交線的方向向量 = 兩法向量的外積"
+          ]
+        },
+        {
+          "title": "兩面式（兩平面聯立）",
+          "latex": "\\begin{cases} A_1x+B_1y+C_1z+D_1=0 \\\\ A_2x+B_2y+C_2z+D_2=0 \\end{cases}",
+          "symbols": [
+            {
+              "symbol": "(A_1,B_1,C_1)",
+              "name": "第一平面的法向量",
+              "unit": "無",
+              "type": "向量"
+            },
+            {
+              "symbol": "(A_2,B_2,C_2)",
+              "name": "第二平面的法向量",
+              "unit": "無",
+              "type": "向量"
+            },
+            {
+              "symbol": "D_1, D_2",
+              "name": "各平面的常數項",
+              "unit": "無",
+              "type": "純量"
+            }
+          ],
+          "geometricMeaning": "直線視為兩平面的交線；方向向量 = 兩法向量的外積 (A₁,B₁,C₁)×(A₂,B₂,C₂)",
+          "examTips": [
+            "兩面式轉比例式：先求方向向量（外積），再找直線上一點（代特殊值解聯立）",
+            "三種表示法可互轉，依題目給的條件選用最方便的形式"
           ]
         }
       ],
@@ -810,6 +1072,18 @@
               "name": "焦點到頂點距離",
               "unit": "無",
               "type": "純量"
+            },
+            {
+              "symbol": "F(p, 0)",
+              "name": "焦點座標",
+              "unit": "無",
+              "type": "座標"
+            },
+            {
+              "symbol": "x = -p",
+              "name": "準線方程式",
+              "unit": "無",
+              "type": "方程式"
             }
           ],
           "geometricMeaning": "到焦點與準線等距的點之軌跡",
@@ -905,10 +1179,22 @@
           "latex": "X = x - h, \\quad Y = y - k",
           "symbols": [
             {
-              "symbol": "(h,k)",
+              "symbol": "(h, k)",
               "name": "平移後的新原點（圓錐曲線中心或頂點）",
               "unit": "無",
-              "type": "純量"
+              "type": "座標"
+            },
+            {
+              "symbol": "(x, y)",
+              "name": "原座標系下的點",
+              "unit": "無",
+              "type": "座標"
+            },
+            {
+              "symbol": "(X, Y)",
+              "name": "平移後新座標系下的點",
+              "unit": "無",
+              "type": "座標"
             }
           ],
           "geometricMeaning": "將曲線中心移至原點，化為標準式以辨認圖形",
@@ -934,6 +1220,12 @@
             {
               "symbol": "A, B, C",
               "name": "Ax²+Bxy+Cy² 的係數",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "\\Delta",
+              "name": "判別式（用來分類二次曲線）",
               "unit": "無",
               "type": "純量"
             }

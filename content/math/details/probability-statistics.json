@@ -171,8 +171,14 @@
               "type": "純量"
             },
             {
+              "symbol": "x_i, y_i",
+              "name": "第 i 筆資料的 x、y 值",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
               "symbol": "\\bar{x}, \\bar{y}",
-              "name": "x, y 的平均數",
+              "name": "x、y 的平均數",
               "unit": "無",
               "type": "純量"
             }
@@ -343,14 +349,26 @@
           "latex": "(a+b)^n = \\sum_{k=0}^{n} C(n,k) \\, a^{n-k} b^k",
           "symbols": [
             {
-              "symbol": "C(n,k)",
-              "name": "二項式係數",
+              "symbol": "a, b",
+              "name": "二項式的兩項",
               "unit": "無",
               "type": "純量"
             },
             {
               "symbol": "n",
               "name": "冪次",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "k",
+              "name": "展開式中 b 的指數（0 到 n）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "C(n,k)",
+              "name": "二項式係數",
               "unit": "無",
               "type": "純量"
             }
@@ -412,8 +430,20 @@
           "latex": "P(A \\cap B) = P(A) \\cdot P(B|A)",
           "symbols": [
             {
+              "symbol": "P(A \\cap B)",
+              "name": "A 且 B 同時發生的機率",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "P(A)",
+              "name": "事件 A 發生的機率",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
               "symbol": "P(B|A)",
-              "name": "在 A 發生下 B 發生的機率",
+              "name": "在 A 發生下 B 發生的條件機率",
               "unit": "無",
               "type": "純量"
             }
@@ -441,14 +471,26 @@
           "latex": "\\hat{y} = a + bx,\\quad b = \\frac{\\sum(x_i-\\bar{x})(y_i-\\bar{y})}{\\sum(x_i-\\bar{x})^2}",
           "symbols": [
             {
+              "symbol": "\\hat{y}",
+              "name": "迴歸預測值",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "a",
+              "name": "迴歸截距 = ȳ - bx̄",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
               "symbol": "b",
               "name": "迴歸斜率",
               "unit": "無",
               "type": "純量"
             },
             {
-              "symbol": "a",
-              "name": "迴歸截距",
+              "symbol": "\\bar{x}, \\bar{y}",
+              "name": "x、y 的平均數",
               "unit": "無",
               "type": "純量"
             }
@@ -538,7 +580,25 @@
           "symbols": [
             {
               "symbol": "C^n_r",
-              "name": "從 n 取 r 的組合數",
+              "name": "從 n 個中取 r 個的組合數（結果）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "n",
+              "name": "總物件數",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "r",
+              "name": "選取物件數（0 ≤ r ≤ n）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "n!",
+              "name": "n 的階乘，= n×(n-1)×⋯×1",
               "unit": "無",
               "type": "純量"
             }
@@ -630,8 +690,20 @@
           "latex": "P(A \\cup B) = P(A) + P(B) - P(A \\cap B)",
           "symbols": [
             {
-              "symbol": "P(A')",
-              "name": "餘事件機率 = 1 - P(A)",
+              "symbol": "P(A \\cup B)",
+              "name": "A 或 B 發生的機率（聯集）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "P(A \\cap B)",
+              "name": "A 且 B 同時發生的機率（交集）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "P(A), P(B)",
+              "name": "事件 A、B 各自的機率",
               "unit": "無",
               "type": "純量"
             }
@@ -659,6 +731,18 @@
             {
               "symbol": "P(A|B)",
               "name": "在 B 發生下 A 的機率",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "P(A \\cap B)",
+              "name": "A 且 B 同時發生的機率",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "P(B)",
+              "name": "事件 B 發生的機率（> 0）",
               "unit": "無",
               "type": "純量"
             }
@@ -692,6 +776,18 @@
             {
               "symbol": "P(A|B)",
               "name": "事後機率 (Posterior)",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "P(B|A)",
+              "name": "似然度 (Likelihood)",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "P(B)",
+              "name": "證據的邊際機率（全機率展開）",
               "unit": "無",
               "type": "純量"
             }
@@ -795,6 +891,12 @@
               "type": "純量"
             },
             {
+              "symbol": "x_i",
+              "name": "第 i 筆資料",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
               "symbol": "n",
               "name": "資料筆數",
               "unit": "無",
@@ -830,6 +932,24 @@
             {
               "symbol": "\\sigma",
               "name": "標準差 (Std Dev)",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "x_i",
+              "name": "第 i 筆資料",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "\\bar{x}",
+              "name": "算術平均數",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "n",
+              "name": "資料筆數",
               "unit": "無",
               "type": "純量"
             }

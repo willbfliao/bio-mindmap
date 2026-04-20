@@ -99,6 +99,24 @@
               "name": "項數",
               "unit": "無",
               "type": "純量"
+            },
+            {
+              "symbol": "a_1",
+              "name": "首項",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "a_n",
+              "name": "第 n 項（末項）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "d",
+              "name": "公差",
+              "unit": "無",
+              "type": "純量"
             }
           ],
           "geometricMeaning": "等差級數和 = 項數 × (首項+末項) / 2，相當於梯形面積",
@@ -143,6 +161,12 @@
             {
               "symbol": "S",
               "name": "無窮級數和",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "a_1",
+              "name": "首項",
               "unit": "無",
               "type": "純量"
             },
@@ -200,8 +224,14 @@
               "type": "矩陣"
             },
             {
+              "symbol": "a, b, c, d",
+              "name": "原矩陣 A 的四個元素",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
               "symbol": "ad-bc",
-              "name": "行列式（det(A)）",
+              "name": "行列式（det(A)），不得為 0",
               "unit": "無",
               "type": "純量"
             }
@@ -258,6 +288,12 @@
           "title": "一元二次不等式解法",
           "latex": "ax^2 + bx + c > 0 \\;(a > 0)",
           "symbols": [
+            {
+              "symbol": "a, b, c",
+              "name": "二次、一次、常數項係數（a ≠ 0）",
+              "unit": "無",
+              "type": "純量"
+            },
             {
               "symbol": "\\alpha, \\beta",
               "name": "方程式 ax²+bx+c=0 的兩根",
@@ -347,8 +383,20 @@
           "latex": "(A \\cap B)' = A' \\cup B', \\quad (A \\cup B)' = A' \\cap B'",
           "symbols": [
             {
-              "symbol": "A'",
-              "name": "A 的補集",
+              "symbol": "A', B'",
+              "name": "A、B 的補集（全集中不屬於 A/B 的元素）",
+              "unit": "無",
+              "type": "集合"
+            },
+            {
+              "symbol": "A \\cap B",
+              "name": "A 與 B 的交集",
+              "unit": "無",
+              "type": "集合"
+            },
+            {
+              "symbol": "A \\cup B",
+              "name": "A 與 B 的聯集",
               "unit": "無",
               "type": "集合"
             }
@@ -471,6 +519,18 @@
               "name": "x 到原點的距離",
               "unit": "無",
               "type": "純量"
+            },
+            {
+              "symbol": "a",
+              "name": "正實數上界（a > 0）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "-a < x < a",
+              "name": "等價解集（x 在以原點為中心、半徑 a 的開區間內）",
+              "unit": "無",
+              "type": "純量"
             }
           ],
           "geometricMeaning": "|x| < a 表示 x 在 -a 到 a 之間（以原點為中心的區間）",
@@ -521,6 +581,12 @@
           "latex": "a_n = a_1 + (n-1)d, \\quad S_n = \\frac{n(a_1+a_n)}{2}",
           "symbols": [
             {
+              "symbol": "a_n",
+              "name": "第 n 項",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
               "symbol": "a_1",
               "name": "首項",
               "unit": "無",
@@ -529,6 +595,12 @@
             {
               "symbol": "d",
               "name": "公差",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "n",
+              "name": "項數",
               "unit": "無",
               "type": "純量"
             },
@@ -560,14 +632,32 @@
           "latex": "a_n = a_1 \\cdot r^{n-1}, \\quad S_n = \\frac{a_1(1-r^n)}{1-r}",
           "symbols": [
             {
+              "symbol": "a_n",
+              "name": "第 n 項",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "a_1",
+              "name": "首項",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
               "symbol": "r",
               "name": "公比",
               "unit": "無",
               "type": "純量"
             },
             {
-              "symbol": "S",
-              "name": "無窮級數和 = a₁/(1-r)，|r|<1",
+              "symbol": "n",
+              "name": "項數",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "S_n",
+              "name": "前 n 項和（r ≠ 1 時適用）",
               "unit": "無",
               "type": "純量"
             }
@@ -659,14 +749,20 @@
           "latex": "\\det(A) = ad-bc, \\quad A^{-1} = \\frac{1}{ad-bc}\\begin{bmatrix} d & -b \\\\ -c & a \\end{bmatrix}",
           "symbols": [
             {
+              "symbol": "a, b, c, d",
+              "name": "二階矩陣 A 的四個元素（a、b 第一列，c、d 第二列）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
               "symbol": "\\det(A)",
-              "name": "行列式",
+              "name": "行列式（= ad - bc）",
               "unit": "無",
               "type": "純量"
             },
             {
               "symbol": "A^{-1}",
-              "name": "反矩陣",
+              "name": "反矩陣（det(A) ≠ 0 時存在）",
               "unit": "無",
               "type": "矩陣"
             }
@@ -725,14 +821,20 @@
           "latex": "|A \\cup B| = |A| + |B| - |A \\cap B|",
           "symbols": [
             {
+              "symbol": "|A|, |B|",
+              "name": "集合 A、B 的元素個數",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
               "symbol": "A \\cap B",
-              "name": "交集",
+              "name": "A 與 B 的交集",
               "unit": "無",
               "type": "集合"
             },
             {
               "symbol": "A \\cup B",
-              "name": "聯集",
+              "name": "A 與 B 的聯集",
               "unit": "無",
               "type": "集合"
             }

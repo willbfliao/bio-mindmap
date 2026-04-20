@@ -36,8 +36,14 @@
           "latex": "y = a(x - h)^2 + k",
           "symbols": [
             {
+              "symbol": "a",
+              "name": "二次項係數（決定開口方向與寬窄）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
               "symbol": "h",
-              "name": "頂點 x 座標",
+              "name": "頂點 x 座標（對稱軸 x = h）",
               "unit": "無",
               "type": "純量"
             },
@@ -96,8 +102,20 @@
           "symbols": [
             {
               "symbol": "\\theta",
-              "name": "角度 (Angle)",
+              "name": "角度",
               "unit": "^\\circ \\text{ 或 rad}",
+              "type": "純量"
+            },
+            {
+              "symbol": "\\sin\\theta",
+              "name": "角 θ 的正弦值（單位圓 y 座標）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "\\cos\\theta",
+              "name": "角 θ 的餘弦值（單位圓 x 座標）",
+              "unit": "無",
               "type": "純量"
             }
           ],
@@ -115,6 +133,24 @@
               "symbol": "\\alpha, \\beta",
               "name": "兩個角",
               "unit": "^\\circ \\text{ 或 rad}",
+              "type": "純量"
+            },
+            {
+              "symbol": "\\sin(\\alpha \\pm \\beta)",
+              "name": "兩角和（差）的正弦值（結果）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "\\sin\\alpha, \\cos\\alpha",
+              "name": "角 α 的正弦與餘弦",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "\\sin\\beta, \\cos\\beta",
+              "name": "角 β 的正弦與餘弦",
+              "unit": "無",
               "type": "純量"
             }
           ],
@@ -142,6 +178,12 @@
           "latex": "f'(x) = \\lim_{\\Delta x \\to 0} \\frac{f(x + \\Delta x) - f(x)}{\\Delta x}",
           "symbols": [
             {
+              "symbol": "f(x)",
+              "name": "原函數",
+              "unit": "無",
+              "type": "函數"
+            },
+            {
               "symbol": "f'(x)",
               "name": "導函數 (Derivative)",
               "unit": "無",
@@ -165,10 +207,22 @@
           "latex": "\\frac{d}{dx}(x^n) = nx^{n-1}",
           "symbols": [
             {
-              "symbol": "n",
-              "name": "冪次",
+              "symbol": "x",
+              "name": "自變數（變數）",
               "unit": "無",
               "type": "純量"
+            },
+            {
+              "symbol": "n",
+              "name": "冪次（任意實數）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "nx^{n-1}",
+              "name": "微分結果（導函數）",
+              "unit": "無",
+              "type": "函數"
             }
           ],
           "geometricMeaning": "xⁿ 圖形在任一點的切線斜率為 nxⁿ⁻¹",
@@ -181,6 +235,12 @@
           "title": "微積分基本定理",
           "latex": "\\int_a^b f(x)\\,dx = F(b) - F(a), \\quad F'(x) = f(x)",
           "symbols": [
+            {
+              "symbol": "f(x)",
+              "name": "被積函數",
+              "unit": "無",
+              "type": "函數"
+            },
             {
               "symbol": "F(x)",
               "name": "反導函數 (Antiderivative)",
@@ -219,7 +279,19 @@
           "symbols": [
             {
               "symbol": "a",
-              "name": "開口方向與寬窄",
+              "name": "二次項係數（決定開口方向與寬窄）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "b",
+              "name": "一次項係數",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "c",
+              "name": "常數項",
               "unit": "無",
               "type": "純量"
             },
@@ -325,8 +397,20 @@
           "latex": "f(x) \\div (x-a) \\text{ 的餘式} = f(a)",
           "symbols": [
             {
+              "symbol": "f(x)",
+              "name": "被除多項式",
+              "unit": "無",
+              "type": "函數"
+            },
+            {
+              "symbol": "a",
+              "name": "代入值（根的候選）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
               "symbol": "f(a)",
-              "name": "代入 a 的函數值",
+              "name": "代入 a 的函數值（即為餘式）",
               "unit": "無",
               "type": "純量"
             }
@@ -385,8 +469,20 @@
           "latex": "\\log_a b = \\frac{\\log b}{\\log a}",
           "symbols": [
             {
+              "symbol": "a",
+              "name": "原本對數的底數（a > 0, a ≠ 1）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "b",
+              "name": "真數（b > 0）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
               "symbol": "\\log",
-              "name": "常用對數 (底10)",
+              "name": "常用對數 (底 10)",
               "unit": "無",
               "type": "函數"
             }
@@ -500,6 +596,18 @@
               "name": "角度",
               "unit": "rad",
               "type": "純量"
+            },
+            {
+              "symbol": "\\sin\\theta",
+              "name": "角 θ 的正弦值",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "\\cos\\theta",
+              "name": "角 θ 的餘弦值",
+              "unit": "無",
+              "type": "純量"
             }
           ],
           "geometricMeaning": "單位圓上的點 (cosθ, sinθ) 到原點距離恆為 1",
@@ -516,6 +624,24 @@
               "symbol": "\\alpha, \\beta",
               "name": "兩個角",
               "unit": "rad",
+              "type": "純量"
+            },
+            {
+              "symbol": "\\sin(\\alpha \\pm \\beta)",
+              "name": "兩角和（差）的正弦值（結果）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "\\sin\\alpha, \\cos\\alpha",
+              "name": "角 α 的正弦與餘弦",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "\\sin\\beta, \\cos\\beta",
+              "name": "角 β 的正弦與餘弦",
+              "unit": "無",
               "type": "純量"
             }
           ],
@@ -540,14 +666,20 @@
           "latex": "\\lim_{x \\to a} f(x) = L",
           "symbols": [
             {
-              "symbol": "L",
-              "name": "極限值",
+              "symbol": "f(x)",
+              "name": "所考慮的函數",
+              "unit": "無",
+              "type": "函數"
+            },
+            {
+              "symbol": "a",
+              "name": "x 所趨近的值",
               "unit": "無",
               "type": "純量"
             },
             {
-              "symbol": "a",
-              "name": "趨近點",
+              "symbol": "L",
+              "name": "極限值",
               "unit": "無",
               "type": "純量"
             }
@@ -573,6 +705,12 @@
           "latex": "f'(x) = \\lim_{\\Delta x \\to 0} \\frac{f(x+\\Delta x)-f(x)}{\\Delta x}",
           "symbols": [
             {
+              "symbol": "f(x)",
+              "name": "原函數",
+              "unit": "無",
+              "type": "函數"
+            },
+            {
               "symbol": "f'(x)",
               "name": "導函數",
               "unit": "無",
@@ -580,7 +718,7 @@
             },
             {
               "symbol": "\\Delta x",
-              "name": "增量",
+              "name": "自變數增量",
               "unit": "無",
               "type": "純量"
             }
@@ -632,6 +770,12 @@
           "title": "定積分與面積",
           "latex": "\\int_a^b f(x)\\,dx = F(b) - F(a)",
           "symbols": [
+            {
+              "symbol": "f(x)",
+              "name": "被積函數",
+              "unit": "無",
+              "type": "函數"
+            },
             {
               "symbol": "F(x)",
               "name": "反導函數",
@@ -686,6 +830,12 @@
             {
               "symbol": "x",
               "name": "真數 (x > 0)",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "y",
+              "name": "對數值（a 要乘幾次方才等於 x）",
               "unit": "無",
               "type": "純量"
             }
@@ -758,14 +908,20 @@
           "latex": "\\log_a(x^n) = n \\log_a x",
           "symbols": [
             {
-              "symbol": "n",
-              "name": "指數（次方）",
+              "symbol": "a",
+              "name": "底數 (a > 0, a ≠ 1)",
               "unit": "無",
               "type": "純量"
             },
             {
               "symbol": "x",
               "name": "真數 (x > 0)",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "n",
+              "name": "指數（次方）",
               "unit": "無",
               "type": "純量"
             }
@@ -793,14 +949,26 @@
           "latex": "\\log_a b = \\frac{\\log b}{\\log a} = \\frac{\\ln b}{\\ln a}",
           "symbols": [
             {
+              "symbol": "a",
+              "name": "原對數的底數（a > 0, a ≠ 1）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "b",
+              "name": "真數（b > 0）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
               "symbol": "\\log",
-              "name": "常用對數 (Common Log)",
+              "name": "常用對數 (Common Log, 底 10)",
               "unit": "無",
               "type": "函數"
             },
             {
               "symbol": "\\ln",
-              "name": "自然對數 (Natural Log)",
+              "name": "自然對數 (Natural Log, 底 e)",
               "unit": "無",
               "type": "函數"
             }
@@ -856,8 +1024,20 @@
           "latex": "N_0 \\cdot a^{t_{1/2}} = \\frac{N_0}{2}",
           "symbols": [
             {
+              "symbol": "N_0",
+              "name": "初始量",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
+              "symbol": "a",
+              "name": "衰退倍率（0 < a < 1）",
+              "unit": "無",
+              "type": "純量"
+            },
+            {
               "symbol": "t_{1/2}",
-              "name": "半衰期",
+              "name": "半衰期（量衰退至一半所需時間）",
               "unit": "時間單位",
               "type": "純量"
             }
