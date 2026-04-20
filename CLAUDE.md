@@ -15,7 +15,19 @@
 | **`.github/copilot-instructions.md`** | 行為映射 | GitHub Copilot 回應風格、程式碼生成偏好、工具行為約束（引用本檔規則，不重複定義） |
 | **`AGENTS.md`** | 角色流程 | Agent 角色定義、標準作業流程 (SOP)、任務分派規則（引用本檔指令） |
 
-**規則**：當指令衝突時，以 `CLAUDE.md` 為準。
+**延伸檔案**（由三位一體衍生，非 SSOT）：
+
+| 路徑 | 角色 | 職責 |
+|------|------|------|
+| `.github/agents/*.agent.md` | Agent 詳細 prompt | `coding` / `content` / `planning` / `reviewer` / `testing` / `doc-writer` 各自的完整指令 |
+| `.github/skills/` | 專案本地 Skills | `reverse-spec-from-code`、`study-coach`、`writing-skills` 等客製化技能 |
+| `.github/workflows/deploy.yml` | CI/CD | 推到 `main` 時自動部署 GitHub Pages |
+| `README.md` | 使用者說明 | 專案簡介與快速上手（對外） |
+| `CONTRIBUTING.md` | 貢獻指南 | 外部協作流程 |
+| `docs/content-guide.md` | 內容撰寫指南 | Markmap `.md` 與 `details/*.json` 的撰寫規範 |
+| `specs/reverse-engineered/` | 反向工程規格 | 由現有程式碼逆向產出的規格文件（`spec.md` / `data-model.md` / `plan.md` 等），僅供參考 |
+
+**規則**：當指令衝突時，以 `CLAUDE.md` 為準。延伸檔案若與 SSOT 衝突，以 SSOT 為準。
 
 ---
 
@@ -55,17 +67,25 @@ python3 -c "import json; json.load(open('path/to/file.json'))"
 
 ```
 mindmap-highschool/
-├── CLAUDE.md                          # 核心中樞（本檔案）
+├── CLAUDE.md                          # 核心中樞（本檔案，SSOT）
 ├── AGENTS.md                          # 角色流程定義
+├── README.md                          # 專案簡介與快速上手
+├── CONTRIBUTING.md                    # 貢獻指南
 ├── .github/
 │   ├── copilot-instructions.md        # AI 行為映射
-│   └── agents/                        # Copilot Agent 詳細 prompt
-│       ├── coding.agent.md
-│       ├── content.agent.md
-│       ├── planning.agent.md
-│       ├── reviewer.agent.md
-│       ├── testing.agent.md
-│       └── doc-writer.agent.md
+│   ├── agents/                        # Copilot Agent 詳細 prompt
+│   │   ├── coding.agent.md
+│   │   ├── content.agent.md
+│   │   ├── planning.agent.md
+│   │   ├── reviewer.agent.md
+│   │   ├── testing.agent.md
+│   │   └── doc-writer.agent.md
+│   ├── skills/                        # 專案本地 Skills
+│   │   ├── reverse-spec-from-code/
+│   │   ├── study-coach/
+│   │   └── writing-skills/
+│   └── workflows/
+│       └── deploy.yml                 # GitHub Pages 自動部署（推到 main 觸發）
 ├── index.html                         # 首頁（科目選擇）
 ├── subject.html                       # 科目/主題列表
 ├── viewer.html                        # 心智圖檢視器
@@ -84,10 +104,24 @@ mindmap-highschool/
 │           └── details/*.json         # 節點詳細資料
 ├── questions/
 │   └── {subject}/{sub}/*.json         # 測驗題 JSON
-└── scripts/
-    ├── smoke-test.py                  # 煙霧測試
-    ├── validate-chemistry.py          # 化學驗證
-    └── add-tags.js                    # 標籤工具
+├── scripts/
+│   ├── smoke-test.py                  # 煙霧測試
+│   ├── validate-chemistry.py          # 化學驗證
+│   └── add-tags.js                    # 標籤工具
+├── docs/
+│   └── content-guide.md               # 內容撰寫指南（Markmap .md + details/*.json）
+├── specs/
+│   └── reverse-engineered/            # 反向工程規格文件（僅供參考，非 SSOT）
+│       ├── spec.md
+│       ├── plan.md
+│       ├── data-model.md
+│       ├── tasks.md
+│       ├── research.md
+│       ├── quickstart.md
+│       ├── checklist.md
+│       ├── constitution.md
+│       └── contracts/
+└── tmp/                               # 本地暫存（不進版控）
 ```
 
 ## Architecture
