@@ -771,11 +771,48 @@
         return;
       }
 
+      /* ---------- Pre-scan associations (💡) before stripping non-heading lines ----------
+         Only h1-h4 render as nodes (per design rule). To preserve sidebar 💡 lookup,
+         attach each 💡 bullet to every ancestor heading path in associationMap. */
+      const associationMap = new Map(); // joined heading path → string[]
+      (function buildAssociationMap() {
+        const stack = []; // current h1-h4 path (texts only)
+        const lines = mergedMd.split('\n');
+        for (const line of lines) {
+          const headMatch = line.match(/^(#{1,4})\s+(.+?)\s*$/);
+          if (headMatch) {
+            const depth = headMatch[1].length;
+            stack.length = depth - 1;
+            stack[depth - 1] = headMatch[2].trim();
+            continue;
+          }
+          if (/^#{5,6}\s/.test(line)) continue; // ignore h5/h6, don't update stack
+          const bulletMatch = line.match(/^\s*[-*+]\s+(.*)$/);
+          if (bulletMatch && bulletMatch[1].includes('💡')) {
+            const tip = bulletMatch[1].trim()
+              .replace(/^💡\s*聯想[：:]\s*/, '')
+              .replace(/^💡\s*類比[：:]\s*/, '')
+              .replace(/^💡\s*/, '');
+            for (let i = 1; i <= stack.length; i++) {
+              const key = stack.slice(0, i).join('');
+              if (!associationMap.has(key)) associationMap.set(key, []);
+              const arr = associationMap.get(key);
+              if (!arr.includes(tip)) arr.push(tip);
+            }
+          }
+        }
+      })();
+
+      /* ---------- Filter to h1-h4 only (display rule: only headings are nodes) ---------- */
+      const filteredMd = mergedMd.split('\n')
+        .filter(line => /^#{1,4}\s/.test(line) || line.trim() === '')
+        .join('\n');
+
       /* ---------- Transform markdown → markmap tree ---------- */
       const { Transformer } = window.markmap;
       const { Markmap } = window.markmap;
       const transformer = new Transformer();
-      const { root } = transformer.transform(mergedMd);
+      const { root } = transformer.transform(filteredMd);
 
       /* ---------- Render markmap ---------- */
       // NOTE: buildNodeMap must run AFTER Markmap.create because initializeData()
@@ -1269,7 +1306,7 @@
 
       /* ===== Sidebar Content Renderer ===== */
       function renderNodeChildrenWithAssociations(parentNode, detailData, container, pathParts) {
-        const associations = extractAssociations(parentNode);
+        const associations = extractAssociations(parentNode, pathParts);
         if (detailData && detailData.associations) {
           detailData.associations.forEach(a => {
             if (!associations.includes(a)) associations.push(a);
@@ -1366,17 +1403,14 @@
         }
       }
 
-      function extractAssociations(node) {
-        const results = [];
-        function walk(n) {
-          const text = (n.content || '').replace(/<[^>]+>/g, '').trim();
-          if (text.includes('💡')) {
-            results.push(text.replace(/^💡\s*聯想[：:]\s*/, '').replace(/^💡\s*/, ''));
-          }
-          if (n.children) n.children.forEach(walk);
+      function extractAssociations(node, pathParts) {
+        let key;
+        if (pathParts && pathParts.length) {
+          key = pathParts.join('');
+        } else {
+          key = (node.content || '').replace(/<[^>]+>/g, '').trim();
         }
-        walk(node);
-        return results;
+        return (associationMap.get(key) || []).slice();
       }
 
       function resolveTopicIdFromPath(pathParts) {
