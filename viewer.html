@@ -74,7 +74,7 @@
 
     /* Sidebar tabs */
     .sidebar-tabs {
-      display: flex; border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex; border-top: 1px solid rgba(255,255,255,0.1);
       flex-shrink: 0; overflow-x: auto;
     }
     .sidebar-tab {
@@ -86,7 +86,8 @@
     .sidebar-tab:hover { color: var(--text); }
     .sidebar-tab.active {
       color: var(--accent, #6366f1);
-      border-bottom-color: var(--accent, #6366f1);
+      border-bottom-color: transparent;
+      box-shadow: inset 0 2px 0 0 var(--accent, #6366f1);
     }
 
     /* Sidebar body */
@@ -108,7 +109,7 @@
     .sidebar-check-row {
       display: flex; align-items: center; gap: 0.5rem;
       padding: 0.5rem 1rem;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      border-top: 1px solid rgba(255,255,255,0.08);
       flex-shrink: 0;
     }
     .sidebar-check-row input[type="checkbox"] {
@@ -609,6 +610,10 @@
         </div>
         <button class="sidebar-close" id="sidebar-close" aria-label="關閉側欄">&times;</button>
       </div>
+      <div class="sidebar-body">
+        <div class="tab-pane active" id="tab-concepts"></div>
+        <div class="tab-pane" id="tab-exam"></div>
+      </div>
       <div class="sidebar-check-row" id="sidebar-check-row">
         <input type="checkbox" id="sidebar-cb">
         <label for="sidebar-cb">已完成複習</label>
@@ -618,10 +623,6 @@
         <button class="sidebar-tab active" data-tab="concepts">📘 概念與應用</button>
         <button class="sidebar-tab" data-tab="exam">🎯 考試準備</button>
       </nav>
-      <div class="sidebar-body">
-        <div class="tab-pane active" id="tab-concepts"></div>
-        <div class="tab-pane" id="tab-exam"></div>
-      </div>
     </div>
   </aside>
 
